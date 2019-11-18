@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="InfinityDTH">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/model"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/controller"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/view"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/helpers"/>
         <property name="context-root" value="InfinityDTH"/>
         <property name="java-output-path" value="/InfinityDTH/build/classes"/>
     </wb-module>
