@@ -1,4 +1,4 @@
-package channel;
+package model;
 
 public class Channel {
 
