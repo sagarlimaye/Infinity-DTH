@@ -20,11 +20,11 @@
         </div>
         <div>
             <label for="videoFreq">Video carrier frequency</label>
-            <input type="number" id="videoFreq"/> 
+            <input type="number" id="videoFreq" min="0"/> 
         </div> 
         <div>
             <label for="audioFreq">Audio carrier frequency</label>
-            <input type="number" id="audioFreq"/> 
+            <input type="number" id="audioFreq" min="0"/> 
         </div>
         <div>
             <label for="chargeType">Channel charge type</label>
@@ -42,7 +42,7 @@
         </div>
         <div>
             <label for="charge">Channel charge</label>
-            <input type="number" id="charge"/> 
+            <input type="number" id="charge" min="0"/> 
         </div> 
     </div>
 </form>
