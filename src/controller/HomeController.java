@@ -37,8 +37,18 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String option = request.getParameter("option");
+		switch(option) {
+			case "CreateChannel":
+				AddChannelDAO.addChannel();
+				response.sendRedirect("dashboard.jsp");
+				break;
+			default:
+				response.sendRedirect("dashboard.jsp");
+				break;
+		}
 		
-		AddChannelDAO.addChannel();
+		
 	}
 
 }
