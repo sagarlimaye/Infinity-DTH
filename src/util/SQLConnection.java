@@ -14,9 +14,9 @@ package util;
 		private static SQLConnection single_instance = null;
 		private SQLConnection() {
 			DB_DRIVER = "com.mysql.jdbc.Driver";
-			DB_CONNECTION  = "jdbc:mysql://localhost:3306/xfinity?autoReconnect=true&useSSL=false";
-			DB_USER  = "root";
-			DB_PASSWORD = "noblesse";
+			DB_CONNECTION  = DBConfig.DB_URL;
+			DB_USER  = DBConfig.DB_USERNAME;
+			DB_PASSWORD = DBConfig.DB_PASSWORD;
 		}
 		public static synchronized SQLConnection getInstance() {
 	        if (single_instance == null)
