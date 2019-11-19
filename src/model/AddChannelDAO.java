@@ -1,29 +1,33 @@
 package model;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import util.SQLConnection;
 
+import data.Channel;
 
-public class AddChannelDAO {
-	static SQLConnection DBMgr = SQLConnection.getInstance();
+public class AddChannelDAO implements Closeable {
+	Connection conn = null;
+	PreparedStatement stmt = null;
+	String query = "INSERT INTO channels(channel_name, channel_band, ) VALUES ('some')";
 	
-	
-	public static void addChannel(){
-		Statement stmt = null;
-		String query = "Insert into channels(channel_name) values ('some')";
-		try{
-				//conn.setAutoCommit(false);  
-				Connection conn = DBMgr.getDBConnection();
-				stmt = conn.createStatement();
-				stmt.executeUpdate(query);
-				conn.commit();
+	public AddChannelDAO() throws SQLException {
+		conn = SQLConnection.getInstance().getDBConnection();
+		stmt = conn.prepareStatement(query);
 	}
-	catch(SQLException e){
+	public void addChannel(Channel channel) throws SQLException {
+		stmt.setString(1, channel.getName());
 		
 	}
+	@Override
+	public void close() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
-	}
+}
 
