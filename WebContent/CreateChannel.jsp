@@ -12,19 +12,19 @@
         <h3>New channel</h3>
         <div>
             <label for="channelName">Channel name</label>
-            <input type="text" id="channelName"/>
+            <input type="text" id="channelName" name="channelName"/>
         </div>
         <div>
             <label for="channelBand">Channel band</label>
-            <input type="text" id="channelBand"/>
+            <input type="text" id="channelBand" name="channelBand"/>
         </div>
         <div>
             <label for="videoFreq">Video carrier frequency</label>
-            <input type="number" id="videoFreq" min="0"/> 
+            <input type="number" id="videoFreq" name="videoFreq" min="0"/> 
         </div> 
         <div>
             <label for="audioFreq">Audio carrier frequency</label>
-            <input type="number" id="audioFreq" min="0"/> 
+            <input type="number" id="audioFreq" name="audioFreq" min="0"/> 
         </div>
         <div>
             <label for="chargeType">Channel charge type</label>
@@ -35,14 +35,14 @@
         </div>
         <div>
             <label for="transmissionType">Transmission type</label>
-            <select id="transmissionType">
+            <select id="transmissionType" name="transmissionType">
                 <option value="standard">Standard</option>
                 <option value="hd">High-definition</option>
             </select>
         </div>
         <div>
             <label for="charge">Channel charge</label>
-            <input type="number" id="charge" min="0"/> 
+            <input type="number" id="charge" name="charge" min="0"/> 
         </div> 
         <input type="submit" value="Create"/>
     </div>
