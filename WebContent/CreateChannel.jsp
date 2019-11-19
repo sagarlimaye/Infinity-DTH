@@ -44,6 +44,7 @@
             <label for="charge">Channel charge</label>
             <input type="number" id="charge" min="0"/> 
         </div> 
+        <input type="submit" value="Create"/>
     </div>
 </form>
 </body>
