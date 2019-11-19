@@ -7,8 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="CreateChannel" method="post">
+<form action="HomeController" method="post">
     <div>
+    <input type="hidden" name="option" value="CreateChannel"/>
         <h3>New channel</h3>
         <div>
             <label for="channelName">Channel name</label>
