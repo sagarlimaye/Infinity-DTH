@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,8 +42,33 @@ public class HomeController extends HttpServlet {
 		String option = request.getParameter("option");
 		switch(option) {
 			case "CreateChannel":
-				AddChannelDAO.addChannel();
-				response.sendRedirect("dashboard.jsp");
+				Channel channel = new Channel();
+				AddChannelDAO dao = null;
+				channel.setName(request.getParameter("channelName"));
+				channel.setBand(request.getParameter("channelBand"));
+				channel.setVideoFreq(Float.parseFloat(request.getParameter("videoFreq")));
+				channel.setAudioFreq(Float.parseFloat(request.getParameter("audioFreq")));
+				channel.setChargeType(request.getParameter("chargeType"));
+				channel.setTransmissionType(request.getParameter("transmissionType"));
+				channel.setCharge(Float.parseFloat(request.getParameter("charge")));
+				try
+				{
+					dao = new AddChannelDAO();
+					dao.addChannel(channel);
+				}
+				catch(SQLException e)
+				{
+					// log SQL exception
+				}
+				catch(Exception e)
+				{
+					// log other exception
+				}
+				finally {
+					dao.close();
+					response.sendRedirect("dashboard.jsp");
+				}
+				
 				break;
 			default:
 				response.sendRedirect("dashboard.jsp");
