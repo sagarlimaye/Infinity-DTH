@@ -12,16 +12,15 @@ import util.SQLConnection;
 import data.Channel;
 
 public class ChannelDAO implements Closeable {
-	Connection conn = null;
-	PreparedStatement stmt = null;
-	String query = "INSERT INTO channels(channel_name, channel_band, video_freq, audio_freq, charge_type, transmission_type, charge) "
-			+ "		VALUES (?, ?, ?, ?, ?, ?, ?)";
 	
-	public ChannelDAO() throws SQLException {
-		conn = SQLConnection.getInstance().getDBConnection();
-		stmt = conn.prepareStatement(query);
-	}
+	static Connection conn = SQLConnection.getInstance().getDBConnection();
+	
 	public void addChannel(Channel channel) throws SQLException {
+	
+		String query = "INSERT INTO channels(channel_name, channel_band, video_freq, audio_freq, charge_type, transmission_type, charge) "
+				+ "		VALUES (?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement stmt = conn.prepareStatement(query);
+		
 		stmt.setString(1, channel.getName());
 		stmt.setString(2, channel.getBand());
 		stmt.setFloat(3,  channel.getVideoFreq());
@@ -30,16 +29,31 @@ public class ChannelDAO implements Closeable {
 		stmt.setString(6,  channel.getTransmissionType());
 		stmt.setFloat(7, channel.getCharge());
 		stmt.executeUpdate();
+		stmt.close();
 		
 	}
+	
+	public static void updateChannel(Channel channel) throws SQLException{
+		
+		String updateQuery = "UPDATE channels SET charge_type=?, transmission_type=?, charge =? WHERE channel_id=?";
+
+		PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+		
+		updateStmt.setString(1,channel.getChargeType());
+		updateStmt.setString(2,channel.getTransmissionType());
+		updateStmt.setInt(3,channel.getCharge());
+		updateStmt.setInt(4,channel.getChannel_id());
+		updateStmt.executeUpdate();
+		updateStmt.close();
+	}
+	
 	@Override
 	public void close() throws IOException {
 		try {
-			if(stmt != null)
-				stmt.close();
 			if(conn != null)
 				conn.close();
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 		}
 		
 	}

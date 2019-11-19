@@ -2,10 +2,12 @@ package data;
 
 public class Channel {
 	private String name, band, chargeType, transmissionType;
-	private float videoFreq, audioFreq, charge;
+	private float videoFreq, audioFreq;
+	private int channel_id, charge;
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -39,11 +41,19 @@ public class Channel {
 	public void setAudioFreq(float audioFreq) {
 		this.audioFreq = audioFreq;
 	}
-	public float getCharge() {
+	public int getCharge() {
 		return charge;
 	}
-	public void setCharge(float charge) {
+	public void setCharge(int charge) {
 		this.charge = charge;
+	}
+
+	public int getChannel_id() {
+		return channel_id;
+	}
+
+	public void setChannel_id(int channel_id) {
+		this.channel_id = channel_id;
 	}
 
 	

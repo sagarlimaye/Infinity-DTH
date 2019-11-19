@@ -50,7 +50,7 @@ public class HomeController extends HttpServlet {
 				channel.setAudioFreq(Float.parseFloat(request.getParameter("audioFreq")));
 				channel.setChargeType(request.getParameter("chargeType"));
 				channel.setTransmissionType(request.getParameter("transmissionType"));
-				channel.setCharge(Float.parseFloat(request.getParameter("charge")));
+				channel.setCharge(Integer.parseInt(request.getParameter("charge")));
 				try
 				{
 					dao = new ChannelDAO();
@@ -71,6 +71,31 @@ public class HomeController extends HttpServlet {
 				}
 				
 				break;
+				
+			case "UpdateChannel":
+				Channel update = new Channel();
+				update.setChargeType(request.getParameter("chargeType"));
+				update.setTransmissionType(request.getParameter("transmissionType"));
+				update.setCharge(Integer.parseInt(request.getParameter("charge")));
+				update.setChannel_id(Integer.parseInt("channel_id"));
+				try
+				{
+					ChannelDAO.updateChannel(update);
+				}
+				catch(SQLException e)
+				{
+					// log SQL exception
+					
+				}
+				catch(Exception e)
+				{
+					// log other exception
+				}
+				finally {
+					response.sendRedirect("dashboard.jsp");
+				}
+				
+				
 			default:
 				response.sendRedirect("dashboard.jsp");
 				break;
