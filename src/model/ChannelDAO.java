@@ -11,13 +11,13 @@ import util.SQLConnection;
 
 import data.Channel;
 
-public class AddChannelDAO implements Closeable {
+public class ChannelDAO implements Closeable {
 	Connection conn = null;
 	PreparedStatement stmt = null;
 	String query = "INSERT INTO channels(channel_name, channel_band, video_freq, audio_freq, charge_type, transmission_type, charge) "
 			+ "		VALUES (?, ?, ?, ?, ?, ?, ?)";
 	
-	public AddChannelDAO() throws SQLException {
+	public ChannelDAO() throws SQLException {
 		conn = SQLConnection.getInstance().getDBConnection();
 		stmt = conn.prepareStatement(query);
 	}

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import data.Channel;
-import model.AddChannelDAO;
+import model.ChannelDAO;
 
 /**
  * Servlet implementation class HomeController
@@ -43,7 +43,7 @@ public class HomeController extends HttpServlet {
 		switch(option) {
 			case "CreateChannel":
 				Channel channel = new Channel();
-				AddChannelDAO dao = null;
+				ChannelDAO dao = null;
 				channel.setName(request.getParameter("channelName"));
 				channel.setBand(request.getParameter("channelBand"));
 				channel.setVideoFreq(Float.parseFloat(request.getParameter("videoFreq")));
@@ -53,12 +53,13 @@ public class HomeController extends HttpServlet {
 				channel.setCharge(Float.parseFloat(request.getParameter("charge")));
 				try
 				{
-					dao = new AddChannelDAO();
+					dao = new ChannelDAO();
 					dao.addChannel(channel);
 				}
 				catch(SQLException e)
 				{
 					// log SQL exception
+					
 				}
 				catch(Exception e)
 				{
