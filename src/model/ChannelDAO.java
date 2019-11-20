@@ -13,7 +13,12 @@ import data.Channel;
 
 public class ChannelDAO implements Closeable {
 	
-	static Connection conn = SQLConnection.getInstance().getDBConnection();
+	Connection conn = null;
+	
+	public ChannelDAO() throws SQLException
+	{
+		conn = SQLConnection.getInstance().getDBConnection();
+	}
 	
 	public void addChannel(Channel channel) throws SQLException {
 	
