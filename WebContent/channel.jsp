@@ -5,6 +5,10 @@
 <html>
 <head>
 <jsp:include page="Admin.jsp"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -27,8 +31,17 @@ channel_array = new Array(channel1,channel2,channel3);
 <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
 <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
+<script>
+$(document).ready(function() {
+    $('#datatable').dataTable();
+    
+     $("[data-toggle=tooltip]").tooltip();
+    
+} );
+</script>
 </head>
 <body>
+    
 <div class="container">
 	<div class="row">
 		<h2 class="text-center">Channel Dashboard</h2>
@@ -36,7 +49,7 @@ channel_array = new Array(channel1,channel2,channel3);
     
         <div class="row">
 		
-            <div class="col-md-12">
+            <div class="col-md-12" style="width:500px;height:250px;line-height:3em;overflow:scroll;padding:5px;">
   
             
 <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -44,8 +57,8 @@ channel_array = new Array(channel1,channel2,channel3);
 						<tr>
 							<th>Channel</th>
 							<th>Band</th>
-							<th>Audio Frequency</th>
 							<th>Video Frequency</th>
+							<th>Audio Frequency</th>
 							<th>Charge Type</th>
 							<th>Transmission Type</th>
 							<th>Channel Charge</th>
@@ -55,7 +68,7 @@ channel_array = new Array(channel1,channel2,channel3);
 					</thead>			
 					
 					<tbody>	
-					<c:forEach var="channel" items="${channel_array.rows}">
+		<c:forEach var="channel" items="${channel_array.rows}">
                 <tr>
                     <td><c:out value="${channel.Name}" /></td>
                     <td><c:out value="${channel.Band}" /></td>
@@ -64,7 +77,7 @@ channel_array = new Array(channel1,channel2,channel3);
                 </tr>
             </c:forEach>
 					
-						<!--  <tr>
+						<tr>
 							<td>Tiger Nixon</td>
 							<td>System Architect</td>
 							<td>Edinburgh</td>
@@ -74,7 +87,29 @@ channel_array = new Array(channel1,channel2,channel3);
 							<td>239</td>
                             <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-						</tr>-->
+						</tr>
+						<tr>
+							<td>Tiger Nixon</td>
+							<td>System Architect</td>
+							<td>Edinburgh</td>
+							<td>61</td>
+							<td>2011/04/25</td>
+							<td>$320,800</td>
+							<td>239</td>
+                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+						</tr>
+						<tr>
+							<td>Tiger Nixon</td>
+							<td>System Architect</td>
+							<td>Edinburgh</td>
+							<td>61</td>
+							<td>2011/04/25</td>
+							<td>$320,800</td>
+							<td>239</td>
+                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+						</tr>
                            
 					</tbody>
 				</table>
@@ -84,6 +119,10 @@ channel_array = new Array(channel1,channel2,channel3);
 	</div>
 </div>
 
+<div align="center" class="add-container">
+ <button onclick="location.href = 'CreateChannel.jsp';" id="myButton" class="float-none submit-button" >Add Channel</button>
+</div>
+
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
       <div class="modal-dialog">
     <div class="modal-content">
@@ -91,25 +130,33 @@ channel_array = new Array(channel1,channel2,channel3);
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
       </div>
-          <div class="modal-body">
+      <div class="modal-body">
           <div class="form-group">
-        <input class="form-control " type="text" placeholder="Tiger Nixon">
-        </div>
-        <div class="form-group">
-        
-        <input class="form-control " type="text" placeholder="System Architect">
-        </div>
-        <div class="form-group">
-        
-        
-      <input class="form-control " type="text" placeholder="Edinburgh">
-        
-        </div>
+             <input class="form-control " type="text" placeholder="Channel Name">
+          </div>
+          <div class="form-group">
+             <input class="form-control " type="text" placeholder="Channel Band">
+          </div>
+          <div class="form-group">
+             <input class="form-control " type="number" placeholder="Video Carrier Frequency">
+          </div>
+          <div class="form-group">
+             <input class="form-control " type="number" placeholder="Audio Carrier Frequency">
+          </div>
+          <div class="form-group">
+             <input class="form-control " type="text" placeholder="Channel Charge Type">
+          </div>
+          <div class="form-group">
+             <input class="form-control " type="text" placeholder="Channel Transmission Type">
+          </div>
+          <div class="form-group">
+             <input class="form-control " type="number" placeholder="Channel Charge">
+          </div>
       </div>
           <div class="modal-footer ">
-        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
-      </div>
-        </div>
+            <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+         </div>
+     </div>
     <!-- /.modal-content --> 
   </div>
       <!-- /.modal-dialog --> 
@@ -117,11 +164,11 @@ channel_array = new Array(channel1,channel2,channel3);
     
     
     
-    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal fade" id="delete" role="dialog" >
       <div class="modal-dialog">
     <div class="modal-content">
           <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
       </div>
           <div class="modal-body">
@@ -131,7 +178,7 @@ channel_array = new Array(channel1,channel2,channel3);
       </div>
         <div class="modal-footer ">
         <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ><span class="glyphicon glyphicon-remove"></span> No</button>
       </div>
         </div>
     <!-- /.modal-content --> 
