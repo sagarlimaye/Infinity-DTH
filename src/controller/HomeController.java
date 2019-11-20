@@ -73,9 +73,12 @@ public class HomeController extends HttpServlet {
 			break;
 				
 			case "ChannelInformation":
+			{
 				HttpSession session = request.getSession();
-			
+
+				ChannelDAO dao = null;
 				try {
+					dao = new ChannelDAO();
 					List<Channel> channelInfo = new ArrayList<Channel>();
 					ChannelDAO channelDB = new ChannelDAO();
 					channelInfo = channelDB.ChannelInformation();
@@ -86,8 +89,13 @@ public class HomeController extends HttpServlet {
 				catch(SQLException e) {
 					
 				}	
-				break;
 				
+				finally {
+					dao.close();
+				}
+				
+			}
+				break;
 			case "UpdateChannel":
 			{
 				Channel update = new Channel();
