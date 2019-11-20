@@ -78,49 +78,21 @@ $(document).ready(function() {
                 <tr>
                     <td><c:out value="${channel.name}" /></td>
                     <td><c:out value="${channel.band}" /></td>
+                    <td><c:out value="${channel.videoFreq}" /></td>
+                    <td><c:out value="${channel.audioFreq}" /></td>
+                     <td><c:out value="${channel.chargeType}" /></td>
+                    <td><c:out value="${channel.transmissionType}" /></td>
+                    <td><c:out value="${channel.charge}" /></td>
                     
-<!--                      <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> -->
-<!--    					 <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td> -->
+                    
+                      <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
+    				  <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td> 
              </tr> 
             </c:forEach>
 					
-						<tr>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
-							<td>2011/04/25</td>
-							<td>$320,800</td>
-							<td>239</td>
-                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-						</tr>
-						<tr>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
-							<td>2011/04/25</td>
-							<td>$320,800</td>
-							<td>239</td>
-                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-						</tr>
-						<tr>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
-							<td>2011/04/25</td>
-							<td>$320,800</td>
-							<td>239</td>
-                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-						</tr>
-                           
 					</tbody>
-				</table>
-
+					</table>
+				
 	
 	</div>
 	</div>

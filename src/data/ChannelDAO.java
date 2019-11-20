@@ -59,9 +59,12 @@ public List<Channel> ChannelInformation() throws SQLException{
 		String selectQuery = "select * from channels";
 		List<Channel> channelInf = new ArrayList<Channel>();
 
-		PreparedStatement selectStmt = conn.prepareStatement(selectQuery);
+		//PreparedStatement selectStmt = conn.prepareStatement(selectQuery);
 		
-		ResultSet rs = selectStmt.executeQuery(selectQuery);
+		//ResultSet rs = selectStmt.executeQuery(selectQuery);
+		Statement stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(selectQuery);
+		
 		System.out.println("connection successful");
 		
 		

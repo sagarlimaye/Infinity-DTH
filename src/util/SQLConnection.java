@@ -14,7 +14,7 @@ import java.sql.SQLException;
 		private static SQLConnection single_instance = null;
 		private SQLConnection() {
 			
-			DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+			DB_DRIVER = "com.mysql.jdbc.Driver";
 			DB_CONNECTION  = DBConfig.DB_URL;
 			DB_USER  = DBConfig.DB_USERNAME;
 			DB_PASSWORD = DBConfig.DB_PASSWORD;
@@ -26,7 +26,7 @@ import java.sql.SQLException;
 	        return single_instance;
 		}
 
-		public static Connection getDBConnection() {	
+		public Connection getDBConnection() {	
 			Connection dbConnection = null;	 
 
 			try {	 
