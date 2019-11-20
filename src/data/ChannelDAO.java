@@ -15,7 +15,12 @@ import util.SQLConnection;
 
 public class ChannelDAO implements Closeable {
 	
-	static Connection conn = SQLConnection.getInstance().getDBConnection();
+	Connection conn = null;
+	
+	public ChannelDAO() throws SQLException
+	{
+		conn = SQLConnection.getInstance().getDBConnection();
+	}
 	
 	public void addChannel(Channel channel) throws SQLException {
 	
@@ -35,7 +40,7 @@ public class ChannelDAO implements Closeable {
 		
 	}
 	
-	public static void updateChannel(Channel channel) throws SQLException{
+	public void updateChannel(Channel channel) throws SQLException{
 		
 		String updateQuery = "UPDATE channels SET charge_type=?, transmission_type=?, charge =? WHERE channel_id=?";
 
