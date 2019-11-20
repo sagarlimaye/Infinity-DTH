@@ -73,18 +73,25 @@ public class HomeController extends HttpServlet {
 			break;
 				
 			case "ChannelInformation":
+			{
 				HttpSession session = request.getSession();
-			
+
+				ChannelDAO dao = null;
 				try {
+					dao = new ChannelDAO();
 					List<Channel> channelInfo = new ArrayList<Channel>();
-					channelInfo = ChannelDAO.ChannelInformation();
+					channelInfo = dao.ChannelInformation();
 					session.setAttribute("channelInf",channelInfo);
 					getServletContext().getRequestDispatcher("/channelInform.jsp").forward(request, response);
-					
 				}
 				catch(SQLException e) {
 					
 				}	
+				finally {
+					dao.close();
+				}
+				
+			}
 				
 			case "UpdateChannel":
 			{
