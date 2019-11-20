@@ -1,6 +1,5 @@
 package util;
 
-
 	import java.sql.Connection;
 	import java.sql.DriverManager;
 	import java.sql.SQLException;
@@ -14,7 +13,7 @@ package util;
 		private static SQLConnection single_instance = null;
 		private SQLConnection() {
 			
-			DB_DRIVER = "com.mysql.jdbc.Driver";
+			DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 			DB_CONNECTION  = DBConfig.DB_URL;
 			DB_USER  = DBConfig.DB_USERNAME;
 			DB_PASSWORD = DBConfig.DB_PASSWORD;

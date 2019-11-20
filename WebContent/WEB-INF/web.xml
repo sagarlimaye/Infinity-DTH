@@ -9,5 +9,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>channel.jsp</welcome-file>
+    <welcome-file>channelInform.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

@@ -2,15 +2,18 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import data.Channel;
-import model.ChannelDAO;
+import data.ChannelDAO;
+import model.Channel;
 
 /**
  * Servlet implementation class HomeController
@@ -71,6 +74,20 @@ public class HomeController extends HttpServlet {
 				}
 				
 				break;
+				
+			case "ChannelInformation":
+				HttpSession session = request.getSession();
+			
+				try {
+					List<Channel> channelInfo = new ArrayList<Channel>();
+					channelInfo = ChannelDAO.ChannelInformation();
+					session.setAttribute("channelInf",channelInfo);
+					getServletContext().getRequestDispatcher("/channelInform.jsp").forward(request, response);
+					
+				}
+				catch(SQLException e) {
+					
+				}	
 				
 			case "UpdateChannel":
 				Channel update = new Channel();

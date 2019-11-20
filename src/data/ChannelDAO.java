@@ -1,15 +1,17 @@
-package model;
+package data;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.Channel;
 import util.SQLConnection;
-
-import data.Channel;
 
 public class ChannelDAO implements Closeable {
 	
@@ -47,6 +49,33 @@ public class ChannelDAO implements Closeable {
 		updateStmt.close();
 	}
 	
+public static List<Channel> ChannelInformation() throws SQLException{
+		
+		String selectQuery = "select * from channels";
+		List<Channel> channelInf = new ArrayList<Channel>();
+
+		PreparedStatement selectStmt = conn.prepareStatement(selectQuery);
+		
+		ResultSet rs = selectStmt.executeQuery(selectQuery);
+		System.out.println("connection successful");
+		
+		
+		while(rs.next()) {
+			Channel channelInfo = new Channel();
+			
+			channelInfo.setChannel_id(rs.getInt(1));
+			channelInfo.setName(rs.getString(2));	
+			channelInfo.setBand(rs.getString(3));
+			channelInfo.setVideoFreq(rs.getFloat(4));
+			channelInfo.setAudioFreq(rs.getFloat(5));
+			channelInfo.setChargeType(rs.getString(6));
+			channelInfo.setTransmissionType(rs.getString(7));
+			channelInfo.setCharge(rs.getInt(8));
+			channelInf.add(channelInfo);			
+		}
+		return channelInf;
+	}
+
 	@Override
 	public void close() throws IOException {
 		try {
