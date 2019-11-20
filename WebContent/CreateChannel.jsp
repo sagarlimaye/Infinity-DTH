@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 <% 
@@ -18,28 +19,31 @@ else if(success != null && success.equalsIgnoreCase("true"))
 %>
 	<h3>Successfully created channel!</h3>
 <form action="HomeController" method="post">
+
     <div>
-    <input type="hidden" name="option" value="CreateChannel"/>
-        <h3>New channel</h3>
+      <h3 align="center">Add New Channel</h3> 
         <div>
+        
             <label for="channelName">Channel name</label>
-            <input type="text" id="channelName" name="channelName"/>
+            <input type="text" id="channelName" name="channelName" placeholder="Enter ChannelName" required />
         </div>
         <div>
+        
             <label for="channelBand">Channel band</label>
-            <input type="text" id="channelBand" name="channelBand"/>
+            <input type="text" id="channelBand" name="channelBand" placeholder="Enter ChannelBand" required/>
         </div>
         <div>
+        
             <label for="videoFreq">Video carrier frequency</label>
-            <input type="number" id="videoFreq" name="videoFreq" min="0"/> 
+              <input type="number" id="videoFreq" name="videoFreq" placeholder="Enter VideoFrequency in number" required min="0" /> 
         </div> 
         <div>
             <label for="audioFreq">Audio carrier frequency</label>
-            <input type="number" id="audioFreq" name="audioFreq" min="0"/> 
+        <input type="number" id="audioFreq" name="audioFreq" placeholder="Enter AudioFrequency in number" required min="0" /> 
         </div>
         <div>
             <label for="chargeType">Channel charge type</label>
-            <select id="chargeType" name="chargeType">
+           <select id="chargeType" name="chargeType">
                 <option value="fta">FTA</option>
                 <option value="paid">Paid</option>
             </select> 
@@ -52,10 +56,12 @@ else if(success != null && success.equalsIgnoreCase("true"))
             </select>
         </div>
         <div>
-            <label for="charge">Channel charge</label>
-            <input type="number" id="charge" name="charge" min="0"/> 
+        
+           <label for="charge">Channel charge</label>
+            <input type="number" id="charge" name="charge" placeholder="Enter Channel charge in number" min="0" required/> 
         </div> 
         <input type="submit" value="Create"/>
+        
     </div>
 </form>
 </body>
