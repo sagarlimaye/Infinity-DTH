@@ -54,7 +54,7 @@ public class ChannelDAO implements Closeable {
 		updateStmt.close();
 	}
 	
-public static List<Channel> ChannelInformation() throws SQLException{
+public List<Channel> ChannelInformation() throws SQLException{
 		
 		String selectQuery = "select * from channels";
 		List<Channel> channelInf = new ArrayList<Channel>();
