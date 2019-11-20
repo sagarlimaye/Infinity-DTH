@@ -42,6 +42,7 @@ public class HomeController extends HttpServlet {
 		String option = request.getParameter("option");
 		switch(option) {
 			case "CreateChannel":
+			{
 				Channel channel = new Channel();
 				ChannelDAO dao = null;
 				channel.setName(request.getParameter("channelName"));
@@ -65,18 +66,21 @@ public class HomeController extends HttpServlet {
 					dao.close();
 					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 				}
-				
-				break;
+			}
+			break;
 				
 			case "UpdateChannel":
+			{
 				Channel update = new Channel();
+				ChannelDAO dao = null;
 				update.setChargeType(request.getParameter("chargeType"));
 				update.setTransmissionType(request.getParameter("transmissionType"));
 				update.setCharge(Integer.parseInt(request.getParameter("charge")));
 				update.setChannel_id(Integer.parseInt("channel_id"));
 				try
 				{
-					ChannelDAO.updateChannel(update);
+					dao = new ChannelDAO();
+					dao.updateChannel(update);
 				}
 				catch(SQLException e)
 				{
@@ -88,10 +92,11 @@ public class HomeController extends HttpServlet {
 					// log other exception
 				}
 				finally {
+					dao.close();
 					response.sendRedirect("/dashboard.jsp");
 				}
-				
-				
+			}
+			break;
 			default:
 				response.sendRedirect("/dashboard.jsp");
 				break;

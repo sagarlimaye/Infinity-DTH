@@ -38,7 +38,7 @@ public class ChannelDAO implements Closeable {
 		
 	}
 	
-	public static void updateChannel(Channel channel) throws SQLException{
+	public void updateChannel(Channel channel) throws SQLException{
 		
 		String updateQuery = "UPDATE channels SET charge_type=?, transmission_type=?, charge =? WHERE channel_id=?";
 
