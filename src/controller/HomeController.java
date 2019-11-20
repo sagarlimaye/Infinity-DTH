@@ -55,19 +55,17 @@ public class HomeController extends HttpServlet {
 				{
 					dao = new ChannelDAO();
 					dao.addChannel(channel);
-				}
-				catch(SQLException e)
-				{
-					// log SQL exception
-					
+					request.setAttribute("success", "true");
 				}
 				catch(Exception e)
 				{
 					// log other exception
+					request.setAttribute("error", e.getMessage());
 				}
 				finally {
 					dao.close();
-					response.sendRedirect("dashboard.jsp");
+					
+					getServletContext().getRequestDispatcher("CreateChannel.jsp").forward(request, response);
 				}
 				
 				break;
