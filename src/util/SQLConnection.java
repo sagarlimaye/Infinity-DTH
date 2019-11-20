@@ -3,7 +3,8 @@ package util;
 
 	import java.sql.Connection;
 	import java.sql.DriverManager;
-	import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 	public class SQLConnection {
 
@@ -14,7 +15,7 @@ package util;
 		private static SQLConnection single_instance = null;
 		private SQLConnection() {
 			
-			DB_DRIVER = "com.mysql.jdbc.Driver";
+			DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 			DB_CONNECTION  = DBConfig.DB_URL;
 			DB_USER  = DBConfig.DB_USERNAME;
 			DB_PASSWORD = DBConfig.DB_PASSWORD;
@@ -26,7 +27,7 @@ package util;
 	        return single_instance;
 		}
 
-		public static Connection getDBConnection() {	
+		public static Connection getDBConnection() throws SQLException {	
 			Connection dbConnection = null;	 
 
 			try {	 
@@ -34,12 +35,17 @@ package util;
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-
+			PreparedStatement stmt = null;
 			try {	 
 				dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER,DB_PASSWORD);
-				dbConnection.setAutoCommit(false);
+				stmt = dbConnection.prepareStatement("USE xfinity;");
+				stmt.executeUpdate();
 			} catch (SQLException e) {	    
 			}	 
+			finally {
+				if(stmt != null)
+					stmt.close();
+			}
 			return dbConnection;	 
 		}
 
