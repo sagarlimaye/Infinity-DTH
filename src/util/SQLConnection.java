@@ -27,7 +27,7 @@ import java.sql.SQLException;
 	        return single_instance;
 		}
 
-		public static Connection getDBConnection() throws SQLException {	
+		public static Connection getDBConnection() {	
 			Connection dbConnection = null;	 
 
 			try {	 
@@ -35,17 +35,10 @@ import java.sql.SQLException;
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			PreparedStatement stmt = null;
 			try {	 
 				dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER,DB_PASSWORD);
-				stmt = dbConnection.prepareStatement("USE xfinity;");
-				stmt.executeUpdate();
 			} catch (SQLException e) {	    
-			}	 
-			finally {
-				if(stmt != null)
-					stmt.close();
-			}
+			}	
 			return dbConnection;	 
 		}
 
