@@ -8,16 +8,6 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-<% 
-String error = (String)request.getAttribute("error");
-String success = (String)request.getAttribute("success");
-if(!error.isEmpty())
-%>
-	<h3>There was an error</h3>
-<%
-else if(success != null && success.equalsIgnoreCase("true")) 
-%>
-	<h3>Successfully created channel!</h3>
 <form action="HomeController" method="post">
 
     <div>
@@ -60,6 +50,7 @@ else if(success != null && success.equalsIgnoreCase("true"))
            <label for="charge">Channel charge</label>
             <input type="number" id="charge" name="charge" placeholder="Enter Channel charge in number" min="0" required/> 
         </div> 
+        <input type="hidden" name="option" value="CreateChannel"/>
         <input type="submit" value="Create"/>
         
     </div>

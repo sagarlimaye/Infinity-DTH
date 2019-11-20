@@ -65,7 +65,7 @@ public class HomeController extends HttpServlet {
 				finally {
 					dao.close();
 					
-					getServletContext().getRequestDispatcher("CreateChannel.jsp").forward(request, response);
+					getServletContext().getRequestDispatcher("/CreateChannel.jsp").forward(request, response);
 				}
 				
 				break;
