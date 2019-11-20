@@ -55,17 +55,13 @@ public class HomeController extends HttpServlet {
 				{
 					dao = new ChannelDAO();
 					dao.addChannel(channel);
-					request.setAttribute("success", "true");
 				}
 				catch(Exception e)
 				{
 					// log other exception
-					request.setAttribute("error", e.getMessage());
 				}
 				finally {
-					dao.close();
-					
-					getServletContext().getRequestDispatcher("CreateChannel.jsp").forward(request, response);
+					getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
 				}
 				
 				break;
@@ -90,12 +86,12 @@ public class HomeController extends HttpServlet {
 					// log other exception
 				}
 				finally {
-					response.sendRedirect("dashboard.jsp");
+					response.sendRedirect("/dashboard.jsp");
 				}
 				
 				
 			default:
-				response.sendRedirect("dashboard.jsp");
+				response.sendRedirect("/dashboard.jsp");
 				break;
 		}
 		
