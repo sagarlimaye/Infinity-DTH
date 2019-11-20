@@ -83,7 +83,23 @@ public List<Channel> ChannelInformation() throws SQLException{
 		}
 		return channelInf;
 	}
-
+	public Channel getChannelById(int id) throws SQLException
+	{
+		String query = "SELECT * FROM channel WHERE id = ?";
+		PreparedStatement stmt = conn.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery(query);
+		rs.next();
+		Channel channel = new Channel();
+		channel.setChannel_id(rs.getInt("channel_id"));
+		channel.setAudioFreq(rs.getFloat("audio_freq"));
+		channel.setVideoFreq(rs.getFloat("video_freq"));
+		channel.setName(rs.getString("channel_name"));
+		channel.setBand(rs.getString("channel_band"));
+		channel.setCharge(rs.getInt("charge"));
+		channel.setChargeType(rs.getString("charge_type"));
+		channel.setTransmissionType(rs.getString("transmission_type"));
+		return channel;
+	}
 	@Override
 	public void close() throws IOException {
 		try {
