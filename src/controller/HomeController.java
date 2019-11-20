@@ -55,6 +55,7 @@ public class HomeController extends HttpServlet {
 				{
 					dao = new ChannelDAO();
 					dao.addChannel(channel);
+					request.setAttribute("success", "true");
 				}
 				catch(Exception e)
 				{
