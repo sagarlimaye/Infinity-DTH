@@ -59,9 +59,11 @@ public class HomeController extends HttpServlet {
 				catch(Exception e)
 				{
 					// log other exception
+					System.out.println(e.getMessage());
 				}
 				finally {
-					getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
+					dao.close();
+					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 				}
 				
 				break;
