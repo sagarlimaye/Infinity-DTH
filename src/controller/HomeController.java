@@ -102,7 +102,6 @@ public class HomeController extends HttpServlet {
 					if(dao != null)
 						dao.close();
 				}
-				
 			}
 				break;
 			case "UpdateChannel":
@@ -178,6 +177,22 @@ public class HomeController extends HttpServlet {
 					if(channelDao != null)
 						channelDao.close();
 					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
+				}
+			}
+			break;
+			case "PrepareCreatePackage":
+			{
+				ChannelDAO channelDao =  null;
+				try {
+					channelDao = new ChannelDAO();
+					request.setAttribute("channels", channelDao.getUnassignedChannels());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				finally {
+					if(channelDao != null)
+						channelDao.close();
+					getServletContext().getRequestDispatcher("/package.jsp").forward(request, response);
 				}
 			}
 			break;

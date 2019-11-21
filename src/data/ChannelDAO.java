@@ -135,6 +135,41 @@ public List<Channel> ChannelInformation() throws SQLException{
 		
 		return channel;
 	}
+	public Channel[] getUnassignedChannels() throws SQLException {
+		String selectQuery = "SELECT * FROM channels WHERE package_id IS NULL";
+		List<Channel> channelInf = new ArrayList<Channel>();
+
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.createStatement();
+		    rs = stmt.executeQuery(selectQuery);
+		    
+			while(rs.next()) {
+				Channel channelInfo = new Channel();
+				
+				channelInfo.setChannel_id(rs.getInt(1));
+				channelInfo.setName(rs.getString(2));	
+				channelInfo.setBand(rs.getString(3));
+				channelInfo.setVideoFreq(rs.getFloat(4));
+				channelInfo.setAudioFreq(rs.getFloat(5));
+				channelInfo.setChargeType(rs.getString(6));
+				channelInfo.setTransmissionType(rs.getString(7));
+				channelInfo.setCharge(rs.getInt(8));
+				channelInf.add(channelInfo);			
+			}
+		}
+		finally {
+			if(rs != null)
+				rs.close();
+			if(stmt != null)
+				stmt.close();
+		}
+		
+		return channelInf.toArray(new Channel[channelInf.size()]);
+	}
+	
 	@Override
 	public void close() throws IOException {
 		try {
