@@ -176,7 +176,7 @@ public class HomeController extends HttpServlet {
 						pkgDao.close();
 					if(channelDao != null)
 						channelDao.close();
-					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
+					getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
 				}
 			}
 			break;
