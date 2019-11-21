@@ -73,7 +73,8 @@ public class HomeController extends HttpServlet {
 					System.out.println(e.getMessage());
 				}
 				finally {
-					dao.close();
+					if(dao != null)
+						dao.close();
 					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 				}
 			}
@@ -98,7 +99,8 @@ public class HomeController extends HttpServlet {
 				}	
 				
 				finally {
-					dao.close();
+					if(dao != null)
+						dao.close();
 				}
 				
 			}
@@ -126,7 +128,8 @@ public class HomeController extends HttpServlet {
 					// log other exception
 				}
 				finally {
-					dao.close();
+					if(dao != null)
+						dao.close();
 					response.sendRedirect("/dashboard.jsp");
 				}
 			}
@@ -170,7 +173,10 @@ public class HomeController extends HttpServlet {
 					System.out.println(e.getMessage());
 				}
 				finally {
-					pkgDao.close();
+					if(pkgDao != null)
+						pkgDao.close();
+					if(channelDao != null)
+						channelDao.close();
 					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 				}
 			}
