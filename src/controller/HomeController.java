@@ -108,11 +108,17 @@ public class HomeController extends HttpServlet {
 			{
 				Channel update = new Channel();
 				ChannelDAO dao = null;
-				update.setChannel_id(Integer.parseInt(request.getParameter("channelID")));
+				
+				String id = (request.getParameter("channel_Id"));
+				update.setChannel_id(Integer.parseInt(id.trim()));
+				update.setName(request.getParameter("channelName"));
+				update.setAudioFreq(Float.parseFloat(request.getParameter("audioFreq")));
+				update.setVideoFreq(Float.parseFloat(request.getParameter("videoFreq")));
+				update.setBand(request.getParameter("channelBand"));
 				update.setChargeType(request.getParameter("chargeType"));
 				update.setTransmissionType(request.getParameter("transmissionType"));
 				update.setCharge(Integer.parseInt(request.getParameter("charge")));
-				update.setChannel_id(Integer.parseInt("channel_id"));
+				
 				try
 				{
 					dao = new ChannelDAO();
@@ -120,20 +126,23 @@ public class HomeController extends HttpServlet {
 				}
 				catch(SQLException e)
 				{
-					// log SQL exception
+					e.printStackTrace();
 					
 				}
 				catch(Exception e)
 				{
-					// log other exception
+					e.printStackTrace();
 				}
 				finally {
 					if(dao != null)
 						dao.close();
-					response.sendRedirect("/dashboard.jsp");
+					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 				}
 			}
 			break;
+			case "DeleteChannel": {
+				
+			}
 			case "CreatePackage":
 			{
 				Package pkg = new Package();

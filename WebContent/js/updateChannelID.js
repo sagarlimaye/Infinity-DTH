@@ -24,8 +24,8 @@ window.addEventListener('load', () => {
 			editModal.querySelector('input[name="chargeType"]').value = channel.chargeType;
 			editModal.querySelector('input[name="transmissionType"]').value = channel.transmission;
 			editModal.querySelector('input[name="charge"]').value = channel.charge;
-			document.querySelector('div#edit input[name="channelId"]').value = channel.id;
-			console.log(document.querySelector('div#edit input[name="channelId"]').value);
+			document.querySelector('div#edit input[name="channel_Id"]').value = channel.id;
+			console.log(document.querySelector('div#edit input[name="channel_Id"]').value);
 		});
 	});
 });

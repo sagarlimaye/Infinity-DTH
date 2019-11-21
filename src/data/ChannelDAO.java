@@ -47,17 +47,22 @@ public class ChannelDAO implements Closeable {
 	
 	public void updateChannel(Channel channel) throws SQLException{
 		
-		String updateQuery = "UPDATE channels SET charge_type=?, transmission_type=?, charge =? WHERE channel_id=?";
+		String updateQuery = "UPDATE channels SET channel_name = ?, "
+				+ "channel_band = ?, video_freq = ?, audio_freq = ?, charge_type=?,"
+				+ " transmission_type=?, charge =? WHERE channel_id=?";
 
 		PreparedStatement updateStmt = null;
 		
 		try {
 			updateStmt = conn.prepareStatement(updateQuery);
-			
-			updateStmt.setString(1,channel.getChargeType());
-			updateStmt.setString(2,channel.getTransmissionType());
-			updateStmt.setInt(3,channel.getCharge());
-			updateStmt.setInt(4,channel.getChannel_id());
+			updateStmt.setString(1,channel.getName());
+			updateStmt.setString(2,channel.getBand());
+			updateStmt.setInt(3,(int) channel.getVideoFreq());
+			updateStmt.setInt(4,(int) channel.getAudioFreq());
+			updateStmt.setString(5,channel.getChargeType());
+			updateStmt.setString(6,channel.getTransmissionType());
+			updateStmt.setInt(7,channel.getCharge());
+			updateStmt.setInt(8,channel.getChannel_id());
 			updateStmt.executeUpdate();
 		}
 		finally {
@@ -65,6 +70,9 @@ public class ChannelDAO implements Closeable {
 				updateStmt.close();
 		}
 	}
+public void DeleteChannel() throws SQLException{
+	
+}
 	
 public List<Channel> ChannelInformation() throws SQLException{
 		
@@ -78,7 +86,7 @@ public List<Channel> ChannelInformation() throws SQLException{
 			stmt = conn.createStatement();
 		    rs = stmt.executeQuery(selectQuery);
 			
-			System.out.println("connection successful");
+			
 			
 			
 			while(rs.next()) {

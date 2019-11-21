@@ -1,6 +1,12 @@
 package model;
 
-public class Channel {
+import java.io.Serializable;
+
+public class Channel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name, band, chargeType, transmissionType;
 	private float videoFreq, audioFreq;
 	private int channel_id, charge;

@@ -104,10 +104,10 @@ $(document).ready(function() {
              <input class="form-control " type="text" name = "channelBand" placeholder="Channel Band">
           </div>
           <div class="form-group">
-             <input class="form-control " type="number" name = "videoFreq" placeholder="Video Carrier Frequency">
+             <input class="form-control " type="text" name = "videoFreq" placeholder="Video Carrier Frequency">
           </div>
           <div class="form-group">
-             <input class="form-control " type="number" name = "audioFreq" placeholder="Audio Carrier Frequency">
+             <input class="form-control " type="text" name = "audioFreq" placeholder="Audio Carrier Frequency">
           </div>
           <div class="form-group">
              <input class="form-control " type="text" name = "chargeType" placeholder="Channel Charge Type">
@@ -121,7 +121,7 @@ $(document).ready(function() {
       </div>
           <div class="modal-footer ">
 			<input type = "hidden" name = "option" value = "UpdateChannel">
-			<input type = "hidden" name = "channelId" value = "1">
+			<input type = "hidden" name = "channel_Id">
             <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
          
          </div>
