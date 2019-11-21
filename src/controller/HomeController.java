@@ -168,12 +168,12 @@ public class HomeController extends HttpServlet {
 				{
 					pkgDao = new PackageDAO();
 					channelDao = new ChannelDAO();
-					Channel[] channels = null;
 					ArrayList<Channel> channelList = new ArrayList<Channel>();
 					for(String id : channelIds) {
 						channelList.add(channelDao.getChannelById(Integer.parseInt(id)));
 					}
-					pkg.setChannels(channelList.toArray(channels));
+					Channel[] channels = channelList.toArray(new Channel[channelList.size()]);
+					pkg.setChannels(channels);
 					pkgDao.addPackage(pkg);
 				}
 				catch(Exception e)
