@@ -1,7 +1,12 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import data.ChannelDAO;
+import data.PackageDAO;
 import model.Channel;
+import model.Package;
 
 /**
  * Servlet implementation class HomeController
@@ -66,7 +73,8 @@ public class HomeController extends HttpServlet {
 					System.out.println(e.getMessage());
 				}
 				finally {
-					dao.close();
+					if(dao != null)
+						dao.close();
 					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 				}
 			}
@@ -91,9 +99,9 @@ public class HomeController extends HttpServlet {
 				}	
 				
 				finally {
-					dao.close();
+					if(dao != null)
+						dao.close();
 				}
-				
 			}
 				break;
 			case "UpdateChannel":
@@ -120,15 +128,75 @@ public class HomeController extends HttpServlet {
 					// log other exception
 				}
 				finally {
-					dao.close();
+					if(dao != null)
+						dao.close();
 					response.sendRedirect("/dashboard.jsp");
 				}
 			}
 			break;
-			case "DeleteChannel":
+			case "CreatePackage":
 			{
+				Package pkg = new Package();
+				PackageDAO pkgDao = null;
+				ChannelDAO channelDao =  null;
+				pkg.setName(request.getParameter("pkgName"));
+				pkg.setChargingType(request.getParameter("chargeType"));
+				pkg.setTransmissionType(request.getParameter("transmissionType"));
+				pkg.setCost(Integer.parseInt(request.getParameter("cost")));
+				pkg.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDefault")));
+				DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+				try {
+					pkg.setAvailableFrom(df.parse(request.getParameter("availableFrom")));
+				} catch (ParseException e1) {
+				}
+				try {
+					pkg.setAvailableTo(df.parse(request.getParameter("availableTo")));
+				} catch (ParseException e1) {
+				}
+				String[] channelIds = request.getParameterValues("channels");
 				
+				try
+				{
+					pkgDao = new PackageDAO();
+					channelDao = new ChannelDAO();
+					Channel[] channels = null;
+					ArrayList<Channel> channelList = new ArrayList<Channel>();
+					for(String id : channelIds) {
+						channelList.add(channelDao.getChannelById(Integer.parseInt(id)));
+					}
+					pkg.setChannels(channelList.toArray(channels));
+					pkgDao.addPackage(pkg);
+				}
+				catch(Exception e)
+				{
+					// log other exception
+					System.out.println(e.getMessage());
+				}
+				finally {
+					if(pkgDao != null)
+						pkgDao.close();
+					if(channelDao != null)
+						channelDao.close();
+					getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+				}
 			}
+			break;
+			case "PrepareCreatePackage":
+			{
+				ChannelDAO channelDao =  null;
+				try {
+					channelDao = new ChannelDAO();
+					request.setAttribute("channels", channelDao.getUnassignedChannels());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				finally {
+					if(channelDao != null)
+						channelDao.close();
+					getServletContext().getRequestDispatcher("/package.jsp").forward(request, response);
+				}
+			}
+			break;
 			default:
 				response.sendRedirect("/dashboard.jsp");
 				break;
