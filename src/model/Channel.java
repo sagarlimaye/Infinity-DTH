@@ -1,4 +1,4 @@
-package data;
+package model;
 
 public class Channel {
 	private String name, band, chargeType, transmissionType;
@@ -55,6 +55,7 @@ public class Channel {
 	public void setChannel_id(int channel_id) {
 		this.channel_id = channel_id;
 	}
-
-	
 }
+
+
+

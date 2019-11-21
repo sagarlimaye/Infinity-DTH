@@ -1,9 +1,9 @@
 package util;
 
-
 	import java.sql.Connection;
 	import java.sql.DriverManager;
-	import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 	public class SQLConnection {
 
@@ -26,7 +26,7 @@ package util;
 	        return single_instance;
 		}
 
-		public static Connection getDBConnection() {	
+		public Connection getDBConnection() {	
 			Connection dbConnection = null;	 
 
 			try {	 
@@ -34,12 +34,10 @@ package util;
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-
 			try {	 
 				dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER,DB_PASSWORD);
-				dbConnection.setAutoCommit(false);
 			} catch (SQLException e) {	    
-			}	 
+			}	
 			return dbConnection;	 
 		}
 
