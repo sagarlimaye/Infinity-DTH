@@ -100,6 +100,7 @@ public class HomeController extends HttpServlet {
 			{
 				Channel update = new Channel();
 				ChannelDAO dao = null;
+				update.setChannel_id(Integer.parseInt(request.getParameter("channelID")));
 				update.setChargeType(request.getParameter("chargeType"));
 				update.setTransmissionType(request.getParameter("transmissionType"));
 				update.setCharge(Integer.parseInt(request.getParameter("charge")));
@@ -124,6 +125,10 @@ public class HomeController extends HttpServlet {
 				}
 			}
 			break;
+			case "DeleteChannel":
+			{
+				
+			}
 			default:
 				response.sendRedirect("/dashboard.jsp");
 				break;
