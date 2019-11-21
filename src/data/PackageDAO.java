@@ -20,6 +20,7 @@ public class PackageDAO implements Closeable {
 	}
 	public void addPackage(Package pkg) throws SQLException {
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		try
 		{
 			String query = "INSERT INTO package(package_name, charging_type, transmission_type, cost, available_from, available_to, added_default) "
@@ -40,12 +41,13 @@ public class PackageDAO implements Closeable {
 				stmt.close();
 		}
 		try {
-			ResultSet rs = stmt.getGeneratedKeys();
+			rs = stmt.getGeneratedKeys();
 			rs.next();
 			int id = rs.getInt("package_id");
 			String query = "UPDATE channel SET package_id = ? WHERE channel_id = ?";
 			stmt = conn.prepareStatement(query);
-			for(Channel channel : pkg.getChannels())
+			Channel[] channels = pkg.getChannels();
+			for(Channel channel : channels)
 			{
 				stmt.setInt(1,  id);
 				stmt.setInt(2,  channel.getChannel_id());
@@ -53,6 +55,8 @@ public class PackageDAO implements Closeable {
 			}
 		}
 		finally {
+			if(rs != null)
+				rs.close();
 			if(stmt != null)
 				stmt.close();
 		}
