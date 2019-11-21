@@ -75,7 +75,7 @@ public class HomeController extends HttpServlet {
 				finally {
 					if(dao != null)
 						dao.close();
-					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
+					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 			}
 			break;
@@ -136,7 +136,7 @@ public class HomeController extends HttpServlet {
 				finally {
 					if(dao != null)
 						dao.close();
-					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
+					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 			}
 			break;
@@ -161,7 +161,7 @@ public class HomeController extends HttpServlet {
 				finally {
 					if(dao != null)
 						dao.close();
-					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
+					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 				
 			}
