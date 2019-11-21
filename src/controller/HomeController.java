@@ -141,8 +141,31 @@ public class HomeController extends HttpServlet {
 			}
 			break;
 			case "DeleteChannel": {
+				String ID = request.getParameter("remove_id").trim();
+				int removeID = Integer.parseInt(ID);
+				ChannelDAO dao = null;
+				try
+				{
+					dao = new ChannelDAO();
+					dao.DeleteChannel(removeID);
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+					
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				finally {
+					if(dao != null)
+						dao.close();
+					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
+				}
 				
 			}
+			break;
 			case "CreatePackage":
 			{
 				Package pkg = new Package();

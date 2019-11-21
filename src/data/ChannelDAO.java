@@ -57,8 +57,8 @@ public class ChannelDAO implements Closeable {
 			updateStmt = conn.prepareStatement(updateQuery);
 			updateStmt.setString(1,channel.getName());
 			updateStmt.setString(2,channel.getBand());
-			updateStmt.setInt(3,(int) channel.getVideoFreq());
-			updateStmt.setInt(4,(int) channel.getAudioFreq());
+			updateStmt.setFloat(3,channel.getVideoFreq());
+			updateStmt.setFloat(4,channel.getAudioFreq());
 			updateStmt.setString(5,channel.getChargeType());
 			updateStmt.setString(6,channel.getTransmissionType());
 			updateStmt.setInt(7,channel.getCharge());
@@ -70,10 +70,21 @@ public class ChannelDAO implements Closeable {
 				updateStmt.close();
 		}
 	}
-public void DeleteChannel() throws SQLException{
+public void DeleteChannel(int id) throws SQLException{
+	String deleteQuery = "Delete from channels where channel_id = ?";
+	PreparedStatement stmt = null;
+	try {
+		stmt = conn.prepareStatement(deleteQuery);
+		
+		stmt.setInt(1,id);
+		stmt.execute();
 	
 }
-	
+	finally {
+		if(stmt != null)
+			stmt.close();
+	}
+}
 public List<Channel> ChannelInformation() throws SQLException{
 		
 		String selectQuery = "select * from channels";
