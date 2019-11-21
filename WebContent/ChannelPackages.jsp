@@ -12,7 +12,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container">
 <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -20,9 +19,17 @@
                             <div class="card-header">Manage Channel Packages</div>
                             <div class="card-body">
 
-                                <form class="form-horizontal" method="post" action="#">
-
-                                    <div class="form-group">
+                                <form class="form-horizontal" method="post" action="HomeController">
+           <div class="form-group">
+             <label for="pid" class="cols-sm-2 control-label">Package ID</label>
+             <div class="cols-sm-10">
+               <div class="input-group">
+                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                   <input type="text" class="form-control" name="pid" id="pid" placeholder="Enter package ID" />
+              </div>
+            </div>
+           </div>
+           <div class="form-group">
              <label for="name" class="cols-sm-2 control-label">Package Name</label>
              <div class="cols-sm-10">
                <div class="input-group">
@@ -32,7 +39,7 @@
             </div>
            </div>
            <div class="form-group">
-            <label for="name" class="cols-sm-2 control-label">Package Category</label>
+            <label for="pack" class="cols-sm-2 control-label">Package Category</label>
               <div class="cols-sm-10">
                <div class="input-group">
                 <div class="category">
@@ -42,8 +49,8 @@
                    <a class="dropdown-item" href="#">News</a>
                    <a class="dropdown-item" href="#">Entertainment</a>
                  </div>
-                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Add Category</button>
-                 <div class="modal fade" id="myModal" role="dialog">
+                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#category">Add Category</button>
+                 <div class="modal fade" id="category" role="dialog">
                   <div class="modal-dialog">
                    <div class="modal-content">
                     <div class="modal-header">
@@ -52,15 +59,15 @@
                    </div>
                    <div class="modal-body">
                      <div class="form-group">
-                       <label for="name" class="cols-sm-2 control-label">Name</label>
+                       <label for="cname" class="cols-sm-2 control-label">Name</label>
                        <input class="form-control" type="text" placeholder="Category Name">
                      </div>
                       <div class="input-group">
-                       <label for="name" class="cols-sm-2 control-label">Min Channels </label>
+                       <label for="min" class="cols-sm-2 control-label">Min Channels </label>
                        <span class="input-group-addon" style="width:10px"></span>
                        <input type="text" class="form-control" placeholder="0"/>
                        <span class="input-group-addon" style="width:30px"></span>
-                       <label for="name" class="cols-sm-2 control-label">Max Channels </label>
+                       <label for="max" class="cols-sm-2 control-label">Max Channels </label>
                        <span class="input-group-addon" style="width:10px"></span>
                        <input type="text" class="form-control" placeholder=" "/>
                       </div>
@@ -113,7 +120,63 @@
                 </div>
                </div>
               </div>
-                                   
+         <div class="form-group">
+             <label for="fdate" class="cols-sm-2 control-label">Package Available from date</label>
+             <div class="cols-sm-10">
+               <div class="input-group">
+                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                   <input type="date" class="form-control" name="fdate" id="fdate" placeholder="MM/DD/YYYY" />
+              </div>
+            </div>
+           </div>
+           <div class="form-group">
+             <label for="tdate" class="cols-sm-2 control-label">Package Available to date</label>
+             <div class="cols-sm-10">
+               <div class="input-group">
+                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                   <input type="date" class="form-control" name="tdate" id="tdate" placeholder="MM/DD/YYYY" />
+              </div>
+            </div>
+           </div>
+           <div class="form-group">
+              <label for="default" class="cols-sm-2 control-label">Add by Default</label>
+              <div class="cols-sm-10">
+               <div class="input-group">
+                <div class="default">
+                  <div class="form-check-inline">
+                   <label class="form-check-label" for="radio5">
+                   <input type="radio" class="form-check-input" id="radio5" name="radio5" value="radio5">Yes
+                   </label>
+                  </div>
+                  <div class="form-check-inline">
+                   <label class="form-check-label" for="radio6">
+                   <input type="radio" class="form-check-input" id="radio6" name="radio5" value="radio6">No
+                   </label>
+                  </div>
+                 </div>
+                </div>
+               </div>
+              </div>
+           <!-- <div class="form-group">
+             <label for="AddChannels" class="cols-sm-2 control-label">Add Channels</label>
+             <div class="cols-sm-10">
+               <div class="input-group">
+                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                 <input type="button" value="AddChannels" name="AddChannels" onclick="openPage('AddChannelToPackage.jsp')"/>
+              </div>
+            </div>
+           </div>
+           <script type="text/javascript">
+                   function openPage(pageURL)
+                      {
+                           window.location.href = pageURL;
+                      }
+          </script> -->
+          
+          <div class="form-group ">
+             <button type="button" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
+         </div>
+           
                                 </form>
                             </div>
 
