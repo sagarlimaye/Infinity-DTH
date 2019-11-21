@@ -73,7 +73,8 @@ public class HomeController extends HttpServlet {
 					System.out.println(e.getMessage());
 				}
 				finally {
-					dao.close();
+					if(dao != null)
+						dao.close();
 					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 				}
 			}
@@ -98,9 +99,9 @@ public class HomeController extends HttpServlet {
 				}	
 				
 				finally {
-					dao.close();
+					if(dao != null)
+						dao.close();
 				}
-				
 			}
 				break;
 			case "UpdateChannel":
@@ -126,7 +127,8 @@ public class HomeController extends HttpServlet {
 					// log other exception
 				}
 				finally {
-					dao.close();
+					if(dao != null)
+						dao.close();
 					response.sendRedirect("/dashboard.jsp");
 				}
 			}
@@ -170,8 +172,27 @@ public class HomeController extends HttpServlet {
 					System.out.println(e.getMessage());
 				}
 				finally {
-					pkgDao.close();
-					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
+					if(pkgDao != null)
+						pkgDao.close();
+					if(channelDao != null)
+						channelDao.close();
+					getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+				}
+			}
+			break;
+			case "PrepareCreatePackage":
+			{
+				ChannelDAO channelDao =  null;
+				try {
+					channelDao = new ChannelDAO();
+					request.setAttribute("channels", channelDao.getUnassignedChannels());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				finally {
+					if(channelDao != null)
+						channelDao.close();
+					getServletContext().getRequestDispatcher("/package.jsp").forward(request, response);
 				}
 			}
 			break;
