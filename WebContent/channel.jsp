@@ -13,7 +13,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script><!-- Creating a dummy channel array. Replace this later by DB objects -->>
+<script><!-- Creating a dummy channel array. Replace this later by DB objects
 
 var channel1 = {Name:"HBO",Band:"Type 1",Audio_Frequency:2.3, Video_Frequency:1.3,Charge_Type:"FTA",Transmission_Type:"STD",charge:"50$"
 };
@@ -22,7 +22,10 @@ var channel2 = {Name:"HBO",Band:"Type 1",Audio_Frequency:2.3, Video_Frequency:1.
 };
 var channel3 = {Name:"HBO",Band:"Type 1",Audio_Frequency:2.3, Video_Frequency:1.3,Charge_Type:"FTA",Transmission_Type:"STD",charge:"50$"
 };
-channel_array = new Array(channel1,channel2,channel3); 
+
+-->
+
+
 </script>
 <title>Insert title here</title>
 <script language="JavaScript" src="https://code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
@@ -41,7 +44,10 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-    
+<form name="form1" action="HomeController" >
+<input type="hidden" name="option" value="ChannelInformation">
+<button type = "submit">Information</button>
+</form>
 <div class="container">
 	<div class="row">
 		<h2 class="text-center">Channel Dashboard</h2>
@@ -68,52 +74,26 @@ $(document).ready(function() {
 					</thead>			
 					
 					<tbody>	
-		<c:forEach var="channel" items="${channel_array.rows}">
+					<c:forEach items="${channelInf}" var="channel">
                 <tr>
-                    <td><c:out value="${channel.Name}" /></td>
-                    <td><c:out value="${channel.Band}" /></td>
-                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-   					 <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                </tr>
+                    <td><c:out value="${channel.name}" /></td>
+                    <td><c:out value="${channel.band}" /></td>
+                    <td><c:out value="${channel.videoFreq}" /></td>
+                    <td><c:out value="${channel.audioFreq}" /></td>
+                     <td><c:out value="${channel.chargeType}" /></td>
+                    <td><c:out value="${channel.transmissionType}" /></td>
+                    <td><c:out value="${channel.charge}" /></td>
+                    <td><a href="HomeController?option=EditChannel&id=${channel.id}">Edit</a></td>
+                    <td><a href="HomeController?option=RemoveChannel&id=${channel.id}">Remove</a></td>
+                    
+                      <!--<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>--> 
+    				  <!--<td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>--> 
+             </tr> 
             </c:forEach>
 					
-						<tr>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
-							<td>2011/04/25</td>
-							<td>$320,800</td>
-							<td>239</td>
-                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-						</tr>
-						<tr>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
-							<td>2011/04/25</td>
-							<td>$320,800</td>
-							<td>239</td>
-                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-						</tr>
-						<tr>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
-							<td>2011/04/25</td>
-							<td>$320,800</td>
-							<td>239</td>
-                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-						</tr>
-                           
 					</tbody>
-				</table>
-
+					</table>
+				
 	
 	</div>
 	</div>

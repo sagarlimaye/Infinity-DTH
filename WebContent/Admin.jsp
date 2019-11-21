@@ -26,7 +26,7 @@ float: left;
       <a class="nav-link" href="#">Manage Set Top Boxes</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Manage Channels</a>
+      <a class="nav-link" href="HomeController?option=ChannelInformation">Manage Channels</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Manage Channel Packages </a>
