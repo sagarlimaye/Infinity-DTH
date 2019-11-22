@@ -23,7 +23,6 @@ public class ChannelDAO implements Closeable {
 	}
 	
 	public void addChannel(Channel channel) throws SQLException {
-	
 		String query = "INSERT INTO channels(channel_name, channel_band, video_freq, audio_freq, charge_type, transmission_type, charge) "
 				+ "		VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement stmt = null;
@@ -70,22 +69,21 @@ public class ChannelDAO implements Closeable {
 				updateStmt.close();
 		}
 	}
-public void DeleteChannel(int id) throws SQLException{
-	String deleteQuery = "Delete from channels where channel_id = ?";
-	PreparedStatement stmt = null;
-	try {
-		stmt = conn.prepareStatement(deleteQuery);
-		
-		stmt.setInt(1,id);
-		stmt.execute();
-	
-}
-	finally {
-		if(stmt != null)
-			stmt.close();
+	public void DeleteChannel(int id) throws SQLException {
+		String deleteQuery = "Delete from channels where channel_id = ?";
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(deleteQuery);
+			
+			stmt.setInt(1,id);
+			stmt.execute();
+		}
+		finally {
+			if(stmt != null) stmt.close();
+		}
 	}
-}
-public List<Channel> ChannelInformation() throws SQLException{
+	
+	public List<Channel> ChannelInformation() throws SQLException {
 		
 		String selectQuery = "select * from channels";
 		List<Channel> channelInf = new ArrayList<Channel>();
@@ -96,9 +94,6 @@ public List<Channel> ChannelInformation() throws SQLException{
 		try {
 			stmt = conn.createStatement();
 		    rs = stmt.executeQuery(selectQuery);
-			
-			
-			
 			
 			while(rs.next()) {
 				Channel channelInfo = new Channel();
@@ -121,9 +116,9 @@ public List<Channel> ChannelInformation() throws SQLException{
 				stmt.close();
 		}
 		
-		
 		return channelInf;
 	}
+	
 	public Channel getChannelById(int id) throws SQLException
 	{
 		String query = "SELECT * FROM channel WHERE id = ?";
@@ -154,6 +149,7 @@ public List<Channel> ChannelInformation() throws SQLException{
 		
 		return channel;
 	}
+	
 	public Channel[] getUnassignedChannels() throws SQLException {
 		String selectQuery = "SELECT * FROM channels WHERE package_id IS NULL";
 		List<Channel> channelInf = new ArrayList<Channel>();

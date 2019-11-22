@@ -106,10 +106,16 @@ $(document).ready(function() {
 					   	<input class="form-control " type="text" id="audioFreq" name = "audioFreq" placeholder="Audio Carrier Frequency">
 					</div>
 					<div class="form-group">
-					  	<input class="form-control " type="text" name = "chargeType" placeholder="Channel Charge Type">
+						<select id="chargeType" name="chargeType" class="form-control">
+			                <option value="Free">Free</option>
+			                <option value="Paid">Paid</option>
+			            </select>
 					</div>
 					<div class="form-group">
-					   	<input class="form-control " type="text" name = "transmissionType" placeholder="Channel Transmission Type">
+						<select id="transmissionType" name="transmissionType" class="form-control">
+			                <option value="Standard">Standard</option>
+			                <option value="HD">High-definition</option>
+			            </select>
 					</div>
 					<div class="form-group">
 					   	<input class="form-control " type="text" id="charge" name = "charge" placeholder="Channel Charge">
