@@ -27,6 +27,18 @@ $(document).ready(function() {
     $('#datatable').dataTable();
 } );
 </script>
+<style type="text/css">
+body{
+background-image: url("1.jpg");
+ height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+</style>
+
 </head>
 <body>
 
