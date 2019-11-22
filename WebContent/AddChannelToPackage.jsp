@@ -31,14 +31,14 @@ $("#mytable #checkall").click(function () {
     $("[data-toggle=tooltip]").tooltip();
 });
 </script>
-
+<form action="">
 <div class="container">
 	<div class="row">
 		
         
         <div class="col-md-12">
         <h4>Add Channels</h4>
-        <div class="table-responsive">
+        <div class="table-responsive" style="width:500px;height:250px;line-height:3em;overflow:scroll;padding:5px;">
 
                 
               <table id="mytable" class="table table-bordred table-striped">
@@ -56,14 +56,47 @@ $("#mytable #checkall").click(function () {
     <td><input type="checkbox" class="checkthis" /></td>
     <td>Mohsin</td>
     </tr>  
+    <tr>
+    <td><input type="checkbox" class="checkthis" /></td>
+    <td>Mohsin</td>
+    </tr>  
+    <tr>
+    <td><input type="checkbox" class="checkthis" /></td>
+    <td>Mohsin</td>
+    </tr>  
+    <tr>
+    <td><input type="checkbox" class="checkthis" /></td>
+    <td>Mohsin</td>
+    </tr>  
+    <tr>
+    <td><input type="checkbox" class="checkthis" /></td>
+    <td>Mohsin</td>
+    </tr>  
+    <tr>
+    <td><input type="checkbox" class="checkthis" /></td>
+    <td>Mohsin</td>
+    </tr>  
     
     </tbody>
         
 </table>
+
         </div>    
         </div>
 	</div>
+	
+	
+<div>	
+    <br>
+    <button type="button" onclick="" title="Calculates the default charge based on the channels selected.This can be changed.">Calculate Charges</button>
+  	<input type="text" name="charges"><br><br>
+ 		
+</div>	
+<div align="center" class="add-container">
+	<input type=Submit value = "Submit">
 </div>
+</div>
+</form>
  
 </body>
 </html>
