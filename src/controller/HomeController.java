@@ -97,14 +97,14 @@ public class HomeController extends HttpServlet {
 					
 				}
 				catch(SQLException e) {
-					
+					e.printStackTrace();
 				}	
 				
 				finally {
 					if(dao != null) dao.close();
 				}
 			}
-				break;
+			break;
 			case "UpdateChannel":
 			{
 				Channel update = new Channel();
@@ -167,6 +167,25 @@ public class HomeController extends HttpServlet {
 					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 				
+			}
+			break;
+			case "PackageInfo":
+			{
+				HttpSession session = request.getSession();
+
+				PackageDAO dao = null;
+				try {
+					dao = new PackageDAO();
+					getServletContext().getRequestDispatcher("/ViewPackage.jsp").forward(request, response);
+					
+				}
+				catch(SQLException e) {
+					e.printStackTrace();
+				}	
+				
+				finally {
+					if(dao != null) dao.close();
+				}
 			}
 			break;
 			case "CreatePackage":
