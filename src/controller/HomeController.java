@@ -177,12 +177,16 @@ public class HomeController extends HttpServlet {
 				pkg.setName(request.getParameter("pkgName"));
 				pkg.setChargingType(request.getParameter("chargeType"));
 				pkg.setTransmissionType(request.getParameter("transmissionType"));
-				pkg.setCost(Integer.parseInt(request.getParameter("cost")));
+				pkg.setCost(0);
 				pkg.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDefault")));
-				DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+				DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 				try {
-					pkg.setAvailableFrom(df.parse(request.getParameter("availableFrom")));
-					pkg.setAvailableTo(df.parse(request.getParameter("availableTo")));
+					String afs =request.getParameter("availableFrom"); 
+					String ats = request.getParameter("availableTo");
+					java.util.Date af = df.parse(afs);
+					java.util.Date at = df.parse(ats);
+					pkg.setAvailableFrom(af);
+					pkg.setAvailableTo(at);
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}

@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import model.Channel;
 import model.Package;
@@ -21,11 +22,12 @@ public class PackageDAO implements Closeable {
 	public void addPackage(Package pkg) throws SQLException {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int id = 0;
 		try
 		{
 			String query = "INSERT INTO package(package_name, charging_type, transmission_type, cost, available_from, available_to, added_default) "
 					+ "		VALUES (?, ?, ?, ?, ?, ?, ?)";
-			stmt = conn.prepareStatement(query);
+			stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			stmt.setString(1, pkg.getName());
 			stmt.setString(2, pkg.getChargingType());
@@ -35,15 +37,18 @@ public class PackageDAO implements Closeable {
 			stmt.setDate(6,  new java.sql.Date(pkg.getAvailableTo().getTime()));
 			stmt.setBoolean(7, pkg.isAddedByDefault());
 			stmt.executeUpdate();
+			rs = stmt.getGeneratedKeys();
+			rs.next();
+			id = rs.getInt(1);
 		}
 		finally {
+			if(rs != null)
+				rs.close();
 			if(stmt != null)
 				stmt.close();
 		}
 		try {
-			rs = stmt.getGeneratedKeys();
-			rs.next();
-			int id = rs.getInt("package_id");
+			
 			String query = "UPDATE channels SET package_id = ? WHERE channel_id = ?";
 			stmt = conn.prepareStatement(query);
 			Channel[] channels = pkg.getChannels();

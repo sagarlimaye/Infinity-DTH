@@ -121,14 +121,15 @@ public class ChannelDAO implements Closeable {
 	
 	public Channel getChannelById(int id) throws SQLException
 	{
-		String query = "SELECT * FROM channel WHERE id = ?";
+		String query = "SELECT * FROM channels WHERE channel_id = ?;";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Channel channel = null;
 		try
 		{
 			stmt = conn.prepareStatement(query);
-			rs = stmt.executeQuery(query);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
 			rs.next();
 			channel = new Channel();
 			channel.setChannel_id(rs.getInt("channel_id"));
