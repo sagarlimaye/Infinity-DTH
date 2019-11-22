@@ -34,7 +34,6 @@ public class HomeController extends HttpServlet {
      */
     public HomeController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -48,7 +47,6 @@ public class HomeController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String option = request.getParameter("option");
 		switch(option) {
 			case "CreateChannel":
@@ -61,7 +59,12 @@ public class HomeController extends HttpServlet {
 				channel.setAudioFreq(Float.parseFloat(request.getParameter("audioFreq")));
 				channel.setChargeType(request.getParameter("chargeType"));
 				channel.setTransmissionType(request.getParameter("transmissionType"));
-				channel.setCharge(Integer.parseInt(request.getParameter("charge")));
+				if (channel.getChargeType().equalsIgnoreCase("free")) {
+					channel.setCharge(0);
+				} else {
+					channel.setCharge(Float.parseFloat(request.getParameter("charge")));
+				}
+				
 				try
 				{
 					dao = new ChannelDAO();
@@ -73,8 +76,7 @@ public class HomeController extends HttpServlet {
 					System.out.println(e.getMessage());
 				}
 				finally {
-					if(dao != null)
-						dao.close();
+					if(dao != null) dao.close();
 					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 			}
@@ -99,8 +101,7 @@ public class HomeController extends HttpServlet {
 				}	
 				
 				finally {
-					if(dao != null)
-						dao.close();
+					if(dao != null) dao.close();
 				}
 			}
 				break;
@@ -117,7 +118,11 @@ public class HomeController extends HttpServlet {
 				update.setBand(request.getParameter("channelBand"));
 				update.setChargeType(request.getParameter("chargeType"));
 				update.setTransmissionType(request.getParameter("transmissionType"));
-				update.setCharge(Integer.parseInt(request.getParameter("charge")));
+				if (update.getChargeType().equalsIgnoreCase("free")) {
+					update.setCharge(0);
+				} else {
+					update.setCharge(Float.parseFloat(request.getParameter("charge")));
+				}
 				
 				try
 				{
@@ -134,8 +139,7 @@ public class HomeController extends HttpServlet {
 					e.printStackTrace();
 				}
 				finally {
-					if(dao != null)
-						dao.close();
+					if(dao != null) dao.close();
 					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 			}
@@ -159,8 +163,7 @@ public class HomeController extends HttpServlet {
 					e.printStackTrace();
 				}
 				finally {
-					if(dao != null)
-						dao.close();
+					if(dao != null) dao.close();
 					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 				
@@ -179,11 +182,9 @@ public class HomeController extends HttpServlet {
 				DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
 				try {
 					pkg.setAvailableFrom(df.parse(request.getParameter("availableFrom")));
-				} catch (ParseException e1) {
-				}
-				try {
 					pkg.setAvailableTo(df.parse(request.getParameter("availableTo")));
-				} catch (ParseException e1) {
+				} catch (ParseException e) {
+					e.printStackTrace();
 				}
 				String[] channelIds = request.getParameterValues("channels");
 				
@@ -201,14 +202,11 @@ public class HomeController extends HttpServlet {
 				}
 				catch(Exception e)
 				{
-					// log other exception
-					System.out.println(e.getMessage());
+					e.printStackTrace();
 				}
 				finally {
-					if(pkgDao != null)
-						pkgDao.close();
-					if(channelDao != null)
-						channelDao.close();
+					if(pkgDao != null) pkgDao.close();
+					if(channelDao != null) channelDao.close();
 					getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
 				}
 			}
@@ -234,8 +232,5 @@ public class HomeController extends HttpServlet {
 				response.sendRedirect("/ChannelPackages.jsp");
 				break;
 		}
-		
-		
 	}
-
 }
