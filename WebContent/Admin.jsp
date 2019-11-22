@@ -8,19 +8,25 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
 <style>
-.imgs
-{
-float: left;
+img{
+float:left;
+
 }
 </style>
 </head>
 <body>
+ 
+    <img  src="img.png" alt="logo" width="100" height="40">
 
-<nav class="navbar navbar-expand-sm bg-light justify-content-center">
-<img class=imgs src="img.png" alt="logo" width="100" height="42">
-</nav>
-<nav class="navbar navbar-expand-sm bg-light justify-content-center">
+<h2 align="center" style="color:white; font-family:courier;"><b><i>Infinity DTH Services</i></b></h2>
+<nav class="navbar navbar-expand-sm justify-content-center bg-dark navbar-dark">
+ <!-- <a class="navbar-brand" href="#"> 
+    <img  src="img.png" alt="logo" width="100" height="40">
+  </a> -->
+    
+
   <ul class="navbar-nav">
     <li class="nav-item">
       <a class="nav-link" href="#">Manage Set Top Boxes</a>
@@ -33,6 +39,7 @@ float: left;
     </li>
   </ul>
 </nav>
+
 <br>
 
 
