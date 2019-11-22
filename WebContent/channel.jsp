@@ -18,9 +18,10 @@
 <script language="JavaScript" src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script language="JavaScript" src="https://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script>
 <script src="js/updateChannelID.js"></script>
+<script src="js/createChannel.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
-<link rel="stylesheet" type="text/css" href="channel.css">
+<link rel="stylesheet" type="text/css" href="css/channel.css">
 <script>
 $(document).ready(function() {
     $('#datatable').dataTable();
@@ -99,10 +100,10 @@ $(document).ready(function() {
 					   	<input class="form-control " type="text" name = "channelBand" placeholder="Channel Band">
 					</div>
 					<div class="form-group">
-					   	<input class="form-control " type="text" name = "videoFreq" placeholder="Video Carrier Frequency">
+					   	<input class="form-control " type="text" id="videoFreq" name = "videoFreq" placeholder="Video Carrier Frequency">
 					</div>
 					<div class="form-group">
-					   	<input class="form-control " type="text" name = "audioFreq" placeholder="Audio Carrier Frequency">
+					   	<input class="form-control " type="text" id="audioFreq" name = "audioFreq" placeholder="Audio Carrier Frequency">
 					</div>
 					<div class="form-group">
 					  	<input class="form-control " type="text" name = "chargeType" placeholder="Channel Charge Type">
@@ -111,7 +112,7 @@ $(document).ready(function() {
 					   	<input class="form-control " type="text" name = "transmissionType" placeholder="Channel Transmission Type">
 					</div>
 					<div class="form-group">
-					   	<input class="form-control " type="number" name = "charge" placeholder="Channel Charge">
+					   	<input class="form-control " type="text" id="charge" name = "charge" placeholder="Channel Charge">
 					</div>
 		      	</div>
 		        <div class="modal-footer ">

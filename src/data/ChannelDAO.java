@@ -61,7 +61,7 @@ public class ChannelDAO implements Closeable {
 			updateStmt.setFloat(4,channel.getAudioFreq());
 			updateStmt.setString(5,channel.getChargeType());
 			updateStmt.setString(6,channel.getTransmissionType());
-			updateStmt.setInt(7,channel.getCharge());
+			updateStmt.setFloat(7,channel.getCharge());
 			updateStmt.setInt(8,channel.getChannel_id());
 			updateStmt.executeUpdate();
 		}
@@ -110,7 +110,7 @@ public List<Channel> ChannelInformation() throws SQLException{
 				channelInfo.setAudioFreq(rs.getFloat(5));
 				channelInfo.setChargeType(rs.getString(6));
 				channelInfo.setTransmissionType(rs.getString(7));
-				channelInfo.setCharge(rs.getInt(8));
+				channelInfo.setCharge(rs.getFloat(8));
 				channelInf.add(channelInfo);			
 			}
 		}
