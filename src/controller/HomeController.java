@@ -218,19 +218,20 @@ public class HomeController extends HttpServlet {
 				ChannelDAO channelDao =  null;
 				try {
 					channelDao = new ChannelDAO();
-					request.setAttribute("channels", channelDao.getUnassignedChannels());
+					Channel[] channels = channelDao.getUnassignedChannels();
+					request.setAttribute("channels", channels);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 				finally {
 					if(channelDao != null)
 						channelDao.close();
-					getServletContext().getRequestDispatcher("/package.jsp").forward(request, response);
+					getServletContext().getRequestDispatcher("/ChannelPackages.jsp").forward(request, response);
 				}
 			}
 			break;
 			default:
-				response.sendRedirect("/dashboard.jsp");
+				response.sendRedirect("/ChannelPackages.jsp");
 				break;
 		}
 		
