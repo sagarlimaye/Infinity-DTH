@@ -75,7 +75,7 @@ public class HomeController extends HttpServlet {
 				finally {
 					if(dao != null)
 						dao.close();
-					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
+					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 			}
 			break;
@@ -108,10 +108,17 @@ public class HomeController extends HttpServlet {
 			{
 				Channel update = new Channel();
 				ChannelDAO dao = null;
+				
+				String id = (request.getParameter("channel_Id"));
+				update.setChannel_id(Integer.parseInt(id.trim()));
+				update.setName(request.getParameter("channelName"));
+				update.setAudioFreq(Float.parseFloat(request.getParameter("audioFreq")));
+				update.setVideoFreq(Float.parseFloat(request.getParameter("videoFreq")));
+				update.setBand(request.getParameter("channelBand"));
 				update.setChargeType(request.getParameter("chargeType"));
 				update.setTransmissionType(request.getParameter("transmissionType"));
 				update.setCharge(Integer.parseInt(request.getParameter("charge")));
-				update.setChannel_id(Integer.parseInt("channel_id"));
+				
 				try
 				{
 					dao = new ChannelDAO();
@@ -119,18 +126,44 @@ public class HomeController extends HttpServlet {
 				}
 				catch(SQLException e)
 				{
-					// log SQL exception
+					e.printStackTrace();
 					
 				}
 				catch(Exception e)
 				{
-					// log other exception
+					e.printStackTrace();
 				}
 				finally {
 					if(dao != null)
 						dao.close();
-					response.sendRedirect("/dashboard.jsp");
+					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
+			}
+			break;
+			case "DeleteChannel": {
+				String ID = request.getParameter("remove_id").trim();
+				int removeID = Integer.parseInt(ID);
+				ChannelDAO dao = null;
+				try
+				{
+					dao = new ChannelDAO();
+					dao.DeleteChannel(removeID);
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+					
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				finally {
+					if(dao != null)
+						dao.close();
+					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
+				}
+				
 			}
 			break;
 			case "CreatePackage":
@@ -158,12 +191,12 @@ public class HomeController extends HttpServlet {
 				{
 					pkgDao = new PackageDAO();
 					channelDao = new ChannelDAO();
-					Channel[] channels = null;
 					ArrayList<Channel> channelList = new ArrayList<Channel>();
 					for(String id : channelIds) {
 						channelList.add(channelDao.getChannelById(Integer.parseInt(id)));
 					}
-					pkg.setChannels(channelList.toArray(channels));
+					Channel[] channels = channelList.toArray(new Channel[channelList.size()]);
+					pkg.setChannels(channels);
 					pkgDao.addPackage(pkg);
 				}
 				catch(Exception e)

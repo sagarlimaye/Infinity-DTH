@@ -44,7 +44,7 @@ public class PackageDAO implements Closeable {
 			rs = stmt.getGeneratedKeys();
 			rs.next();
 			int id = rs.getInt("package_id");
-			String query = "UPDATE channel SET package_id = ? WHERE channel_id = ?";
+			String query = "UPDATE channels SET package_id = ? WHERE channel_id = ?";
 			stmt = conn.prepareStatement(query);
 			Channel[] channels = pkg.getChannels();
 			for(Channel channel : channels)

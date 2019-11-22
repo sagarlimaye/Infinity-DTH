@@ -52,6 +52,7 @@
         </div> 
         <input type="hidden" name="option" value="CreateChannel"/>
         <input type="submit" value="Create"/>
+        <input type="button" name="Back" value="Back" onclick="window.history.back()">
         
     </div>
 </form>
