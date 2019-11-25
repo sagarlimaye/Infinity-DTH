@@ -338,9 +338,13 @@ public class HomeController extends HttpServlet {
 				//update.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDef")));
 				DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 				try {
-					update.setAvailableFrom(df.parse(request.getParameter("availableFrom")));
-					update.setAvailableTo(df.parse(request.getParameter("availableTo")));
-					System.out.println("Date is "+update.getAvailableFrom());
+					
+					String afs =request.getParameter("availableFrom"); 
+					String ats = request.getParameter("availableTo");
+					java.util.Date af = df.parse(afs);
+					java.util.Date at = df.parse(ats);
+					update.setAvailableFrom(af);
+					update.setAvailableTo(at);
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
