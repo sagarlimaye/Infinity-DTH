@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,8 +19,9 @@
                             <div class="card-header">Manage Channel Packages</div>
                             <div class="card-body">
 
-                                <form class="form-horizontal" method="post" action="HomeController">
-           <div class="form-group">
+<!--              <form class="form-horizontal" method="post" action="HomeController"> 
+ -->        
+ 			   <div class="form-group">
              <label for="pid" class="cols-sm-2 control-label">Package ID</label>
              <div class="cols-sm-10">
                <div class="input-group">
@@ -38,18 +39,31 @@
               </div>
             </div>
            </div>
+           
            <div class="form-group">
             <label for="pack" class="cols-sm-2 control-label">Package Category</label>
               <div class="cols-sm-10">
                <div class="input-group">
-                <div class="category">
-                 <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">Categories</button>
-                  <div class="dropdown-menu">
-                   <a class="dropdown-item" href="#">Sports</a>
-                   <a class="dropdown-item" href="#">News</a>
-                   <a class="dropdown-item" href="#">Entertainment</a>
-                 </div>
-                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#category">Add Category</button>
+               
+              <div class="dropdown">
+                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Category</button>
+                       <ul class="dropdown-menu">      
+						<c:forEach items ="${categoryInf}" var = "category">
+							<li><c:out value="${category.categoryName}"></c:out></li>
+						</c:forEach>
+						</ul>
+					<br><br>
+
+			<!-- 	</form>- --> 
+
+
+<!--                  <button type="submit" class="btn btn-light dropdown-toggle" data-toggle="dropdown">Categories</button>
+ -->
+   <!--               <div class="category-names-list">
+                <button onclick="myFunction()" class="btn btn-light dropdown-toggle">Categories</button>
+    -->           
+                
+                <!--  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#category">Add Category</button>
                  <div class="modal fade" id="category" role="dialog">
                   <div class="modal-dialog">
                    <div class="modal-content">
@@ -74,6 +88,7 @@
                    </div>
                    <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Create</button>
+                     -->
                    </div>
                   </div>
                  </div>
@@ -176,13 +191,7 @@
           <div class="form-group ">
              <button type="button" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
          </div>
-           
-                                </form>
                             </div>
 
-                        </div>
-                    </div>
-                </div>
-</div>
 </body>
 </html>

@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.CategoryDAO;
 import data.ChannelDAO;
 import data.PackageDAO;
+import model.Category;
 import model.Channel;
 import model.Package;
 
@@ -230,13 +232,49 @@ public class HomeController extends HttpServlet {
 				}
 			}
 			break;
+			
+			case "CreateCategory":
+			{
+				Category category = new Category();
+				CategoryDAO dao = null;
+					
+				category.setCategoryName(request.getParameter("channelName"));
+				category.setMinChannels(Integer.parseInt(request.getParameter("minChannels")));
+				category.setMaxChannels(Integer.parseInt(request.getParameter("maxChannels")));
+				
+				try
+				{
+					dao = new CategoryDAO();
+					dao.addCategory(category);
+				}
+				catch(Exception e)
+				{						
+					// log other exception
+					System.out.println(e.getMessage());
+				}
+				finally 
+				{
+					if (dao != null) 
+						dao.close();				
+					getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+				}
+					
+			}
+		
 			case "PrepareCreatePackage":
 			{
 				ChannelDAO channelDao =  null;
+				CategoryDAO dao = null;
+
 				try {
+					dao = new CategoryDAO();
+					List<Category> names = dao.CategoryNames();
+					request.setAttribute("categoryInf", names);
+
 					channelDao = new ChannelDAO();
 					Channel[] channels = channelDao.getUnassignedChannels();
 					request.setAttribute("channels", channels);
+					
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
