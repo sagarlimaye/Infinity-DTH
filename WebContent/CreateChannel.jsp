@@ -3,14 +3,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+<jsp:include page="Admin.jsp"/>
 <meta charset="ISO-8859-1">
 <title>Add Channel</title>
 <script
 	src="https://code.jquery.com/jquery-3.4.1.min.js"
 	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	crossorigin="anonymous"></script>
+	
+
 <script src="js/createChannel.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="css/form.css">
+<style type="text/css">
+body{
+background-image: url("1.jpg");
+ height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+</style>
+
 </head>
 <body>
 <form action="HomeController" method="post">
