@@ -44,12 +44,12 @@ background-image: url("1.jpg");
                   			<div class="charge" id="charge">
                   				<div class="form-check-inline">
                      				<label class="form-check-label" for="radio1">
-                     					<input type="radio" class="form-check-input" name="chargeType" value="pbd">Paid by default
+                     					<input type="radio" class="form-check-input" name="chargeType" value="paid">Paid by default
                      				</label>
                    				</div>
                    				<div class="form-check-inline">
                      				<label class="form-check-label" for="radio2">
-                     					<input type="radio" class="form-check-input" name="chargeType" value="fta">FTR
+                     					<input type="radio" class="form-check-input" name="chargeType" value="fta">FTA
                      				</label>
                    				</div>
                   			</div>
