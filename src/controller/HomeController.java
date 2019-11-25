@@ -123,7 +123,7 @@ public class HomeController extends HttpServlet {
 					update.setBand(request.getParameter("channelBand"));
 					update.setChargeType(request.getParameter("chargeType"));
 					update.setTransmissionType(request.getParameter("transmissionType"));
-					if (update.getChargeType().equalsIgnoreCase("free")) {
+					if (update.getChargeType().equalsIgnoreCase("fta")) {
 						update.setCharge(0);
 					} else {
 						update.setCharge(Float.parseFloat(request.getParameter("charge")));
