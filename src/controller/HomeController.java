@@ -20,9 +20,11 @@ import javax.servlet.http.HttpSession;
 import data.CategoryDAO;
 import data.ChannelDAO;
 import data.PackageDAO;
+import data.SetTopBoxDAO;
 import model.Category;
 import model.Channel;
 import model.Package;
+import model.SetTopBox;
 
 /**
  * Servlet implementation class HomeController
@@ -381,6 +383,27 @@ public class HomeController extends HttpServlet {
 						dao.close();
 					getServletContext().getRequestDispatcher("/HomeController?option=ViewPackage").forward(request, response);
 				}
+			}
+			break;					
+			case "SetTopBoxInformation":
+			{
+				HttpSession session = request.getSession();
+				SetTopBoxDAO dao = null;				
+				try {
+					dao = new SetTopBoxDAO();
+					SetTopBoxDAO setTopBoxDB = new SetTopBoxDAO();
+					SetTopBox[] setTopBoxInfo = setTopBoxDB.SetTopBoxInformation();
+					session.setAttribute("setTopBoxInf", setTopBoxInfo);
+					getServletContext().getRequestDispatcher("/viewSetTopBox.jsp").forward(request, response);
+					
+				}
+				catch(SQLException e) {
+					e.printStackTrace();
+				}	
+				
+				finally {
+					if(dao != null) dao.close();
+				}				
 			}
 			break;
 			default:
