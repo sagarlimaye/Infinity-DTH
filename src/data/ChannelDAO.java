@@ -83,7 +83,7 @@ public class ChannelDAO implements Closeable {
 		}
 	}
 	
-	public List<Channel> ChannelInformation() throws SQLException {
+	public Channel[] ChannelInformation() throws SQLException {
 		
 		String selectQuery = "select * from channels";
 		List<Channel> channelInf = new ArrayList<Channel>();
@@ -116,7 +116,7 @@ public class ChannelDAO implements Closeable {
 				stmt.close();
 		}
 		
-		return channelInf;
+		return channelInf.toArray(new Channel[channelInf.size()]);
 	}
 	
 	public Channel getChannelById(int id) throws SQLException
