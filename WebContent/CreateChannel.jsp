@@ -51,15 +51,15 @@ background-image: url("1.jpg");
         <div>
             <label for="chargeType">Channel charge type</label>
            	<select id="chargeType" name="chargeType">
-                <option value="Free">Free</option>
-                <option value="Paid">Paid</option>
+                <option value="fta">Free</option>
+                <option value="paid">Paid</option>
             </select> 
         </div>
         <div>
             <label for="transmissionType">Transmission type</label>
             <select id="transmissionType" name="transmissionType">
-                <option value="Standard">Standard</option>
-                <option value="HD">High-definition</option>
+                <option value="standard">Standard</option>
+                <option value="hd">High-definition</option>
             </select>
         </div>
         <div>

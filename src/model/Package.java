@@ -15,14 +15,7 @@ public class Package implements Serializable{
 	private boolean addedByDefault;
 	private Channel[] channels;
 	private int packageID;
-	private int categoryID;
 	
-	public int getCategoryID() {
-		return categoryID;
-	}
-	public void setCategoryID(int categoryID) {
-		this.categoryID = categoryID;
-	}
 	public String getName() {
 		return name;
 	}

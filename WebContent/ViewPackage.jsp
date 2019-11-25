@@ -101,7 +101,7 @@ background-image: url("1.jpg");
 </div>
 
 <div align="center" class="add-container">
- <button onclick="location.href = 'CreateChannel.jsp';" id="myButton" class="float-none submit-button" >Add Package</button>
+ <button onclick="location.href = 'HomeController?option=PrepareCreatePackage';" id="myButton" class="float-none submit-button" >Add Package</button>
 </div>
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
