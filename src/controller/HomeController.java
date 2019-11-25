@@ -183,7 +183,7 @@ public class HomeController extends HttpServlet {
 				pkg.setTransmissionType(request.getParameter("transmissionType"));
 				pkg.setCost(0);
 				pkg.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDefault")));
-				DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				try {
 					String afs =request.getParameter("availableFrom"); 
 					String ats = request.getParameter("availableTo");
@@ -336,7 +336,7 @@ public class HomeController extends HttpServlet {
 				update.setTransmissionType(request.getParameter("transmissionType"));
 				update.setCost(Float.parseFloat(request.getParameter("chargeCost")));
 				//update.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDef")));
-				DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				try {
 					
 					String afs =request.getParameter("availableFrom"); 
