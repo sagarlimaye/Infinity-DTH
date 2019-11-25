@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Category;
 import data.ChannelDAO;
 import data.PackageDAO;
 import data.SetTopBoxDAO;
@@ -256,6 +257,9 @@ public class HomeController extends HttpServlet {
 				}
 			}
 			break;
+			
+			
+			
 			case "SetTopBoxInformation":
 			{
 				HttpSession session = request.getSession();
