@@ -17,7 +17,7 @@
 <script language="JavaScript" src="https://code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
 <script language="JavaScript" src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script language="JavaScript" src="https://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script>
-<!--  <script src="js/updateChannelID.js"></script>-->
+ <script src="js/updatePackage.js"></script>
 <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
 <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
@@ -31,10 +31,12 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<form name="form1" action="HomeController" >
-<!--  <input type="hidden" name="option" value="ChannelInformation">
-<button type = "submit">Information</button>-->
+<div class = "myform">
+<form name="viewform" action="HomeController" method = "post" >
+<input type="hidden" name="option" value="ViewPackage">
+<button class="btn btn-primary" type = "submit">Refresh</button>
 </form>
+</div>
 <div class="container">
 	<div class="row">
 		<h2 class="text-center">Package Dashboard</h2>
@@ -45,7 +47,7 @@ $(document).ready(function() {
             <div class="col-md-12" style="width:500px;height:250px;line-height:3em;overflow:scroll;padding:5px;">
   
             
-<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+				<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
     				<thead>
 						<tr>
 							<th>Name</th>
@@ -55,7 +57,7 @@ $(document).ready(function() {
 							<th>Available From</th>
 							<th>Available To</th>
 							<th>Add By Default</th>
-							<th>Channels</th>
+<!-- 							<th>Channels</th> -->
 							
                              	<th>Edit</th>
                                  <th>Delete</th>
@@ -63,16 +65,16 @@ $(document).ready(function() {
 					</thead>			
 					
 					<tbody>	
-					<c:forEach items="${channelInf}" var="package">
-                <tr>
-                    <td><c:out value="${channel.name}" /></td>
-                    <td><c:out value="${channel.band}" /></td>
-                    <td><c:out value="${channel.videoFreq}" /></td>
-                    <td><c:out value="${channel.audioFreq}" /></td>
-                    <td><c:out value="${channel.chargeType}" /></td>
-                    <td><c:out value="${channel.transmissionType}" /></td>
-                    <td><c:out value="${channel.charge}" /></td> 
-                    <input type = "hidden" name = "updateID" value = "${channel.channel_id} ">                   
+					<c:forEach items="${inf}" var="pac">
+               		<tr>
+                    <td><c:out value="${pac.name}" /></td>
+                    <td><c:out value="${pac.chargingType}" /></td>
+                    <td><c:out value="${pac.transmissionType}" /></td>
+                    <td><c:out value="${pac.cost}" /></td>
+                    <td><c:out value="${pac.availableFrom}" /></td>
+                    <td><c:out value="${pac.availableTo}" /></td>
+                    <td><c:out value="${pac.addedByDefault}" /></td>
+                    <input type = "hidden" name = "updateID" value = "${pac.packageID} ">                   
                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs editChannel" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
     			    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs removeChannel" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td> 
              </tr> 
@@ -100,30 +102,30 @@ $(document).ready(function() {
       </div>
       <div class="modal-body">
           <div class="form-group">
-             <input class="form-control " type="text" name = "channelName" placeholder="Channel Name">
+             <input class="form-control " type="text" name = "packageName" placeholder="Package Name">
           </div>
           <div class="form-group">
-             <input class="form-control " type="text" name = "channelBand" placeholder="Channel Band">
+             <input class="form-control " type="text" name = "chargingType" placeholder="Package Band">
           </div>
           <div class="form-group">
-             <input class="form-control " type="text" name = "videoFreq" placeholder="Video Carrier Frequency">
+             <input class="form-control " type="text" name = "transmissionType" placeholder="Transmission Type">
           </div>
           <div class="form-group">
-             <input class="form-control " type="text" name = "audioFreq" placeholder="Audio Carrier Frequency">
+             <input class="form-control " type="number" name = "chargeCost" placeholder="Cost">
           </div>
           <div class="form-group">
-             <input class="form-control " type="text" name = "chargeType" placeholder="Channel Charge Type">
+             <input class="form-control " type="date" name = "availableFrom" placeholder="Available From">
           </div>
           <div class="form-group">
-             <input class="form-control " type="text" name = "transmissionType" placeholder="Channel Transmission Type">
+             <input class="form-control " type="date" name = "availableTo" placeholder="Available To">
           </div>
-          <div class="form-group">
-             <input class="form-control " type="number" name = "charge" placeholder="Channel Charge">
-          </div>
+<!--           <div class="form-group"> -->
+<!--             <input class="form-control " type="number" name = "addedByDef" placeholder="Added by Default"> -->
+<!--           </div> -->
       </div>
           <div class="modal-footer ">
 			<input type = "hidden" name = "option" value = "UpdatePackage">
-			<input type = "hidden" name = "channel_Id">
+			<input type = "hidden" name = "package_Id">
             <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
          
          </div>

@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Channel;
 import model.Package;
@@ -66,8 +68,84 @@ public class PackageDAO implements Closeable {
 				stmt.close();
 		}
 			
-		
 	}
+		public List<Package> PackInformation() throws SQLException{
+			List<Package> pack = new ArrayList<Package>();
+			String selectQuery = "Select * from package";
+			Statement stmt = null;
+			ResultSet rs = null;
+			
+			try {
+				stmt = conn.createStatement();
+			    rs = stmt.executeQuery(selectQuery);
+				
+				
+				
+				
+				while(rs.next()) {
+					Package packageInfo = new Package();
+					packageInfo.setPackageID(rs.getInt(1));
+					packageInfo.setName(rs.getString(2));
+					packageInfo.setChargingType(rs.getString(4));
+					packageInfo.setTransmissionType(rs.getString(5));
+					packageInfo.setCost(Float.parseFloat(rs.getString(6)));
+					packageInfo.setAvailableFrom(rs.getDate(7));
+					packageInfo.setAvailableTo(rs.getDate(8));
+					packageInfo.setAddedByDefault((rs.getBoolean(9)));
+					pack.add(packageInfo);			
+				}
+			}
+			finally {
+				if(rs != null)
+					rs.close();
+				if(stmt != null)
+					stmt.close();
+			}
+			
+			
+			return pack;
+			
+		}
+		public void DeletePackage(int id) throws SQLException{
+			String deleteQuery = "Delete from package where package_id = ?";
+			PreparedStatement stmt = null;
+			try {
+				stmt = conn.prepareStatement(deleteQuery);
+				
+				stmt.setInt(1,id);
+				stmt.execute();
+			
+		}
+			finally {
+				if(stmt != null)
+					stmt.close();
+			}
+		}
+		public void UpdatePackage(Package pack) throws SQLException{
+			
+			String updateQuery = "UPDATE package SET package_name = ?, "
+					+ "charging_type = ?, transmission_type=?, cost =? "
+					+ "available_from = ?, available_to = ? WHERE package_id=?";
+
+			PreparedStatement updateStmt = null;
+			
+			try {
+				updateStmt = conn.prepareStatement(updateQuery);
+				updateStmt.setString(1,pack.getName());
+				updateStmt.setString(2,pack.getChargingType());
+				updateStmt.setString(3,pack.getTransmissionType());
+				updateStmt.setFloat(4,pack.getCost());
+				updateStmt.setDate(5,new java.sql.Date(pack.getAvailableFrom().getTime()));
+				updateStmt.setDate(6,new java.sql.Date(pack.getAvailableTo().getTime()));
+				//updateStmt.setBoolean(5,pack.isAddedByDefault());
+				updateStmt.setInt(7,pack.getPackageID());
+				updateStmt.executeUpdate();
+			}
+			finally {
+				if(updateStmt != null)
+					updateStmt.close();
+			}
+		}
 	@Override
 	public void close() throws IOException {
 		try {
