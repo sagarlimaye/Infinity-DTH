@@ -1,16 +1,36 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Package {
+public class Package implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name, chargingType, transmissionType;
 	private Date availableFrom, availableTo;
 	private float cost;
 	private boolean addedByDefault;
 	private Channel[] channels;
+	private int packageID;
+	private int categoryID;
+	
+	public int getCategoryID() {
+		return categoryID;
+	}
+	public void setCategoryID(int categoryID) {
+		this.categoryID = categoryID;
+	}
 	public String getName() {
 		return name;
+	}
+	public int getPackageID() {
+		return packageID;
+	}
+	public void setPackageID(int packageID) {
+		this.packageID = packageID;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -42,8 +62,8 @@ public class Package {
 	public boolean isAddedByDefault() {
 		return addedByDefault;
 	}
-	public void setAddedByDefault(boolean addedByDefault) {
-		this.addedByDefault = addedByDefault;
+	public void setAddedByDefault(Boolean f) {
+		this.addedByDefault = f;
 	}
 	public Channel[] getChannels() {
 		return channels;

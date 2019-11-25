@@ -241,13 +241,49 @@ public class HomeController extends HttpServlet {
 				}
 			}
 			break;
+			
+			case "CreateCategory":
+			{
+				Category category = new Category();
+				CategoryDAO dao = null;
+					
+				category.setCategoryName(request.getParameter("channelName"));
+				category.setMinChannels(Integer.parseInt(request.getParameter("minChannels")));
+				category.setMaxChannels(Integer.parseInt(request.getParameter("maxChannels")));
+				
+				try
+				{
+					dao = new CategoryDAO();
+					dao.addCategory(category);
+				}
+				catch(Exception e)
+				{						
+					// log other exception
+					System.out.println(e.getMessage());
+				}
+				finally 
+				{
+					if (dao != null) 
+						dao.close();				
+					getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+				}
+					
+			}
+		
 			case "PrepareCreatePackage":
 			{
 				ChannelDAO channelDao =  null;
+				CategoryDAO dao = null;
+
 				try {
+					dao = new CategoryDAO();
+					List<Category> names = dao.CategoryNames();
+					request.setAttribute("categoryInf", names);
+
 					channelDao = new ChannelDAO();
 					Channel[] channels = channelDao.ChannelInformation();
 					request.setAttribute("channels", channels);
+					
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -308,7 +344,6 @@ public class HomeController extends HttpServlet {
 				
 			}
 			break;
-			
 			case "UpdatePackage":
 			{
 				Package update = new Package();
@@ -376,4 +411,6 @@ public class HomeController extends HttpServlet {
 				break;
 		}
 	}
+	
+
 }
