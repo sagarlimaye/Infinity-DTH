@@ -34,7 +34,7 @@ float:left;
       <a class="nav-link" href="HomeController?option=ChannelInformation">Manage Channels</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="HomeController?option=PackageInfo">Manage Channel Packages </a>
+      <a class="nav-link" href="HomeController?option=ViewPackage">Manage Channel Packages </a>
     </li>
   </ul>
 </nav>
