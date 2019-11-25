@@ -17,9 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data.CategoryDAO;
 import data.ChannelDAO;
 import data.PackageDAO;
 import data.SetTopBoxDAO;
+import model.Category;
 import model.Channel;
 import model.Package;
 import model.SetTopBox;
@@ -256,7 +258,98 @@ public class HomeController extends HttpServlet {
 				}
 			}
 			break;
+			case "ViewPackage":
+			{
+				HttpSession session = request.getSession();
+
+				PackageDAO dao = null;
+				try {
+					dao = new PackageDAO();
+					List<Package> packageInfo = new ArrayList<Package>();
+					packageInfo = dao.PackInformation();
+					session.setAttribute("inf",packageInfo);
+					getServletContext().getRequestDispatcher("/ViewPackage.jsp").forward(request, response);
 					
+				}
+				catch(SQLException e) {
+					
+				}	
+				
+				finally {
+					if(dao != null)
+						dao.close();
+				}
+				
+			}
+			break;
+			case "DeletePackage": {
+				String ID = request.getParameter("remove_id").trim();
+				int removeID = Integer.parseInt(ID);
+				PackageDAO dao = null;
+				try
+				{
+					dao = new PackageDAO();
+					dao.DeletePackage(removeID);
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+					
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				finally {
+					if(dao != null)
+						dao.close();
+					getServletContext().getRequestDispatcher("/HomeController?option=ViewPackage").forward(request, response);
+				}
+				
+			}
+			break;
+			
+			case "UpdatePackage":
+			{
+				Package update = new Package();
+				PackageDAO dao = null;
+				
+				String id = (request.getParameter("package_Id"));
+				update.setPackageID(Integer.parseInt(id.trim()));
+				update.setName(request.getParameter("packageName"));
+				update.setChargingType((request.getParameter("chargingType")));
+				update.setTransmissionType(request.getParameter("transmissionType"));
+				update.setCost(Integer.parseInt(request.getParameter("chargeCost")));
+				//update.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDef")));
+				DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+				try {
+					update.setAvailableFrom(df.parse(request.getParameter("availableFrom")));
+					update.setAvailableTo(df.parse(request.getParameter("availableTo")));
+					System.out.println("Date is "+update.getAvailableFrom());
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				try
+				{
+					dao = new PackageDAO();
+					dao.UpdatePackage(update);
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+					
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				finally {
+					if(dao != null)
+						dao.close();
+					getServletContext().getRequestDispatcher("/HomeController?option=ViewPackage").forward(request, response);
+				}
+			}
+			break;					
 			case "SetTopBoxInformation":
 			{
 				HttpSession session = request.getSession();
