@@ -7,36 +7,84 @@
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<style type="text/css">
+body{
+background-image: url("1.jpg");
+ height: 1000px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+.card{heigth:50%;}
+</style>
 </head>
 <body>
 <div class="container">
 <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header">Manage Channel Packages</div>
-                            <div class="card-body">
-
-<!--              <form class="form-horizontal" method="post" action="HomeController"> 
- -->        
- 			   <div class="form-group">
-             <label for="pid" class="cols-sm-2 control-label">Package ID</label>
-             <div class="cols-sm-10">
+	<div class="col-md-8">
+    	<div class="card">
+        	<div class="card-header">Manage Channel Packages</div>
+            	<div class="card-body">
+		 			<form class="form-horizontal" method="post" action="HomeController">
+                    <input type="hidden" name="option" value="CreatePackage"/>
+           				<div class="form-group">
+             				<label for="name" class="cols-sm-2 control-label">Package Name</label>
+                			<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  			<input type="text" class="form-control" name="pkgName" id="name" placeholder="Enter package name" />
+           				</div>
+           				<div class="form-group">
+              				<label for="charge" class="cols-sm-2 control-label">Package Charging Type</label>
+               				<div class="cols-sm-10">
+                 			<div class="input-group">
+                  			<div class="charge" id="charge">
+                  				<div class="form-check-inline">
+                     				<label class="form-check-label" for="radio1">
+                     					<input type="radio" class="form-check-input" name="chargeType" value="pbd">Paid by default
+                     				</label>
+                   				</div>
+                   				<div class="form-check-inline">
+                     				<label class="form-check-label" for="radio2">
+                     					<input type="radio" class="form-check-input" name="chargeType" value="fta">FTR
+                     				</label>
+                   				</div>
+                  			</div>
+                 			</div>
+                			</div>
+             			</div>
+             <div class="form-group">
+              <label for="transmission" class="cols-sm-2 control-label">Package Transmission Type</label>
+              <div class="cols-sm-10">
                <div class="input-group">
-                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                   <input type="text" class="form-control" name="pid" id="pid" placeholder="Enter package ID" />
+                <div class="Transmission" id="transmission">
+                  <div class="form-check-inline">
+                   <label class="form-check-label" for="radio3">
+                   <input type="radio" class="form-check-input" name="transmissionType" value="hd">HD
+                   </label>
+                  </div>
+                  <div class="form-check-inline">
+                   <label class="form-check-label" for="radio4">
+                   <input type="radio" class="form-check-input" name="transmissionType" value="standard">Standard
+                   </label>
+                  </div>
+                 </div>
+                </div>
+               </div>
               </div>
-            </div>
-           </div>
            <div class="form-group">
-             <label for="name" class="cols-sm-2 control-label">Package Name</label>
+             <label for="channels" class="cols-sm-2 control-label">Channels in this package</label>
              <div class="cols-sm-10">
                <div class="input-group">
-                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                   <input type="text" class="form-control" name="name" id="name" placeholder="Enter package name" />
-              </div>
+                 <select class="selectpicker" name="channels" id="channelSelect" multiple>
+	                 
+                 </select>
+               </div>
             </div>
            </div>
            
@@ -97,50 +145,12 @@
               </div>
              </div>
             </div>
-            <div class="form-group">
-              <label for="charge" class="cols-sm-2 control-label">Package Charging Type</label>
-               <div class="cols-sm-10">
-                 <div class="input-group">
-                  <div class="charge">
-                   <div class="form-check-inline">
-                     <label class="form-check-label" for="radio1">
-                     <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1">Paid by default
-                     </label>
-                   </div>
-                   <div class="form-check-inline">
-                     <label class="form-check-label" for="radio2">
-                     <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">FTR
-                     </label>
-                   </div>
-                  </div>
-                 </div>
-                </div>
-             </div>
-             <div class="form-group">
-              <label for="transmission" class="cols-sm-2 control-label">Package Transmission Type</label>
-              <div class="cols-sm-10">
-               <div class="input-group">
-                <div class="Transmission">
-                  <div class="form-check-inline">
-                   <label class="form-check-label" for="radio3">
-                   <input type="radio" class="form-check-input" id="radio3" name="radio" value="option3">HD
-                   </label>
-                  </div>
-                  <div class="form-check-inline">
-                   <label class="form-check-label" for="radio4">
-                   <input type="radio" class="form-check-input" id="radio4" name="radio" value="option4">Standard
-                   </label>
-                  </div>
-                 </div>
-                </div>
-               </div>
-              </div>
          <div class="form-group">
              <label for="fdate" class="cols-sm-2 control-label">Package Available from date</label>
              <div class="cols-sm-10">
                <div class="input-group">
                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                   <input type="date" class="form-control" name="fdate" id="fdate" placeholder="MM/DD/YYYY" />
+                   <input type="date" class="form-control" name="availableFrom" id="fdate" placeholder="MM/DD/YYYY" />
               </div>
             </div>
            </div>
@@ -149,7 +159,7 @@
              <div class="cols-sm-10">
                <div class="input-group">
                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                   <input type="date" class="form-control" name="tdate" id="tdate" placeholder="MM/DD/YYYY" />
+                   <input type="date" class="form-control" name="availableTo" id="tdate" placeholder="MM/DD/YYYY" />
               </div>
             </div>
            </div>
@@ -160,12 +170,12 @@
                 <div class="default">
                   <div class="form-check-inline">
                    <label class="form-check-label" for="radio5">
-                   <input type="radio" class="form-check-input" id="radio5" name="radio5" value="radio5">Yes
+                   <input type="radio" class="form-check-input" name="addedByDefault" value="true">Yes
                    </label>
                   </div>
                   <div class="form-check-inline">
                    <label class="form-check-label" for="radio6">
-                   <input type="radio" class="form-check-input" id="radio6" name="radio5" value="radio6">No
+                   <input type="radio" class="form-check-input" name="addedByDefault" value="false">No
                    </label>
                   </div>
                  </div>
@@ -189,9 +199,67 @@
           </script> -->
           
           <div class="form-group ">
-             <button type="button" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
+             <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
          </div>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+</div>
+
+<div class="channelList">
+	<c:forEach items="${channels}" var="channel">
+		<div class="channelItem" 
+			 id="${channel.channel_id}"
+			 data-band="${channel.band}" 
+			 data-audioFreq="${channel.audioFreq}" 
+			 data-videoFreq="${channel.videoFreq}"
+			 data-chargeType="${channel.chargeType}"
+			 data-transmissionType="${channel.transmissionType}"
+			 data-charge="${channel.charge}"><c:out value="${channel.name}"/>
+		</div>
+	</c:forEach>
+</div>
 </body>
+<script>
+$(function() {
+	$("div.channelList").hide();
+	var channelSelect = $("#channelSelect");
+	var channelList = $("div.channelItem").map(function() {
+		return {
+			id: $(this).attr("id"),
+			band: $(this).data("band"),
+			name: $(this).text(),
+			videoFreq: $(this).data("videofreq"),
+			audioFreq: $(this).data("audiofreq"),
+			chargeType: $(this).data("chargetype"),
+			transmissionType: $(this).data("transmissiontype"),
+			charge: $(this).data("charge")
+		}
+	}).get();
+	
+	$("input[name='chargeType'], input[name='transmissionType']").click(function() {
+		var checkbox = $(this);
+		if(checkbox.is(":checked")) {
+			let ctype = $("input[name='chargeType']:checked").val();
+			let transType = $("input[name='transmissionType']:checked").val();
+			let selection = channelList;
+			if(ctype == 'fta')
+			{
+				selection = channelList.filter(channel => channel.chargeType == 'fta');
+			}
+			if(transType == 'standard')
+			{
+				selection = selection.filter(channel => channel.transmissionType == 'standard');
+			}
+			channelSelect.children("option").remove();
+			$.each(selection, function(id, channel) {
+				channelSelect.append("<option value='" + channel.id+"'>"+channel.name+"</option>");
+			});
+			channelSelect.selectpicker("refresh");
+		}
+	});
+});
+</script>
 </html>
