@@ -34,7 +34,6 @@ public class HomeController extends HttpServlet {
      */
     public HomeController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -48,7 +47,6 @@ public class HomeController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String option = request.getParameter("option");
 		switch(option) {
 			case "CreateChannel":
@@ -61,7 +59,12 @@ public class HomeController extends HttpServlet {
 				channel.setAudioFreq(Float.parseFloat(request.getParameter("audioFreq")));
 				channel.setChargeType(request.getParameter("chargeType"));
 				channel.setTransmissionType(request.getParameter("transmissionType"));
-				channel.setCharge(Integer.parseInt(request.getParameter("charge")));
+				if (channel.getChargeType().equalsIgnoreCase("free")) {
+					channel.setCharge(0);
+				} else {
+					channel.setCharge(Float.parseFloat(request.getParameter("charge")));
+				}
+				
 				try
 				{
 					dao = new ChannelDAO();
@@ -73,8 +76,7 @@ public class HomeController extends HttpServlet {
 					System.out.println(e.getMessage());
 				}
 				finally {
-					if(dao != null)
-						dao.close();
+					if(dao != null) dao.close();
 					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 			}
@@ -87,23 +89,21 @@ public class HomeController extends HttpServlet {
 				ChannelDAO dao = null;
 				try {
 					dao = new ChannelDAO();
-					List<Channel> channelInfo = new ArrayList<Channel>();
 					ChannelDAO channelDB = new ChannelDAO();
-					channelInfo = channelDB.ChannelInformation();
+					Channel[] channelInfo = channelDB.ChannelInformation();
 					session.setAttribute("channelInf",channelInfo);
 					getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 					
 				}
 				catch(SQLException e) {
-					
+					e.printStackTrace();
 				}	
 				
 				finally {
-					if(dao != null)
-						dao.close();
+					if(dao != null) dao.close();
 				}
 			}
-				break;
+			break;
 			case "UpdateChannel":
 			{
 				Channel update = new Channel();
@@ -117,7 +117,11 @@ public class HomeController extends HttpServlet {
 				update.setBand(request.getParameter("channelBand"));
 				update.setChargeType(request.getParameter("chargeType"));
 				update.setTransmissionType(request.getParameter("transmissionType"));
-				update.setCharge(Integer.parseInt(request.getParameter("charge")));
+				if (update.getChargeType().equalsIgnoreCase("free")) {
+					update.setCharge(0);
+				} else {
+					update.setCharge(Float.parseFloat(request.getParameter("charge")));
+				}
 				
 				try
 				{
@@ -134,8 +138,7 @@ public class HomeController extends HttpServlet {
 					e.printStackTrace();
 				}
 				finally {
-					if(dao != null)
-						dao.close();
+					if(dao != null) dao.close();
 					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 			}
@@ -159,11 +162,29 @@ public class HomeController extends HttpServlet {
 					e.printStackTrace();
 				}
 				finally {
-					if(dao != null)
-						dao.close();
+					if(dao != null) dao.close();
 					getServletContext().getRequestDispatcher("/HomeController?option=ChannelInformation").forward(request, response);
 				}
 				
+			}
+			break;
+			case "PackageInfo":
+			{
+				HttpSession session = request.getSession();
+
+				PackageDAO dao = null;
+				try {
+					dao = new PackageDAO();
+					getServletContext().getRequestDispatcher("/ViewPackage.jsp").forward(request, response);
+					
+				}
+				catch(SQLException e) {
+					e.printStackTrace();
+				}	
+				
+				finally {
+					if(dao != null) dao.close();
+				}
 			}
 			break;
 			case "CreatePackage":
@@ -171,19 +192,22 @@ public class HomeController extends HttpServlet {
 				Package pkg = new Package();
 				PackageDAO pkgDao = null;
 				ChannelDAO channelDao =  null;
+				float cost = 0;
 				pkg.setName(request.getParameter("pkgName"));
 				pkg.setChargingType(request.getParameter("chargeType"));
 				pkg.setTransmissionType(request.getParameter("transmissionType"));
-				pkg.setCost(Integer.parseInt(request.getParameter("cost")));
+				pkg.setCost(0);
 				pkg.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDefault")));
-				DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+				DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 				try {
-					pkg.setAvailableFrom(df.parse(request.getParameter("availableFrom")));
-				} catch (ParseException e1) {
-				}
-				try {
-					pkg.setAvailableTo(df.parse(request.getParameter("availableTo")));
-				} catch (ParseException e1) {
+					String afs =request.getParameter("availableFrom"); 
+					String ats = request.getParameter("availableTo");
+					java.util.Date af = df.parse(afs);
+					java.util.Date at = df.parse(ats);
+					pkg.setAvailableFrom(af);
+					pkg.setAvailableTo(at);
+				} catch (ParseException e) {
+					e.printStackTrace();
 				}
 				String[] channelIds = request.getParameterValues("channels");
 				
@@ -193,23 +217,23 @@ public class HomeController extends HttpServlet {
 					channelDao = new ChannelDAO();
 					ArrayList<Channel> channelList = new ArrayList<Channel>();
 					for(String id : channelIds) {
-						channelList.add(channelDao.getChannelById(Integer.parseInt(id)));
+						Channel channel = channelDao.getChannelById(Integer.parseInt(id));
+						cost+=channel.getCharge();
+						channelList.add(channel);
 					}
 					Channel[] channels = channelList.toArray(new Channel[channelList.size()]);
 					pkg.setChannels(channels);
+					pkg.setCost(cost);
 					pkgDao.addPackage(pkg);
 				}
 				catch(Exception e)
 				{
-					// log other exception
-					System.out.println(e.getMessage());
+					e.printStackTrace();
 				}
 				finally {
-					if(pkgDao != null)
-						pkgDao.close();
-					if(channelDao != null)
-						channelDao.close();
-					getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+					if(pkgDao != null) pkgDao.close();
+					if(channelDao != null) channelDao.close();
+					getServletContext().getRequestDispatcher("/HomeController?option=PackageInfo").forward(request, response);
 				}
 			}
 			break;
@@ -218,14 +242,15 @@ public class HomeController extends HttpServlet {
 				ChannelDAO channelDao =  null;
 				try {
 					channelDao = new ChannelDAO();
-					request.setAttribute("channels", channelDao.getUnassignedChannels());
+					Channel[] channels = channelDao.ChannelInformation();
+					request.setAttribute("channels", channels);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 				finally {
 					if(channelDao != null)
 						channelDao.close();
-					getServletContext().getRequestDispatcher("/package.jsp").forward(request, response);
+					getServletContext().getRequestDispatcher("/ChannelPackages.jsp").forward(request, response);
 				}
 			}
 			break;
@@ -321,11 +346,9 @@ public class HomeController extends HttpServlet {
 			}
 			break;
 			default:
-				response.sendRedirect("/dashboard.jsp");
+				response.sendRedirect("/ChannelPackages.jsp");
 				break;
 		}
-		
-		
 	}
 	
 

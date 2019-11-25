@@ -8,8 +8,8 @@ public class Channel implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String name, band, chargeType, transmissionType;
-	private float videoFreq, audioFreq;
-	private int channel_id, charge;
+	private float videoFreq, audioFreq, charge;
+	private int channel_id;
 	public String getName() {
 		return name;
 	}
@@ -47,10 +47,10 @@ public class Channel implements Serializable{
 	public void setAudioFreq(float audioFreq) {
 		this.audioFreq = audioFreq;
 	}
-	public int getCharge() {
+	public float getCharge() {
 		return charge;
 	}
-	public void setCharge(int charge) {
+	public void setCharge(float charge) {
 		this.charge = charge;
 	}
 
