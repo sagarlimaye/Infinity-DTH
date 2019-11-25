@@ -279,15 +279,19 @@ public class HomeController extends HttpServlet {
 				break;
 				case "ViewPackage":
 				{
-	
+					ChannelDAO channelDao = null;
 					PackageDAO dao = null;
 					try {
 						dao = new PackageDAO();
 						List<Package> packageInfo = new ArrayList<Package>();
 						packageInfo = dao.PackInformation();
 						request.setAttribute("inf",packageInfo);
-						getServletContext().getRequestDispatcher("/ViewPackage.jsp").forward(request, response);
 						
+						channelDao = new ChannelDAO();
+						Channel[] channels = channelDao.ChannelInformation();
+						request.setAttribute("channels", channels);
+						
+						getServletContext().getRequestDispatcher("/ViewPackage.jsp").forward(request, response);
 					}
 					catch(SQLException e) {
 						e.printStackTrace();

@@ -106,7 +106,8 @@ public class ChannelDAO implements Closeable {
 				channelInfo.setChargeType(rs.getString(6));
 				channelInfo.setTransmissionType(rs.getString(7));
 				channelInfo.setCharge(rs.getFloat(8));
-				channelInf.add(channelInfo);			
+				channelInfo.setPackageId(rs.getInt(9));
+				channelInf.add(channelInfo);	
 			}
 		}
 		finally {
