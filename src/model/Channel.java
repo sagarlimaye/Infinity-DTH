@@ -9,7 +9,7 @@ public class Channel implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String name, band, chargeType, transmissionType;
 	private float videoFreq, audioFreq, charge;
-	private int channel_id;
+	private int channel_id, packageId;
 	public String getName() {
 		return name;
 	}
@@ -60,6 +60,14 @@ public class Channel implements Serializable{
 
 	public void setChannel_id(int channel_id) {
 		this.channel_id = channel_id;
+	}
+
+	public int getPackageId() {
+		return packageId;
+	}
+
+	public void setPackageId(int packageId) {
+		this.packageId = packageId;
 	}
 }
 
