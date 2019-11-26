@@ -92,14 +92,12 @@ background-image: url("1.jpg");
                <div class="input-group">
                 <div class="category">
                        
-                    <select name= "category">
-                     	<c:forEach items="${categoryInf}" var="category">
-                    		<option value="${category.categoryName}">${category.categoryName}</option>                  	
-                    	</c:forEach>                   
-                    </select>
+                     <select class="selectpickerCategory" name="categories" id="categorySelect" multiple>
+	                 
+                 </select>
                     
-                    <input type="hidden" value = "InputCategory">
-                    <button type="submit" formaction = "HomeController">Submit</button>
+<!--                     <input type="hidden" value = "InputCategory"> -->
+<!--                     <button type="submit" formaction = "HomeController">Submit</button> -->
                 
                    </div>
                   </div>
@@ -169,6 +167,16 @@ background-image: url("1.jpg");
 			 data-chargeType="${channel.chargeType}"
 			 data-transmissionType="${channel.transmissionType}"
 			 data-charge="${channel.charge}"><c:out value="${channel.name}"/>
+		</div>
+	</c:forEach>
+</div>
+<div class="categoryList">
+	<c:forEach items="${categoryInf}" var="category">
+		<div class="categoryItem" 
+			 data-cid="${category.category_id}"
+			 data-min="${category.minChannels}" 
+			 data-max="${category.maxChannels}" 
+			 data-name="${category.category_name}"><c:out value="${category.category_name}"/>
 		</div>
 	</c:forEach>
 </div>

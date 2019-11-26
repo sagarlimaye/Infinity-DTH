@@ -10,31 +10,30 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 <style type="text/css">
 body{
 background-image: url("1.jpg");
- height: 500px;
+ height: 1200px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
 
 }
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
 </style>
 
 <script type="text/javascript"> 
-function addOption() { 
-	 var ddl = document.getElementById("select1");
-     var option = document.createElement("OPTION");
-     option.innerHTML = document.getElementById("feature").value;
-     option.value = document.getElementById("feature").value;
-     ddl.options.add(option);
-   //var optionText = document.getElementById("feature").value; 
-   //window.alert(optionText);
-   //var optionValue = document.getElementById("feature").value; 
 
-    //$('#select1').append($('<option>').val(optionValue).text(optionText)); 
-} 
 function fun()
 {
 	 
@@ -85,6 +84,8 @@ function dis()
      
 	
 	}
+	
+
 </script>
 </head>
 <body>
@@ -109,21 +110,112 @@ function dis()
                                             </div>
                                         </div>
                                     </div>
+                                     <div class="form-group">
+						             <label for="features" class="cols-sm-2 control-label">Add Features</label>
+						             <div class="cols-sm-10">
+						               <div class="input-group">
+						                 <select class="selectpicker" name="channels" id="channelSelect" multiple>
+							                 
+						                 </select>
+						               </div>
+						            </div>
+						           </div>
                                     <div class="form-group">
-                                        <label  class="cols-sm-2 control-label">Features</label>
+                                       
                                          <div class="cols-sm-10">
+                                         
                                              <div class="input-group">
-                                               <select id="select1"> 
-           										 <option value="free">Free</option> 
-           											 <option value="basic">Basic</option> 
-       												 </select>  <br>
-                                               			<input type="text" id="feature">
-													 <button onclick="addOption()"> 
-     															 Add option 
-  													</button> 
-                                            </div>
-                                          </div>
-                                    </div>
+                                             
+						               
+                                              <div class="features">
+                								<button type="button" class="btn btn-info"  data-toggle="modal" data-target="#features">Add Features</button>
+													<div class="modal fade" id="features" tabindex="-1" role="dialog" aria-labelledby="features" aria-hidden="true">
+													      <div class="modal-dialog">
+													      <form action = "HomeController" method = "Post">
+													    <div class="modal-content">
+													          <div class="modal-header">
+													          <h4 class="modal-title custom_align" id="Heading">Add Features</h4>
+													        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+													        
+													      </div>
+													      <div class="modal-body">
+													          <div class="form-group">
+													            <input type="text" id="idea" />
+													            <input type="button" value="add to list" id="add" />
+													          </div>
+													          
+													         <ul id="list">
+															  
+															
+															</ul>
+																<script>
+																
+																// Click on a close button to hide the current list item
+																var close = document.getElementsByClassName("close");
+																var i;
+																for (i = 0; i < close.length; i++) {
+																  close[i].onclick = function() {
+																    var div = this.parentElement;
+																    div.style.display = "none";
+																  }
+																}
+																
+																// Create a new list item when clicking on the "Add" button
+																document.getElementById("add").onclick = function() {
+																    
+																     
+																   var node = document.createElement("li");
+																
+																    var textnode = document.createTextNode(document.getElementById("idea").value);
+																  
+																    node.appendChild(textnode);
+																    
+																	    	 document.getElementById("list").appendChild(node);
+																	 
+																	    document.getElementById("idea").value = "";
+																   
+																   
+																	    var span = document.createElement("SPAN");
+																	    var txt = document.createTextNode("\u00D7");
+																	    span.className = "close";
+																	    span.appendChild(txt);
+																	    node.appendChild(span);
+
+																	    for (i = 0; i < close.length; i++) {
+																	      close[i].onclick = function() {
+																	        var div = this.parentElement;
+																	        div.style.display = "none";
+																	      }
+																	    } 
+																   
+																}
+																
+
+																
+
+																</script>												         
+													
+													      </div>
+													          <div class="modal-footer ">
+																<input type = "hidden" name = "option" value = "UpdatePackage">
+																<input type = "hidden" name = "package_Id">
+													            <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Add Features</button>
+													         
+													         </div>
+													     </div>
+													     </form>
+													    <!-- /.modal-content --> 
+													  </div>
+													      <!-- /.modal-dialog --> 
+													    </div>              
+																										              
+													              
+													              
+													               </div>
+                                            
+							                                             </div>
+							                                             </div>
+							                                             </div>
                                     <div class="form-group">
                                         <label for="username" class="cols-sm-2 control-label">Dimensions</label>
                                         <div class="cols-sm-10">
