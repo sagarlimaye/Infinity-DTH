@@ -69,10 +69,9 @@ background-image: url("1.jpg");
 							<th>Available From</th>
 							<th>Available To</th>
 							<th>Add By Default</th>
-<!-- 							<th>Channels</th> -->
-							
-                             	<th>Edit</th>
-                                 <th>Delete</th>
+							<th>Channels</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
 						</tr>
 					</thead>			
 					
@@ -86,6 +85,13 @@ background-image: url("1.jpg");
                     <td><c:out value="${pac.availableFrom}" /></td>
                     <td><c:out value="${pac.availableTo}" /></td>
                     <td><c:out value="${pac.addedByDefault}" /></td>
+                    <td class="channels">
+	                    <c:forEach items="${channels}" var="channel">
+	                    	<c:if test = "${pac.packageID == channel.packageId}">
+	                    		<c:out value="${channel.name},"/>
+	                    	</c:if>
+	                    </c:forEach>
+                    </td>
                     <input type = "hidden" name = "updateID" value = "${pac.packageID} ">                   
                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs editChannel" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
     			    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs removeChannel" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td> 
