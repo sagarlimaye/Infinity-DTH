@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -17,12 +18,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import argo.format.JsonFormatter;
+import argo.format.PrettyJsonFormatter;
+import argo.jdom.JsonArrayNodeBuilder;
+import argo.jdom.JsonNode;
+import argo.jdom.JsonObjectNodeBuilder;
+
+import static argo.jdom.JsonNodeBuilders.*;
+
 import data.CategoryDAO;
 import data.ChannelDAO;
+import data.FeatureDAO;
 import data.PackageDAO;
 import data.SetTopBoxDAO;
 import model.Category;
 import model.Channel;
+import model.Feature;
 import model.Package;
 import model.SetTopBox;
 
@@ -32,7 +43,8 @@ import model.SetTopBox;
 @WebServlet("/HomeController")
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final JsonFormatter JSON_FORMATTER
+    = new PrettyJsonFormatter();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -390,6 +402,85 @@ public class HomeController extends HttpServlet {
 					finally {
 						if(dao != null) dao.close();
 					}				
+				}
+				break;
+				case "FeatureList":
+				{
+					response.setContentType("application/json");
+					PrintWriter out = null;
+					FeatureDAO dao = null;
+					try {
+						dao = new FeatureDAO();
+						out = response.getWriter();
+						Feature[] features = dao.getAllFeatures();
+						JsonArrayNodeBuilder dataBuilder = anArrayBuilder();
+						JsonObjectNodeBuilder nodeBuilder = anObjectBuilder().withField("success", aStringBuilder("true"));
+						for(int i = 0; i<features.length; i++) {
+							dataBuilder.withElement(anObjectBuilder().withField("name", aStringBuilder(features[i].getName())));
+						}
+						out.print(JSON_FORMATTER.format(nodeBuilder.withField("data", dataBuilder).build()));
+					}
+					catch(Exception e) {
+						e.printStackTrace();
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("false")).build()));
+					}
+					finally {
+						if(dao != null)
+							dao.close();
+						if(out != null)
+							out.close();
+					}
+				}
+				break;
+				case "FeatureAdd":
+				{
+					response.setContentType("application/json");
+					PrintWriter out = null;
+					FeatureDAO dao = null;
+					try {
+						dao = new FeatureDAO();
+						out = response.getWriter();
+						Feature feature = new Feature();
+						feature.setName(request.getParameter("featureName"));
+						dao.addFeature(feature);
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("true")).build()));
+					}
+					catch(SQLException e)
+					{
+						e.printStackTrace();
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("false")).build()));
+					}
+					finally {
+						if(out != null)
+							out.close();
+						if(dao != null)
+							dao.close();
+					}
+				}
+				break;
+				case "FeatureRemove":
+				{
+					response.setContentType("application/json");
+					PrintWriter out = null;
+					FeatureDAO dao = null;
+					try {
+						dao = new FeatureDAO();
+						out = response.getWriter();
+						int id = Integer.parseInt(request.getParameter("id"));
+						dao.removeFeature(id);
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("true")).build()));
+					}
+					catch(SQLException e)
+					{
+						e.printStackTrace();
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("false")).build()));
+					}
+					finally {
+						if(out != null)
+							out.close();
+						if(dao != null)
+							dao.close();
+					}
 				}
 				break;
 				default:
