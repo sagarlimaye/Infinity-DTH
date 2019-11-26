@@ -63,8 +63,7 @@ public class CategoryDAO {
 				categoryNames.add(category);		
 			}
 			
-		}
-		
+		}	
 		finally {
 			if(rs != null)
 				rs.close();
@@ -75,6 +74,38 @@ public class CategoryDAO {
 		return categoryNames;
 	}
 	
+public List<Category> CategoryInformation() throws SQLException {
+		
+		String selectQuery = "select * from category";
+		List<Category> categoryInf = new ArrayList<Category>();
+
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.createStatement();
+		    rs = stmt.executeQuery(selectQuery);
+			
+			while(rs.next()) {
+				Category categoryInfo = new Category();
+				categoryInfo.setCategory_id(rs.getInt(1));
+				categoryInfo.setCategoryName(rs.getString(2));
+				categoryInfo.setMinChannels(rs.getInt(3));
+				categoryInfo.setMaxChannels(rs.getInt(4));
+				categoryInf.add(categoryInfo);
+			
+			}
+		}
+		finally {
+			if(rs != null)
+				rs.close();
+			if(stmt != null)
+				stmt.close();
+		}
+		
+		return categoryInf;
+	}
+
 	public void close() throws IOException {
 		try {
 			if(conn != null)

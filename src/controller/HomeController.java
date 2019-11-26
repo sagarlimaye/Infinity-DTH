@@ -240,9 +240,11 @@ public class HomeController extends HttpServlet {
 					Category category = new Category();
 					CategoryDAO dao = null;
 						
-					category.setCategoryName(request.getParameter("channelName"));
-					category.setMinChannels(Integer.parseInt(request.getParameter("minChannels")));
-					category.setMaxChannels(Integer.parseInt(request.getParameter("maxChannels")));
+					category.setCategoryName(request.getParameter("categoryName"));
+					String min = request.getParameter("minChannels").trim();
+					category.setMinChannels(Integer.parseInt(min));
+					String max = request.getParameter("maxChannels").trim();
+					category.setMaxChannels(Integer.parseInt(max));
 					
 					try
 					{
@@ -257,11 +259,34 @@ public class HomeController extends HttpServlet {
 					{
 						if (dao != null) 
 							dao.close();				
-						getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+						getServletContext().getRequestDispatcher("/ViewCategories.jsp").forward(request, response);
 					}
 						
 				}
-			
+				break;
+				case "ViewCategory":
+				{
+					HttpSession session = request.getSession();
+	
+					CategoryDAO dao = null;
+					try {
+						dao = new CategoryDAO();
+						List categoryInfo = new ArrayList<Category>();
+						categoryInfo = dao.CategoryInformation();
+						session.setAttribute("categoryInf",categoryInfo);
+						getServletContext().getRequestDispatcher("/ViewCategories.jsp").forward(request, response);
+						
+					}
+					catch(SQLException e) {
+						e.printStackTrace();
+					}	
+					
+					finally {
+						if(dao != null) dao.close();
+					}
+				}
+				break;
+				
 				case "PrepareCreatePackage":
 				{
 					ChannelDAO channelDao =  null;
@@ -269,8 +294,8 @@ public class HomeController extends HttpServlet {
 	
 					try {
 						dao = new CategoryDAO();
-						/*List<Category> names = dao.CategoryNames();
-						request.setAttribute("categoryInf", names);*/
+						List<Category> names = dao.CategoryNames();
+						request.setAttribute("categoryInf", names);
 	
 						channelDao = new ChannelDAO();
 						Channel[] channels = channelDao.ChannelInformation();

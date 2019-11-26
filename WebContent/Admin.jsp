@@ -36,12 +36,12 @@ float:left;
     <li class="nav-item">
       <a class="nav-link" href="HomeController?option=ViewPackage">Manage Channel Packages </a>
     </li>
+     <li class="nav-item">
+      <a class="nav-link" href="ViewCategories.jsp">Manage Package Category</a>
+    </li>
   </ul>
 </nav>
 
 <br>
-
-
-
 </body>
 </html>
