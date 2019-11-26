@@ -21,6 +21,7 @@ public class PackageDAO implements Closeable {
 	public PackageDAO() throws SQLException {
 		conn = SQLConnection.getInstance().getDBConnection();
 	}
+	
 	public void addPackage(Package pkg) throws SQLException {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -121,32 +122,64 @@ public class PackageDAO implements Closeable {
 					stmt.close();
 			}
 		}
-		public void UpdatePackage(Package pack) throws SQLException{
-			
-			String updateQuery = "UPDATE package SET package_name = ?, "
-					+ "charging_type = ?, transmission_type= ?, cost = ? "
-					+ "available_from = ?, available_to = ? WHERE package_id = ?";
+		
+	public void UpdatePackage(Package pack) throws SQLException{
+		String updateQuery = "UPDATE package SET package_name = ?, "
+				+ "charging_type = ?, transmission_type= ?, cost = ? ,"
+				+ "available_from = ?, available_to = ?, added_default = ? WHERE package_id = ?";
 
-			PreparedStatement updateStmt = null;
-			
+		PreparedStatement updateStmt = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int id = pack.getPackageID();
+		
+		try {
+			updateStmt = conn.prepareStatement(updateQuery);
+			updateStmt.setString(1,pack.getName());
+			updateStmt.setString(2,pack.getChargingType());
+			updateStmt.setString(3,pack.getTransmissionType());
+			updateStmt.setFloat(4,pack.getCost());
+			java.sql.Date availFrom = new java.sql.Date(pack.getAvailableFrom().getTime());
+			updateStmt.setDate(5,availFrom);
+			updateStmt.setDate(6,new java.sql.Date(pack.getAvailableTo().getTime()));
+			updateStmt.setBoolean(7,pack.isAddedByDefault());
+			updateStmt.setInt(8,pack.getPackageID());
+			updateStmt.executeUpdate();
+		}
+		finally {
+			if(updateStmt != null)
+				updateStmt.close();
+		}
+		
+		try {
+			String query = "UPDATE channels SET package_id = NULL WHERE package_id = ?";
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1,  id);
+			stmt.executeUpdate();
+		} finally {
+			if(stmt != null) stmt.close();
+		}
+		
+		if (pack.getChannels() != null) {
 			try {
-				updateStmt = conn.prepareStatement(updateQuery);
-				updateStmt.setString(1,pack.getName());
-				updateStmt.setString(2,pack.getChargingType());
-				updateStmt.setString(3,pack.getTransmissionType());
-				updateStmt.setFloat(4,pack.getCost());
-				java.sql.Date availFrom = new java.sql.Date(pack.getAvailableFrom().getTime());
-				updateStmt.setDate(5,availFrom);
-				updateStmt.setDate(6,new java.sql.Date(pack.getAvailableTo().getTime()));
-				//updateStmt.setBoolean(5,pack.isAddedByDefault());
-				updateStmt.setInt(7,pack.getPackageID());
-				updateStmt.executeUpdate();
-			}
-			finally {
-				if(updateStmt != null)
-					updateStmt.close();
+				String query = "UPDATE channels SET package_id = ? WHERE channel_id = ?";
+				stmt = conn.prepareStatement(query);
+				Channel[] channels = pack.getChannels();
+				
+				for(Channel channel : channels) {
+					stmt.setInt(1,  id);
+					stmt.setInt(2,  channel.getChannel_id());
+					stmt.executeUpdate();
+				}
+			} finally {
+				if(rs != null)
+					rs.close();
+				if(stmt != null)
+					stmt.close();
 			}
 		}
+	}
+	
 	@Override
 	public void close() throws IOException {
 		try {

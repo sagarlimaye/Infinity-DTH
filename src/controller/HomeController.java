@@ -1,12 +1,11 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +16,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import argo.format.JsonFormatter;
+import argo.format.PrettyJsonFormatter;
+import argo.jdom.JsonArrayNodeBuilder;
+import argo.jdom.JsonObjectNodeBuilder;
+
+import static argo.jdom.JsonNodeBuilders.*;
+
 import data.CategoryDAO;
 import data.ChannelDAO;
+import data.FeatureDAO;
 import data.PackageDAO;
 import data.SetTopBoxDAO;
 import model.Category;
 import model.Channel;
+import model.Feature;
 import model.Package;
 import model.SetTopBox;
 
@@ -32,7 +40,7 @@ import model.SetTopBox;
 @WebServlet("/HomeController")
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final JsonFormatter JSON_FORMATTER = new PrettyJsonFormatter();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -78,8 +86,7 @@ public class HomeController extends HttpServlet {
 					}
 					catch(Exception e)
 					{
-						// log other exception
-						System.out.println(e.getMessage());
+						e.printStackTrace();
 					}
 					finally {
 						if(dao != null) dao.close();
@@ -95,8 +102,7 @@ public class HomeController extends HttpServlet {
 					ChannelDAO dao = null;
 					try {
 						dao = new ChannelDAO();
-						ChannelDAO channelDB = new ChannelDAO();
-						Channel[] channelInfo = channelDB.ChannelInformation();
+						Channel[] channelInfo = dao.ChannelInformation();
 						session.setAttribute("channelInf",channelInfo);
 						getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 						
@@ -123,7 +129,7 @@ public class HomeController extends HttpServlet {
 					update.setBand(request.getParameter("channelBand"));
 					update.setChargeType(request.getParameter("chargeType"));
 					update.setTransmissionType(request.getParameter("transmissionType"));
-					if (update.getChargeType().equalsIgnoreCase("free")) {
+					if (update.getChargeType().equalsIgnoreCase("fta")) {
 						update.setCharge(0);
 					} else {
 						update.setCharge(Float.parseFloat(request.getParameter("charge")));
@@ -201,16 +207,20 @@ public class HomeController extends HttpServlet {
 					try
 					{
 						pkgDao = new PackageDAO();
-						channelDao = new ChannelDAO();
-						ArrayList<Channel> channelList = new ArrayList<Channel>();
-						for(String id : channelIds) {
-							Channel channel = channelDao.getChannelById(Integer.parseInt(id));
-							cost+=channel.getCharge();
-							channelList.add(channel);
+						if(channelIds != null && channelIds.length != 0)
+						{
+							channelDao = new ChannelDAO();
+							ArrayList<Channel> channelList = new ArrayList<Channel>();
+							for(String id : channelIds) {
+								Channel channel = channelDao.getChannelById(Integer.parseInt(id));
+								cost+=channel.getCharge();
+								channelList.add(channel);
+							}
+							Channel[] channels = channelList.toArray(new Channel[channelList.size()]);
+							pkg.setChannels(channels);
+							pkg.setCost(cost);
 						}
-						Channel[] channels = channelList.toArray(new Channel[channelList.size()]);
-						pkg.setChannels(channels);
-						pkg.setCost(cost);
+						
 						pkgDao.addPackage(pkg);
 					}
 					catch(Exception e)
@@ -230,9 +240,11 @@ public class HomeController extends HttpServlet {
 					Category category = new Category();
 					CategoryDAO dao = null;
 						
-					category.setCategoryName(request.getParameter("channelName"));
-					category.setMinChannels(Integer.parseInt(request.getParameter("minChannels")));
-					category.setMaxChannels(Integer.parseInt(request.getParameter("maxChannels")));
+					category.setCategoryName(request.getParameter("categoryName"));
+					String min = request.getParameter("minChannels").trim();
+					category.setMinChannels(Integer.parseInt(min));
+					String max = request.getParameter("maxChannels").trim();
+					category.setMaxChannels(Integer.parseInt(max));
 					
 					try
 					{
@@ -241,18 +253,40 @@ public class HomeController extends HttpServlet {
 					}
 					catch(Exception e)
 					{						
-						// log other exception
-						System.out.println(e.getMessage());
+						e.printStackTrace();
 					}
 					finally 
 					{
 						if (dao != null) 
 							dao.close();				
-						getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+						getServletContext().getRequestDispatcher("/ViewCategories.jsp").forward(request, response);
 					}
 						
 				}
-			
+				break;
+				case "ViewCategory":
+				{
+					HttpSession session = request.getSession();
+	
+					CategoryDAO dao = null;
+					try {
+						dao = new CategoryDAO();
+						List categoryInfo = new ArrayList<Category>();
+						categoryInfo = dao.CategoryInformation();
+						session.setAttribute("categoryInf",categoryInfo);
+						getServletContext().getRequestDispatcher("/ViewCategories.jsp").forward(request, response);
+						
+					}
+					catch(SQLException e) {
+						e.printStackTrace();
+					}	
+					
+					finally {
+						if(dao != null) dao.close();
+					}
+				}
+				break;
+				
 				case "PrepareCreatePackage":
 				{
 					ChannelDAO channelDao =  null;
@@ -260,8 +294,8 @@ public class HomeController extends HttpServlet {
 	
 					try {
 						dao = new CategoryDAO();
-						/*List<Category> names = dao.CategoryNames();
-						request.setAttribute("categoryInf", names);*/
+						List<Category> names = dao.CategoryNames();
+						request.setAttribute("categoryInf", names);
 	
 						channelDao = new ChannelDAO();
 						Channel[] channels = channelDao.ChannelInformation();
@@ -277,6 +311,7 @@ public class HomeController extends HttpServlet {
 					}
 				}
 				break;
+				
 				case "ViewPackage":
 				{
 					ChannelDAO channelDao = null;
@@ -334,15 +369,17 @@ public class HomeController extends HttpServlet {
 				{
 					Package update = new Package();
 					PackageDAO dao = null;
+					ChannelDAO channelDao =  null;
 					
 					String id = (request.getParameter("package_Id"));
 					update.setPackageID(Integer.parseInt(id.trim()));
 					update.setName(request.getParameter("packageName"));
-					update.setChargingType((request.getParameter("chargingType")));
+					update.setChargingType(request.getParameter("chargeType"));
 					update.setTransmissionType(request.getParameter("transmissionType"));
 					update.setCost(Float.parseFloat(request.getParameter("chargeCost")));
-					//update.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDef")));
+					update.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDefault")));
 					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					
 					try {
 						
 						String afs =request.getParameter("availableFrom"); 
@@ -354,9 +391,24 @@ public class HomeController extends HttpServlet {
 					} catch (ParseException e1) {
 						e1.printStackTrace();
 					}
+					String[] channelIds = request.getParameterValues("channels");
+					
 					try
 					{
 						dao = new PackageDAO();
+					
+						if(channelIds != null && channelIds.length != 0)
+						{
+							channelDao = new ChannelDAO();
+							ArrayList<Channel> channelList = new ArrayList<Channel>();
+							for(String channelId : channelIds) {
+								Channel channel = channelDao.getChannelById(Integer.parseInt(channelId));
+								channelList.add(channel);
+							}
+							Channel[] channels = channelList.toArray(new Channel[channelList.size()]);
+							update.setChannels(channels);
+						}
+						
 						dao.UpdatePackage(update);
 					}
 					catch(SQLException e)
@@ -369,8 +421,8 @@ public class HomeController extends HttpServlet {
 						e.printStackTrace();
 					}
 					finally {
-						if(dao != null)
-							dao.close();
+						if(dao != null) dao.close();
+						if(channelDao != null) channelDao.close();
 						getServletContext().getRequestDispatcher("/HomeController?option=ViewPackage").forward(request, response);
 					}
 				}
@@ -381,8 +433,7 @@ public class HomeController extends HttpServlet {
 					SetTopBoxDAO dao = null;				
 					try {
 						dao = new SetTopBoxDAO();
-						SetTopBoxDAO setTopBoxDB = new SetTopBoxDAO();
-						SetTopBox[] setTopBoxInfo = setTopBoxDB.SetTopBoxInformation();
+						SetTopBox[] setTopBoxInfo = dao.SetTopBoxInformation();
 						session.setAttribute("setTopBoxInf", setTopBoxInfo);
 						getServletContext().getRequestDispatcher("/viewSetTopBox.jsp").forward(request, response);
 						
@@ -394,6 +445,103 @@ public class HomeController extends HttpServlet {
 					finally {
 						if(dao != null) dao.close();
 					}				
+				}
+				break;
+				case "PrepareCreateSetTopBox":
+				{
+					FeatureDAO dao = null;
+					try {
+						dao = new FeatureDAO();
+						Feature[] features = dao.getAllFeatures();
+						request.setAttribute("features", features);
+						
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					finally {
+						if(dao != null)
+							dao.close();
+						getServletContext().getRequestDispatcher("/SetTopBox.jsp").forward(request, response);
+					}
+				}
+				break;
+				case "FeatureList":
+				{
+					response.setContentType("application/json");
+					PrintWriter out = null;
+					FeatureDAO dao = null;
+					try {
+						dao = new FeatureDAO();
+						out = response.getWriter();
+						Feature[] features = dao.getAllFeatures();
+						JsonArrayNodeBuilder dataBuilder = anArrayBuilder();
+						JsonObjectNodeBuilder nodeBuilder = anObjectBuilder().withField("success", aTrueBuilder());
+						for(int i = 0; i<features.length; i++) {
+							dataBuilder.withElement(anObjectBuilder().withField("name", aStringBuilder(features[i].getName())));
+						}
+						out.print(JSON_FORMATTER.format(nodeBuilder.withField("data", dataBuilder).build()));
+					}
+					catch(Exception e) {
+						e.printStackTrace();
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
+					}
+					finally {
+						if(dao != null)
+							dao.close();
+						if(out != null)
+							out.close();
+					}
+				}
+				break;
+				case "FeatureAdd":
+				{
+					response.setContentType("application/json");
+					PrintWriter out = null;
+					FeatureDAO dao = null;
+					try {
+						dao = new FeatureDAO();
+						out = response.getWriter();
+						Feature feature = new Feature();
+						feature.setName(request.getParameter("featureName"));
+						dao.addFeature(feature);
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
+					}
+					finally {
+						if(out != null)
+							out.close();
+						if(dao != null)
+							dao.close();
+					}
+				}
+				break;
+				case "FeatureRemove":
+				{
+					response.setContentType("application/json");
+					PrintWriter out = null;
+					FeatureDAO dao = null;
+					try {
+						dao = new FeatureDAO();
+						out = response.getWriter();
+						int id = Integer.parseInt(request.getParameter("id"));
+						dao.removeFeature(id);
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
+					}
+					finally {
+						if(out != null)
+							out.close();
+						if(dao != null)
+							dao.close();
+					}
 				}
 				break;
 				default:

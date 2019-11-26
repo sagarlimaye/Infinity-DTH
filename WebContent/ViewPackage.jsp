@@ -6,21 +6,19 @@
 <head>
 <jsp:include page="Admin.jsp"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Packages</title>
+<meta charset="UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<meta charset="UTF-8">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<title>Packages</title>
-<script language="JavaScript" src="https://code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
-<script language="JavaScript" src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
-<script language="JavaScript" src="https://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script>
- <script src="js/updatePackage.js"></script>
-<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
+<script src="js/updatePackage.js"></script>
+<script src="js/channelsToPackage.js"></script>
 <script>
 $(document).ready(function() {
     $('#datatable').dataTable();
@@ -107,39 +105,73 @@ background-image: url("1.jpg");
 </div>
 
 <div align="center" class="add-container">
- <button onclick="location.href = 'HomeController?option=PrepareCreatePackage';" id="myButton" class="float-none submit-button" >Add Package</button>
+ <button onclick="location.href = 'HomeController?option=PrepareCreatePackage';" id="myButton" class="btn btn-primary float-none submit-button" >Add Package</button>
 </div>
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
       <div class="modal-dialog">
-      <form action = "HomeController" method = "Post">
+      <form id="edit-form" action = "HomeController" method = "Post">
     <div class="modal-content">
           <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+        <h4 class="modal-title custom_align" id="Heading">Edit Package</h4>
       </div>
       <div class="modal-body">
-          <div class="form-group">
-             <input class="form-control " type="text" name = "packageName" placeholder="Package Name">
-          </div>
-          <div class="form-group">
-             <input class="form-control " type="text" name = "chargingType" placeholder="Package Band">
-          </div>
-          <div class="form-group">
-             <input class="form-control " type="text" name = "transmissionType" placeholder="Transmission Type">
-          </div>
-          <div class="form-group">
-             <input class="form-control " type="number" name = "chargeCost" placeholder="Cost">
-          </div>
-          <div class="form-group">
-             <input class="form-control " type="date" name = "availableFrom" placeholder="Available From">
-          </div>
-          <div class="form-group">
-             <input class="form-control " type="date" name = "availableTo" placeholder="Available To">
-          </div>
-<!--           <div class="form-group"> -->
-<!--             <input class="form-control " type="number" name = "addedByDef" placeholder="Added by Default"> -->
-<!--           </div> -->
+      	<div class="form-group">
+				<input class="form-control " type="text" name = "packageName" placeholder="Package Name">
+			</div>
+			<div class="form-group">
+	          	<div class="form-check-inline">
+					<label class="form-check-label" for="radio1">
+						<input type="radio" class="form-check-input" name="chargeType" value="paid">Paid by default
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label" for="radio2">
+						<input type="radio" class="form-check-input" name="chargeType" value="fta">FTA
+					</label>
+				</div>
+          	</div>
+          	<div class="form-group">
+	          	<div class="form-check-inline">
+					<label class="form-check-label" for="radio1">
+						<input type="radio" class="form-check-input" name="transmissionType" value="hd">HD
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label" for="radio2">
+						<input type="radio" class="form-check-input" name="transmissionType" value="standard">Standard
+					</label>
+				</div>
+          	</div>
+          	<div class="form-group">
+          		<div class="input-group">
+		            <select class="selectpicker" name="channels" id="channelSelect" multiple>
+		             
+		            </select>
+	            </div>
+          	</div>
+         	<div class="form-group">
+            	<input class="form-control " type="text" name = "chargeCost" placeholder="Cost">
+         	</div>
+          	<div class="form-group">
+             	<input class="form-control " type="date" name = "availableFrom" placeholder="Available From">
+          	</div>
+          	<div class="form-group">
+            	<input class="form-control " type="date" name = "availableTo" placeholder="Available To">
+          	</div>
+			<div class="form-group">
+	          	<div class="form-check-inline">
+					<label class="form-check-label" for="radio1">
+						<input type="radio" class="form-check-input" name="addedByDefault" value="true">Add by default
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label" for="radio2">
+						<input type="radio" class="form-check-input" name="addedByDefault" value="false">Not added by default
+					</label>
+				</div>
+          	</div>
       </div>
           <div class="modal-footer ">
 			<input type = "hidden" name = "option" value = "UpdatePackage">
@@ -180,10 +212,19 @@ background-image: url("1.jpg");
        
     <!-- /.modal-content --> 
   </div>
-  
-      <!-- /.modal-dialog --> 
-    </div>
     
-   
+<div class="channelList">
+	<c:forEach items="${channels}" var="channel">
+		<div class="channelItem" 
+			 id="${channel.channel_id}"
+			 data-band="${channel.band}" 
+			 data-audioFreq="${channel.audioFreq}" 
+			 data-videoFreq="${channel.videoFreq}"
+			 data-chargeType="${channel.chargeType}"
+			 data-transmissionType="${channel.transmissionType}"
+			 data-charge="${channel.charge}"><c:out value="${channel.name}"/>
+		</div>
+	</c:forEach>
+</div>
 </body>
 </html>
