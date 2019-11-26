@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<script src="js/channelsToPackage.js"></script>
 <style type="text/css">
 body{
 background-image: url("1.jpg");
@@ -193,44 +194,4 @@ background-image: url("1.jpg");
 	</c:forEach>
 </div>
 </body>
-<script>
-$(function() {
-	$("div.channelList").hide();
-	var channelSelect = $("#channelSelect");
-	var channelList = $("div.channelItem").map(function() {
-		return {
-			id: $(this).attr("id"),
-			band: $(this).data("band"),
-			name: $(this).text(),
-			videoFreq: $(this).data("videofreq"),
-			audioFreq: $(this).data("audiofreq"),
-			chargeType: $(this).data("chargetype"),
-			transmissionType: $(this).data("transmissiontype"),
-			charge: $(this).data("charge")
-		}
-	}).get();
-	
-	$("input[name='chargeType'], input[name='transmissionType']").click(function() {
-		var checkbox = $(this);
-		if(checkbox.is(":checked")) {
-			let ctype = $("input[name='chargeType']:checked").val();
-			let transType = $("input[name='transmissionType']:checked").val();
-			let selection = channelList;
-			if(ctype == 'fta')
-			{
-				selection = channelList.filter(channel => channel.chargeType == 'fta');
-			}
-			if(transType == 'standard')
-			{
-				selection = selection.filter(channel => channel.transmissionType == 'standard');
-			}
-			channelSelect.children("option").remove();
-			$.each(selection, function(id, channel) {
-				channelSelect.append("<option value='" + channel.id+"'>"+channel.name+"</option>");
-			});
-			channelSelect.selectpicker("refresh");
-		}
-	});
-});
-</script>
 </html>

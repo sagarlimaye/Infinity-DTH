@@ -10,12 +10,15 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="https://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
 <script src="js/updatePackage.js"></script>
+<script src="js/channelsToPackage.js"></script>
 <script>
 $(document).ready(function() {
     $('#datatable').dataTable();
@@ -107,7 +110,7 @@ background-image: url("1.jpg");
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
       <div class="modal-dialog">
-      <form action = "HomeController" method = "Post">
+      <form id="edit-form" action = "HomeController" method = "Post">
     <div class="modal-content">
           <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -165,7 +168,7 @@ background-image: url("1.jpg");
 				</div>
 				<div class="form-check-inline">
 					<label class="form-check-label" for="radio2">
-						<input type="radio" class="form-check-input" name="addedByDefaul" value="false">Not added by default
+						<input type="radio" class="form-check-input" name="addedByDefault" value="false">Not added by default
 					</label>
 				</div>
           	</div>
@@ -209,10 +212,19 @@ background-image: url("1.jpg");
        
     <!-- /.modal-content --> 
   </div>
-  
-      <!-- /.modal-dialog --> 
-    </div>
     
-   
+<div class="channelList">
+	<c:forEach items="${channels}" var="channel">
+		<div class="channelItem" 
+			 id="${channel.channel_id}"
+			 data-band="${channel.band}" 
+			 data-audioFreq="${channel.audioFreq}" 
+			 data-videoFreq="${channel.videoFreq}"
+			 data-chargeType="${channel.chargeType}"
+			 data-transmissionType="${channel.transmissionType}"
+			 data-charge="${channel.charge}"><c:out value="${channel.name}"/>
+		</div>
+	</c:forEach>
+</div>
 </body>
 </html>
