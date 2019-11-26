@@ -470,7 +470,6 @@ public class HomeController extends HttpServlet {
 					SetTopBox stb = new SetTopBox();
 					SetTopBoxDAO stbDao = null;
 					FeatureDAO featureDao =  null;
-					float cost = 0;
 					stb.setType(request.getParameter("type"));
 					stb.setDimensions(request.getParameter("dimensions"));
 					stb.setPrice(Float.parseFloat(request.getParameter("price")));
