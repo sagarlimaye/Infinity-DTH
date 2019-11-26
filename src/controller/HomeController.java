@@ -43,8 +43,7 @@ import model.SetTopBox;
 @WebServlet("/HomeController")
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final JsonFormatter JSON_FORMATTER
-    = new PrettyJsonFormatter();
+	private static final JsonFormatter JSON_FORMATTER = new PrettyJsonFormatter();
     /**
      * @see HttpServlet#HttpServlet()
      */
