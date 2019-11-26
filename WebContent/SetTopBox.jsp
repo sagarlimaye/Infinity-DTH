@@ -345,9 +345,17 @@
                     </div>
 
                 </div>
-            </div>
-        </div>
-    </div>
+</div>
+
+<div class="featureList">
+	<c:forEach items="${features}" var="features">
+		<div class="featureItem" 
+			 id="${features.id}"
+			  data-name="${category.feature_name}" >
+			 <c:out value="${features.feature_name}"/>
+		</div>
+	</c:forEach>
+</div>
 </body>
 
 </html>
