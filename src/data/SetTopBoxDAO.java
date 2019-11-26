@@ -112,6 +112,33 @@ public class SetTopBoxDAO implements Closeable {
 		return setTopBoxInf.toArray(new SetTopBox[setTopBoxInf.size()]);
 	}
 	
+	public void updateSetTopBox(SetTopBox settopbox) throws SQLException {
+		String updateQuery = "UPDATE set_top_boxes SET serial_number = ?, type = ?, dimensions = ?, price= ?, installation_charges = ?, upgradation_charges = ?, mac_id = ?, control_asset_id = ?, billing_type = ?, discount = ?, dish_asset_id = ?, refundable_deposit = ?, status = ?, inventory_details = ?";
+		PreparedStatement updateStmt = null;
+		
+		try {
+			updateStmt = conn.prepareStatement(updateQuery);
+			updateStmt.setInt(1, settopbox.getSerialNumber());
+			updateStmt.setString(2, settopbox.getType());
+			updateStmt.setString(3, settopbox.getDimensions());
+			updateStmt.setFloat(4, settopbox.getPrice());
+			updateStmt.setFloat(5, settopbox.getInstallation_charges());
+			updateStmt.setFloat(6, settopbox.getUpgradation_charges());
+			updateStmt.setString(7, settopbox.getMac_id());
+			updateStmt.setInt(8, settopbox.getControl_asset_id());
+			updateStmt.setString(9, settopbox.getBilling_type());
+			updateStmt.setFloat(10, settopbox.getDiscount());
+			updateStmt.setInt(11, settopbox.getDish_asset_id());
+			updateStmt.setFloat(12, settopbox.getRefundable_deposit());
+			updateStmt.setInt(13, settopbox.getStatus());
+			updateStmt.setBinaryStream(14, settopbox.getInventory_details());
+			updateStmt.executeUpdate();			
+		} finally {
+			if(updateStmt != null)
+				updateStmt.close();			
+		}
+	}		
+	
 	@Override
 	public void close() throws IOException {
 		try {
