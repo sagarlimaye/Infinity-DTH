@@ -11,14 +11,16 @@ $(function() {
 	}).get();
 	
 
-	const updateChannelSelection = (checkbox) => {
+	const updateCategorySelection = () => {
 		let selection = categoryList;
-		
+		console.log(selection);
+		categorySelect.children("option").remove();
 		$.each(selection, function(id,category) {
-			channelSelect.append("<option value='" + category.id+"'>"+category.name+"</option>");
+			categorySelect.append("<option value='" + category.id+"'>"+category.name+"</option>");
 		});
+		console.log(categorySelect);
 		categorySelect.selectpicker("refresh");
 	}
 	
-	//updateCategorySelection($("input[name='chargeType']"));
+	updateCategorySelection();
 });

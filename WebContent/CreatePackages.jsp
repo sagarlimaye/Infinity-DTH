@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 <script src="js/channelsToPackage.js"></script>
+<script src="js/categoryToPackage.js"></script>
+
 <style type="text/css">
 body{
 background-image: url("1.jpg");
@@ -91,13 +93,11 @@ background-image: url("1.jpg");
               <div class="cols-sm-10">
                <div class="input-group">
                 <div class="category">
-                       
-                     <select class="selectpickerCategory" name="categories" id="categorySelect" multiple>
-	                 
-                 </select>
-                    
-<!--                     <input type="hidden" value = "InputCategory"> -->
-<!--                     <button type="submit" formaction = "HomeController">Submit</button> -->
+                	<select>
+						<c:forEach items="${categoryInf}" var="category">
+							<option value="${category.category_id}">${category.categoryName}</option>
+						</c:forEach>
+                    </select>
                 
                    </div>
                   </div>
@@ -167,16 +167,6 @@ background-image: url("1.jpg");
 			 data-chargeType="${channel.chargeType}"
 			 data-transmissionType="${channel.transmissionType}"
 			 data-charge="${channel.charge}"><c:out value="${channel.name}"/>
-		</div>
-	</c:forEach>
-</div>
-<div class="categoryList">
-	<c:forEach items="${categoryInf}" var="category">
-		<div class="categoryItem" 
-			 data-cid="${category.category_id}"
-			 data-min="${category.minChannels}" 
-			 data-max="${category.maxChannels}" 
-			 data-name="${category.category_name}"><c:out value="${category.category_name}"/>
 		</div>
 	</c:forEach>
 </div>
