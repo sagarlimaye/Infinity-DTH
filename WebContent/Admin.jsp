@@ -28,7 +28,7 @@ float:left;
 
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">Manage Set Top Boxes</a>
+      <a class="nav-link" href="HomeController?option=SetTopBoxInformation">Manage Set Top Boxes</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="HomeController?option=ChannelInformation">Manage Channels</a>
