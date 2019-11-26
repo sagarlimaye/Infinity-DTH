@@ -166,21 +166,6 @@ background-image: url("1.jpg");
                 </div>
                </div>
               </div>
-           <!-- <div class="form-group">
-             <label for="AddChannels" class="cols-sm-2 control-label">Add Channels</label>
-             <div class="cols-sm-10">
-               <div class="input-group">
-                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                 <input type="button" value="AddChannels" name="AddChannels" onclick="openPage('AddChannelToPackage.jsp')"/>
-              </div>
-            </div>
-           </div>
-           <script type="text/javascript">
-                   function openPage(pageURL)
-                      {
-                           window.location.href = pageURL;
-                      }
-          </script> -->
           
           <div class="form-group ">
              <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
