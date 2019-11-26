@@ -38,7 +38,7 @@ background-image: url("1.jpg");
 
 }
 </style>
-
+<title>Set Top Box Dashboard</title>
 </head>
 <body>
 
@@ -59,7 +59,7 @@ background-image: url("1.jpg");
   			<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
   				<thead>
 					<tr>
-						<th>Serial #</th>
+						<%--<th>Serial #</th>--%>
 						<th>Type</th>
 						<th>Dimensions</th>
 						<th>Price</th>
@@ -72,14 +72,16 @@ background-image: url("1.jpg");
                         <th>Dish Asset ID</th>
                         <th>Refundable Deposit</th>
                         <th>Status</th>
-                        <th>Inventory Details CSV</th>                                                                                                                        
+                        <th>Inventory Details CSV</th>
+                       	<th>Edit</th>
+                        <th>Delete</th>                                                                                                                                                
 					</tr>
 				</thead>			
 					
 				<tbody>	
 					<c:forEach items="${setTopBoxInf}" var="settopbox">
                 		<tr>
-                    		<td><c:out value="${settopbox.serialNumber}" /></td>
+                    		<%--<td><c:out value="${settopbox.serialNumber}" /></td>--%>
                     		<td><c:out value="${settopbox.type}" /></td>
                     		<td><c:out value="${settopbox.dimensions}" /></td>
                     		<td><c:out value="${settopbox.price}" /></td>
@@ -92,13 +94,20 @@ background-image: url("1.jpg");
                     		<td><c:out value="${settopbox.dish_asset_id}" /></td>
                     		<td><c:out value="${settopbox.refundable_deposit}" /></td>
                     		<td><c:out value="${settopbox.status}" /></td>
-                    		<td><c:out value="${settopbox.inventory_details}" /></td>		 
+                    		<td><c:out value="${settopbox.inventory_details}" /></td>
+		                    <input type = "hidden" name = "updateID" value = "${settopbox.serialNumber} ">                   
+		                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs editChannel" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
+		    			    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs removeChannel" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>                    				 
              			</tr> 
             		</c:forEach>
 				</tbody>
 			</table>		
 		</div>
 	</div>
+</div>
+
+<div align="center" class="add-container">
+	<button onclick="location.href = 'CreateChannel.jsp';" id="myButton" class="btn btn-primary float-none submit-button" >Add Channel</button>
 </div>
    
 </body>
