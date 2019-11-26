@@ -5,12 +5,11 @@
 <head>
 <jsp:include page="Admin.jsp"/>
 <meta charset="ISO-8859-1">
-<title>Add Channel</title>
+<title>Add Category</title>
 <script
 	src="https://code.jquery.com/jquery-3.4.1.min.js"
 	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	crossorigin="anonymous"></script>
-<script src="js/createChannel.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="css/form.css">
 <style type="text/css">
 body{
@@ -41,12 +40,12 @@ background-image: url("1.jpg");
         </div>
         
          <div>
-            <label for="maxChannels">Minimum Channels</label>
-        	<input type="text" id="maxChannels" name="maxChannels" placeholder="Enter minimum number of channels" required min="0" /> 
+            <label for="maxChannels">Maximum Channels</label>
+        	<input type="text" id="maxChannels" name="maxChannels" placeholder="Enter maximum number of channels" required min="0" /> 
         </div>
         
         <input type="hidden" name="option" value="CreateCategory"/>
-        <input type="submit" value="Create category" onclick = "window.history.back()">     
+        <input type="submit" value="CreateCategory" onclick = "window.history.back()">     
         
 </div>
 </form>

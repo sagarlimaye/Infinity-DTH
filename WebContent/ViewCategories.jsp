@@ -14,7 +14,6 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <title>Categories</title>
- <script src="js/updatePackage.js"></script>
 <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
 <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
@@ -41,8 +40,8 @@ background-image: url("1.jpg");
 </head>
 <body>
 <div class = "myform">
-<form name="viewform" action="HomeController" method = "post" >
-<input type="hidden" name="option" value="ViewCategories">
+<form name="viewform" action="HomeController" method = "get" >
+<input type="hidden" name="option" value="ViewCategory">
 <button class="btn btn-primary" type = "submit">Refresh</button>
 </form>
 </div>
@@ -60,39 +59,28 @@ background-image: url("1.jpg");
     				<thead>
 						<tr>
 							<th>Name</th>
-							<th>Charging Type</th>
-							<th>Transmission Type</th>
-							<th>Cost</th>
-							<th>Available From</th>
-							<th>Available To</th>
-							<th>Add By Default</th>
-							<th>Channels</th>
+							<th>Min channels</th>
+							<th>Max channels</th>
 						</tr>
 					</thead>			
 					
 					<tbody>	
-					<c:forEach items="${categoryInf}" var="cat">
+					<c:forEach items="${categoryInf}" var="category">
                		<tr>
-                    <td><c:out value="${cat.name}" /></td>
-                    <td><c:out value="${cat.chargingType}" /></td>
-                    <td><c:out value="${cat.transmissionType}" /></td>
-                    <td><c:out value="${cat.cost}" /></td>
-                    <td><c:out value="${cat.availableFrom}" /></td>
-                    <td><c:out value="${cat.availableTo}" /></td>
-                    <td><c:out value="${cat.addedByDefault}" /></td>                   
+                    <td><c:out value="${category.categoryName}" /></td>
+                    <td><c:out value="${category.minChannels}" /></td>
+                    <td><c:out value="${category.maxChannels}" /></td>                   
              		</tr> 
             		</c:forEach>
 					
 					</tbody>
 					</table>
-				
-	
 	</div>
 	</div>
 </div>
 
 <div align="center" class="add-container">
- <button onclick="location.href = 'HomeController?option=PrepareCreateCategory';" id="myButton" class="float-none submit-button" >Add Category</button>
+ <button onclick="location.href = 'CreateCategory.jsp';" id="myButton" class="float-none submit-button" >Add Category</button>
 </div>
 
 </body>
