@@ -2,12 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,6 @@ import javax.servlet.http.HttpSession;
 import argo.format.JsonFormatter;
 import argo.format.PrettyJsonFormatter;
 import argo.jdom.JsonArrayNodeBuilder;
-import argo.jdom.JsonNode;
 import argo.jdom.JsonObjectNodeBuilder;
 
 import static argo.jdom.JsonNodeBuilders.*;
@@ -107,8 +104,7 @@ public class HomeController extends HttpServlet {
 					ChannelDAO dao = null;
 					try {
 						dao = new ChannelDAO();
-						ChannelDAO channelDB = new ChannelDAO();
-						Channel[] channelInfo = channelDB.ChannelInformation();
+						Channel[] channelInfo = dao.ChannelInformation();
 						session.setAttribute("channelInf",channelInfo);
 						getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 						
@@ -397,8 +393,7 @@ public class HomeController extends HttpServlet {
 					SetTopBoxDAO dao = null;				
 					try {
 						dao = new SetTopBoxDAO();
-						SetTopBoxDAO setTopBoxDB = new SetTopBoxDAO();
-						SetTopBox[] setTopBoxInfo = setTopBoxDB.SetTopBoxInformation();
+						SetTopBox[] setTopBoxInfo = dao.SetTopBoxInformation();
 						session.setAttribute("setTopBoxInf", setTopBoxInfo);
 						getServletContext().getRequestDispatcher("/viewSetTopBox.jsp").forward(request, response);
 						
