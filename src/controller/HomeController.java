@@ -86,8 +86,7 @@ public class HomeController extends HttpServlet {
 					}
 					catch(Exception e)
 					{
-						// log other exception
-						System.out.println(e.getMessage());
+						e.printStackTrace();
 					}
 					finally {
 						if(dao != null) dao.close();
@@ -208,7 +207,7 @@ public class HomeController extends HttpServlet {
 					try
 					{
 						pkgDao = new PackageDAO();
-						if(channelIds.length != 0)
+						if(channelIds != null && channelIds.length != 0)
 						{
 							channelDao = new ChannelDAO();
 							ArrayList<Channel> channelList = new ArrayList<Channel>();
@@ -252,8 +251,7 @@ public class HomeController extends HttpServlet {
 					}
 					catch(Exception e)
 					{						
-						// log other exception
-						System.out.println(e.getMessage());
+						e.printStackTrace();
 					}
 					finally 
 					{
@@ -345,15 +343,17 @@ public class HomeController extends HttpServlet {
 				{
 					Package update = new Package();
 					PackageDAO dao = null;
+					ChannelDAO channelDao =  null;
 					
 					String id = (request.getParameter("package_Id"));
 					update.setPackageID(Integer.parseInt(id.trim()));
 					update.setName(request.getParameter("packageName"));
-					update.setChargingType((request.getParameter("chargingType")));
+					update.setChargingType(request.getParameter("chargeType"));
 					update.setTransmissionType(request.getParameter("transmissionType"));
 					update.setCost(Float.parseFloat(request.getParameter("chargeCost")));
-					//update.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDef")));
+					update.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDefault")));
 					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					
 					try {
 						
 						String afs =request.getParameter("availableFrom"); 
@@ -365,9 +365,24 @@ public class HomeController extends HttpServlet {
 					} catch (ParseException e1) {
 						e1.printStackTrace();
 					}
+					String[] channelIds = request.getParameterValues("channels");
+					
 					try
 					{
 						dao = new PackageDAO();
+					
+						if(channelIds != null && channelIds.length != 0)
+						{
+							channelDao = new ChannelDAO();
+							ArrayList<Channel> channelList = new ArrayList<Channel>();
+							for(String channelId : channelIds) {
+								Channel channel = channelDao.getChannelById(Integer.parseInt(channelId));
+								channelList.add(channel);
+							}
+							Channel[] channels = channelList.toArray(new Channel[channelList.size()]);
+							update.setChannels(channels);
+						}
+						
 						dao.UpdatePackage(update);
 					}
 					catch(SQLException e)
@@ -380,8 +395,8 @@ public class HomeController extends HttpServlet {
 						e.printStackTrace();
 					}
 					finally {
-						if(dao != null)
-							dao.close();
+						if(dao != null) dao.close();
+						if(channelDao != null) channelDao.close();
 						getServletContext().getRequestDispatcher("/HomeController?option=ViewPackage").forward(request, response);
 					}
 				}
