@@ -111,10 +111,10 @@ function dis()
                                         </div>
                                     </div>
                                      <div class="form-group">
-						             <label for="features" class="cols-sm-2 control-label">Add Features</label>
+						             <label for="features" class="cols-sm-2 control-label">Select Features</label>
 						             <div class="cols-sm-10">
 						               <div class="input-group">
-						                 <select class="selectpicker" name="channels" id="channelSelect" multiple>
+						                 <select class="selectpicker" name="features" id="featureSelect" multiple>
 							                 
 						                 </select>
 						               </div>
@@ -197,8 +197,8 @@ function dis()
 													
 													      </div>
 													          <div class="modal-footer ">
-																<input type = "hidden" name = "option" value = "UpdatePackage">
-																<input type = "hidden" name = "package_Id">
+																<input type = "hidden" name = "option" value = "addFeature">
+															
 													            <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Add Features</button>
 													         
 													         </div>
@@ -304,6 +304,16 @@ function dis()
                         </div>
                     </div>
                 </div>
+</div>
+
+<div class="featureList">
+	<c:forEach items="${features}" var="features">
+		<div class="featureItem" 
+			 id="${features.id}"
+			  data-name="${category.feature_name}" >
+			 <c:out value="${features.feature_name}"/>
+		</div>
+	</c:forEach>
 </div>
 </body>
 </html>
