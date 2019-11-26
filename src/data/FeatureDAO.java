@@ -38,7 +38,7 @@ public class FeatureDAO implements Closeable {
 			if(conn != null)
 				conn.close();
 		}
-		catch(Exception e) {}
+		catch(SQLException e) {}
 			
 	}
 }

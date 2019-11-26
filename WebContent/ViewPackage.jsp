@@ -29,6 +29,18 @@ $(document).ready(function() {
     
 } );
 </script>
+<style type="text/css">
+body{
+background-image: url("1.jpg");
+ height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+</style>
+
 </head>
 <body>
 <div class = "myform">
@@ -57,10 +69,9 @@ $(document).ready(function() {
 							<th>Available From</th>
 							<th>Available To</th>
 							<th>Add By Default</th>
-<!-- 							<th>Channels</th> -->
-							
-                             	<th>Edit</th>
-                                 <th>Delete</th>
+							<th>Channels</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
 						</tr>
 					</thead>			
 					
@@ -74,6 +85,13 @@ $(document).ready(function() {
                     <td><c:out value="${pac.availableFrom}" /></td>
                     <td><c:out value="${pac.availableTo}" /></td>
                     <td><c:out value="${pac.addedByDefault}" /></td>
+                    <td class="channels">
+	                    <c:forEach items="${channels}" var="channel">
+	                    	<c:if test = "${pac.packageID == channel.packageId}">
+	                    		<c:out value="${channel.name},"/>
+	                    	</c:if>
+	                    </c:forEach>
+                    </td>
                     <input type = "hidden" name = "updateID" value = "${pac.packageID} ">                   
                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs editChannel" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
     			    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs removeChannel" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td> 
@@ -89,7 +107,7 @@ $(document).ready(function() {
 </div>
 
 <div align="center" class="add-container">
- <button onclick="location.href = 'CreateChannel.jsp';" id="myButton" class="float-none submit-button" >Add Package</button>
+ <button onclick="location.href = 'HomeController?option=PrepareCreatePackage';" id="myButton" class="float-none submit-button" >Add Package</button>
 </div>
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">

@@ -1,16 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
+<jsp:include page="Admin.jsp"/>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 <style type="text/css">
 body{
@@ -22,7 +20,7 @@ background-image: url("1.jpg");
   position: relative;
 
 }
-.card{heigth:50%;}
+
 </style>
 </head>
 <body>
@@ -46,12 +44,12 @@ background-image: url("1.jpg");
                   			<div class="charge" id="charge">
                   				<div class="form-check-inline">
                      				<label class="form-check-label" for="radio1">
-                     					<input type="radio" class="form-check-input" name="chargeType" value="pbd">Paid by default
+                     					<input type="radio" class="form-check-input" name="chargeType" value="paid">Paid by default
                      				</label>
                    				</div>
                    				<div class="form-check-inline">
                      				<label class="form-check-label" for="radio2">
-                     					<input type="radio" class="form-check-input" name="chargeType" value="fta">FTR
+                     					<input type="radio" class="form-check-input" name="chargeType" value="fta">FTA
                      				</label>
                    				</div>
                   			</div>
@@ -87,31 +85,18 @@ background-image: url("1.jpg");
                </div>
             </div>
            </div>
-           
            <div class="form-group">
             <label for="pack" class="cols-sm-2 control-label">Package Category</label>
               <div class="cols-sm-10">
                <div class="input-group">
-               
-              <div class="dropdown">
-                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Category</button>
-                       <ul class="dropdown-menu">      
-						<c:forEach items ="${categoryInf}" var = "category">
-							<li><c:out value="${category.categoryName}"></c:out></li>
-						</c:forEach>
-						</ul>
-					<br><br>
-
-			<!-- 	</form>- --> 
-
-
-<!--                  <button type="submit" class="btn btn-light dropdown-toggle" data-toggle="dropdown">Categories</button>
- -->
-   <!--               <div class="category-names-list">
-                <button onclick="myFunction()" class="btn btn-light dropdown-toggle">Categories</button>
-    -->           
-                
-                <!--  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#category">Add Category</button>
+                <div class="category">
+                 <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">Categories</button>
+                  <div class="dropdown-menu">
+                   <a class="dropdown-item" href="#">Sports</a>
+                   <a class="dropdown-item" href="#">News</a>
+                   <a class="dropdown-item" href="#">Entertainment</a>
+                 </div>
+                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#category">Add Category</button>
                  <div class="modal fade" id="category" role="dialog">
                   <div class="modal-dialog">
                    <div class="modal-content">
@@ -136,7 +121,6 @@ background-image: url("1.jpg");
                    </div>
                    <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Create</button>
-                     -->
                    </div>
                   </div>
                  </div>
@@ -150,7 +134,7 @@ background-image: url("1.jpg");
              <div class="cols-sm-10">
                <div class="input-group">
                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                   <input type="date" class="form-control" name="availableFrom" id="fdate" placeholder="MM/DD/YYYY" />
+                   <input type="date" class="form-control" name="availableFrom" id="fdate" placeholder="YYYY/MM/DD" />
               </div>
             </div>
            </div>
@@ -159,7 +143,7 @@ background-image: url("1.jpg");
              <div class="cols-sm-10">
                <div class="input-group">
                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                   <input type="date" class="form-control" name="availableTo" id="tdate" placeholder="MM/DD/YYYY" />
+                   <input type="date" class="form-control" name="availableTo" id="tdate" placeholder="YYYY/MM/DD" />
               </div>
             </div>
            </div>
@@ -201,6 +185,8 @@ background-image: url("1.jpg");
           <div class="form-group ">
              <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
          </div>
+           
+                                </form>
                             </div>
 
                         </div>

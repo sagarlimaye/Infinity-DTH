@@ -22,8 +22,8 @@ window.addEventListener('load', () => {
 			editModal.querySelector('input[name="channelBand"]').value = channel.band;
 			editModal.querySelector('input[name="videoFreq"]').value = channel.videoFreq;
 			editModal.querySelector('input[name="audioFreq"]').value = channel.audioFreq;
-			if (channel.chargeType == "Paid") editModal.querySelector('#chargeType').value = channel.chargeType;
-			if (channel.transmission == "HD") editModal.querySelector('#transmissionType').value = channel.transmission;
+			if (channel.chargeType == "paid") editModal.querySelector('#chargeType').value = channel.chargeType;
+			if (channel.transmission == "hd") editModal.querySelector('#transmissionType').value = channel.transmission;
 			editModal.querySelector('input[name="charge"]').value = channel.charge;
 			document.querySelector('div#edit input[name="channel_Id"]').value = channel.id;
 		});

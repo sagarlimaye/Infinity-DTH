@@ -1,5 +1,6 @@
 window.addEventListener('load', () => {
 	const editButtons = document.querySelectorAll("button.editChannel");
+	const channelNameRows = document.querySelectorAll("td.channels")
 	
 	editButtons.forEach((button) => {
 		let tableRow = button.parentNode.parentNode.parentNode;
@@ -13,7 +14,6 @@ window.addEventListener('load', () => {
 				addByDefault: tableRow.querySelector("td:nth-child(7)").innerHTML,
 				id: tableRow.querySelector("input").value
 		}
-		console.log(pack.availableFrom,pack.cost);
 		
 		button.addEventListener('click', (event) => {
 			let editModal = document.querySelector("div#edit .modal-body");
@@ -33,10 +33,14 @@ window.addEventListener('load', () => {
 	removeButton.forEach((rmButton) =>{
 		let tableRow = rmButton.parentNode.parentNode.parentNode;
 		let id =  tableRow.querySelector("input").value;
-		console.log(id);
 		rmButton.addEventListener('click', (event) => {
 			document.querySelector('div#delete input[name = "remove_id"]').value = id;
 		});
+	});
+	
+	// remove ending comma
+	channelNameRows.forEach(channelNames => {
+		channelNames.innerText = channelNames.innerText.substring(0, channelNames.innerText.length - 1);
 	});
 	
 });

@@ -119,14 +119,14 @@ background-image: url("1.jpg");
 					</div>
 					<div class="form-group">
 						<select id="chargeType" name="chargeType" class="form-control">
-			                <option value="Free">Free</option>
-			                <option value="Paid">Paid</option>
+			                <option value="fta">Free</option>
+			                <option value="paid">Paid</option>
 			            </select>
 					</div>
 					<div class="form-group">
 						<select id="transmissionType" name="transmissionType" class="form-control">
-			                <option value="Standard">Standard</option>
-			                <option value="HD">High-definition</option>
+			                <option value="standard">Standard</option>
+			                <option value="hd">High-definition</option>
 			            </select>
 					</div>
 					<div class="form-group">

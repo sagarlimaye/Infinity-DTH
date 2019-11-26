@@ -124,8 +124,8 @@ public class PackageDAO implements Closeable {
 		public void UpdatePackage(Package pack) throws SQLException{
 			
 			String updateQuery = "UPDATE package SET package_name = ?, "
-					+ "charging_type = ?, transmission_type=?, cost =? "
-					+ "available_from = ?, available_to = ? WHERE package_id=?";
+					+ "charging_type = ?, transmission_type= ?, cost = ? "
+					+ "available_from = ?, available_to = ? WHERE package_id = ?";
 
 			PreparedStatement updateStmt = null;
 			
@@ -135,7 +135,8 @@ public class PackageDAO implements Closeable {
 				updateStmt.setString(2,pack.getChargingType());
 				updateStmt.setString(3,pack.getTransmissionType());
 				updateStmt.setFloat(4,pack.getCost());
-				updateStmt.setDate(5,new java.sql.Date(pack.getAvailableFrom().getTime()));
+				java.sql.Date availFrom = new java.sql.Date(pack.getAvailableFrom().getTime());
+				updateStmt.setDate(5,availFrom);
 				updateStmt.setDate(6,new java.sql.Date(pack.getAvailableTo().getTime()));
 				//updateStmt.setBoolean(5,pack.isAddedByDefault());
 				updateStmt.setInt(7,pack.getPackageID());

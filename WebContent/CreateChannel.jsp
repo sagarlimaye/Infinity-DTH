@@ -3,14 +3,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+<jsp:include page="Admin.jsp"/>
 <meta charset="ISO-8859-1">
 <title>Add Channel</title>
 <script
 	src="https://code.jquery.com/jquery-3.4.1.min.js"
 	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	crossorigin="anonymous"></script>
+	
+
 <script src="js/createChannel.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="css/form.css">
+<style type="text/css">
+body{
+background-image: url("1.jpg");
+ height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+</style>
+
 </head>
 <body>
 <form action="HomeController" method="post">
@@ -36,15 +51,15 @@
         <div>
             <label for="chargeType">Channel charge type</label>
            	<select id="chargeType" name="chargeType">
-                <option value="Free">Free</option>
-                <option value="Paid">Paid</option>
+                <option value="fta">Free</option>
+                <option value="paid">Paid</option>
             </select> 
         </div>
         <div>
             <label for="transmissionType">Transmission type</label>
             <select id="transmissionType" name="transmissionType">
-                <option value="Standard">Standard</option>
-                <option value="HD">High-definition</option>
+                <option value="standard">Standard</option>
+                <option value="hd">High-definition</option>
             </select>
         </div>
         <div>
