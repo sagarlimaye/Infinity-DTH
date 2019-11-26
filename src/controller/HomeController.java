@@ -418,7 +418,7 @@ public class HomeController extends HttpServlet {
 						out = response.getWriter();
 						Feature[] features = dao.getAllFeatures();
 						JsonArrayNodeBuilder dataBuilder = anArrayBuilder();
-						JsonObjectNodeBuilder nodeBuilder = anObjectBuilder().withField("success", aStringBuilder("true"));
+						JsonObjectNodeBuilder nodeBuilder = anObjectBuilder().withField("success", aTrueBuilder());
 						for(int i = 0; i<features.length; i++) {
 							dataBuilder.withElement(anObjectBuilder().withField("name", aStringBuilder(features[i].getName())));
 						}
@@ -426,7 +426,7 @@ public class HomeController extends HttpServlet {
 					}
 					catch(Exception e) {
 						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("false")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
 					}
 					finally {
 						if(dao != null)
@@ -447,12 +447,12 @@ public class HomeController extends HttpServlet {
 						Feature feature = new Feature();
 						feature.setName(request.getParameter("featureName"));
 						dao.addFeature(feature);
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("true")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
 					}
-					catch(SQLException e)
+					catch(Exception e)
 					{
 						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("false")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
 					}
 					finally {
 						if(out != null)
@@ -472,12 +472,12 @@ public class HomeController extends HttpServlet {
 						out = response.getWriter();
 						int id = Integer.parseInt(request.getParameter("id"));
 						dao.removeFeature(id);
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("true")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
 					}
-					catch(SQLException e)
+					catch(Exception e)
 					{
 						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("false")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aaFalseBuilder()).build()));
 					}
 					finally {
 						if(out != null)
