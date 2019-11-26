@@ -156,6 +156,18 @@
                                                                     var i;
                                                                     for (i = 0; i < close.length; i++) {
                                                                         close[i].onclick = function () {
+                                                                            var saved = false;
+                                                                            $.post("/HomeController", {
+                                                                                option: "FeatureRemove"
+                                                                            }, function(result) {
+                                                                                saved = result.success;
+                                                                                if(!saved)
+                                                                                {
+                                                                                    alert('Could not delete that feature');
+                                                                                }
+                                                                            });
+                                                                            if(!saved)
+                                                                                return;
                                                                             var div = this.parentElement;
                                                                             div.style.display = "none";
                                                                         }
@@ -163,8 +175,18 @@
 
                                                                     // Create a new list item when clicking on the "Add" button
                                                                     document.getElementById("add").onclick = function () {
-
-
+                                                                        var saved = false;
+                                                                        $.post("/HomeController", {
+                                                                            option: "FeatureAdd"
+                                                                        }, function(result) {
+                                                                            saved = result.success;
+                                                                            if(!saved)
+                                                                            {
+                                                                                alert('Could not save that feature');
+                                                                            }
+                                                                        });
+                                                                        if(!saved)
+                                                                            return;
                                                                         var node = document.createElement("li");
 
                                                                         var textnode = document.createTextNode(document.getElementById("idea").value);
@@ -188,7 +210,6 @@
                                                                                 div.style.display = "none";
                                                                             }
                                                                         }
-
                                                                     }
 
 
