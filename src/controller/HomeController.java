@@ -464,6 +464,55 @@ public class HomeController extends HttpServlet {
 					}
 				}
 				break;
+				case "CreateSetTopBox":
+				{
+					SetTopBox stb = new SetTopBox();
+					SetTopBoxDAO stbDao = null;
+					FeatureDAO featureDao =  null;
+					float cost = 0;
+					stb.setType(request.getParameter("type"));
+					stb.setDimensions(request.getParameter("dimensions"));
+					stb.setPrice(Float.parseFloat(request.getParameter("price")));
+					stb.setInstallation_charges(Float.parseFloat(request.getParameter("installationCharges")));
+					stb.setUpgradation_charges(Float.parseFloat("upgradationCharges"));
+					stb.setMac_id(request.getParameter("macId"));
+					stb.setControl_asset_id(Integer.parseInt(request.getParameter("controlAssetId")));
+					stb.setBilling_type(request.getParameter("billingType"));
+					stb.setDiscount(Float.parseFloat(request.getParameter("discount")));
+					stb.setDish_asset_id(Integer.parseInt(request.getParameter("dishAssetId")));
+					stb.setRefundable_deposit(Float.parseFloat(request.getParameter("refundableDeposit")));
+					stb.setStatus(Integer.parseInt(request.getParameter("status")));
+					
+					String[] featureIds = request.getParameterValues("features");
+					
+					try
+					{
+						stbDao = new SetTopBoxDAO();
+						if(featureIds != null && featureIds.length != 0)
+						{
+							featureDao = new FeatureDAO();
+							ArrayList<Feature> featureList = new ArrayList<Feature>();
+							for(String id : featureIds) {
+								Feature feature = featureDao.getFeatureById(Integer.parseInt(id));
+								featureList.add(feature);
+							}
+							Feature[] features = featureList.toArray(new Feature[featureList.size()]);
+							stb.setFeatures(features);
+						}
+						
+						stbDao.addSetTopBox(stb);
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+					}
+					finally {
+						if(stbDao != null) stbDao.close();
+						if(featureDao != null) featureDao.close();
+						getServletContext().getRequestDispatcher("/HomeController?option=SetTopBoxInformation").forward(request, response);
+					}
+				}
+				break;
 				case "FeatureList":
 				{
 					response.setContentType("application/json");
