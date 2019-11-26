@@ -7,16 +7,16 @@ public class Category implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String category_name;
+	private String categoryName;
 	private int category_id;
 	private int minChannels, maxChannels;
 	
 	public String getCategoryName() {
-		return category_name;
+		return categoryName;
 	}
 	
 	public void setCategoryName(String name) {
-		this.category_name = name;
+		this.categoryName = name;
 	}
 	
 	public int getMinChannels() {
