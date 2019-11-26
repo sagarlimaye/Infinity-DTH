@@ -294,7 +294,7 @@ public class HomeController extends HttpServlet {
 	
 					try {
 						dao = new CategoryDAO();
-						List<Category> names = dao.CategoryNames();
+						List<Category> names = dao.CategoryInformation();
 						request.setAttribute("categoryInf", names);
 	
 						channelDao = new ChannelDAO();
