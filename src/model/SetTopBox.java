@@ -7,6 +7,8 @@ public class SetTopBox {
 	private int control_asset_id, dish_asset_id, serialNumber, status;
 	private float discount, installation_charges, price, refundable_deposit, upgradation_charges;
 	private InputStream inventory_details;
+	private Feature[] features;
+	
 	public String getBilling_type() {
 		return billing_type;
 	}
@@ -91,5 +93,11 @@ public class SetTopBox {
 	}
 	public void setSerialNumber(int serialNumber) {
 		this.serialNumber = serialNumber;
+	}
+	public Feature[] getFeatures() {
+		return features;
+	}
+	public void setFeatures(Feature[] features) {
+		this.features = features;
 	}
 }
