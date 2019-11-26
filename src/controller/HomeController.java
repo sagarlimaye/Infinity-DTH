@@ -477,7 +477,7 @@ public class HomeController extends HttpServlet {
 					catch(Exception e)
 					{
 						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aaFalseBuilder()).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
 					}
 					finally {
 						if(out != null)
