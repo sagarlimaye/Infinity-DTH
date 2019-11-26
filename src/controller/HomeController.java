@@ -406,6 +406,24 @@ public class HomeController extends HttpServlet {
 					}				
 				}
 				break;
+				case "PrepareCreateSetTopBox":
+				{
+					FeatureDAO dao = null;
+					try {
+						dao = new FeatureDAO();
+						Feature[] features = dao.getAllFeatures();
+						request.setAttribute("features", features);
+						
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					finally {
+						if(dao != null)
+							dao.close();
+						getServletContext().getRequestDispatcher("/SetTopBox.jsp").forward(request, response);
+					}
+				}
+				break;
 				case "FeatureList":
 				{
 					response.setContentType("application/json");
