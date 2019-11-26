@@ -311,6 +311,7 @@ public class HomeController extends HttpServlet {
 					}
 				}
 				break;
+				
 				case "ViewPackage":
 				{
 					ChannelDAO channelDao = null;
