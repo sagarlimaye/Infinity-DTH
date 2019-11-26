@@ -124,7 +124,7 @@ public class PackageDAO implements Closeable {
 		public void UpdatePackage(Package pack) throws SQLException{
 			
 			String updateQuery = "UPDATE package SET package_name = ?, "
-					+ "charging_type = ?, transmission_type= ?, cost = ? "
+					+ "charging_type = ?, transmission_type= ?, cost = ? ,"
 					+ "available_from = ?, available_to = ? WHERE package_id = ?";
 
 			PreparedStatement updateStmt = null;

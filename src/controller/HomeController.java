@@ -2,12 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,6 @@ import javax.servlet.http.HttpSession;
 import argo.format.JsonFormatter;
 import argo.format.PrettyJsonFormatter;
 import argo.jdom.JsonArrayNodeBuilder;
-import argo.jdom.JsonNode;
 import argo.jdom.JsonObjectNodeBuilder;
 
 import static argo.jdom.JsonNodeBuilders.*;
@@ -106,8 +103,7 @@ public class HomeController extends HttpServlet {
 					ChannelDAO dao = null;
 					try {
 						dao = new ChannelDAO();
-						ChannelDAO channelDB = new ChannelDAO();
-						Channel[] channelInfo = channelDB.ChannelInformation();
+						Channel[] channelInfo = dao.ChannelInformation();
 						session.setAttribute("channelInf",channelInfo);
 						getServletContext().getRequestDispatcher("/channel.jsp").forward(request, response);
 						
@@ -212,16 +208,20 @@ public class HomeController extends HttpServlet {
 					try
 					{
 						pkgDao = new PackageDAO();
-						channelDao = new ChannelDAO();
-						ArrayList<Channel> channelList = new ArrayList<Channel>();
-						for(String id : channelIds) {
-							Channel channel = channelDao.getChannelById(Integer.parseInt(id));
-							cost+=channel.getCharge();
-							channelList.add(channel);
+						if(channelIds.length != 0)
+						{
+							channelDao = new ChannelDAO();
+							ArrayList<Channel> channelList = new ArrayList<Channel>();
+							for(String id : channelIds) {
+								Channel channel = channelDao.getChannelById(Integer.parseInt(id));
+								cost+=channel.getCharge();
+								channelList.add(channel);
+							}
+							Channel[] channels = channelList.toArray(new Channel[channelList.size()]);
+							pkg.setChannels(channels);
+							pkg.setCost(cost);
 						}
-						Channel[] channels = channelList.toArray(new Channel[channelList.size()]);
-						pkg.setChannels(channels);
-						pkg.setCost(cost);
+						
 						pkgDao.addPackage(pkg);
 					}
 					catch(Exception e)
@@ -392,8 +392,7 @@ public class HomeController extends HttpServlet {
 					SetTopBoxDAO dao = null;				
 					try {
 						dao = new SetTopBoxDAO();
-						SetTopBoxDAO setTopBoxDB = new SetTopBoxDAO();
-						SetTopBox[] setTopBoxInfo = setTopBoxDB.SetTopBoxInformation();
+						SetTopBox[] setTopBoxInfo = dao.SetTopBoxInformation();
 						session.setAttribute("setTopBoxInf", setTopBoxInfo);
 						getServletContext().getRequestDispatcher("/viewSetTopBox.jsp").forward(request, response);
 						
@@ -417,7 +416,7 @@ public class HomeController extends HttpServlet {
 						out = response.getWriter();
 						Feature[] features = dao.getAllFeatures();
 						JsonArrayNodeBuilder dataBuilder = anArrayBuilder();
-						JsonObjectNodeBuilder nodeBuilder = anObjectBuilder().withField("success", aStringBuilder("true"));
+						JsonObjectNodeBuilder nodeBuilder = anObjectBuilder().withField("success", aTrueBuilder());
 						for(int i = 0; i<features.length; i++) {
 							dataBuilder.withElement(anObjectBuilder().withField("name", aStringBuilder(features[i].getName())));
 						}
@@ -425,7 +424,7 @@ public class HomeController extends HttpServlet {
 					}
 					catch(Exception e) {
 						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("false")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
 					}
 					finally {
 						if(dao != null)
@@ -446,12 +445,12 @@ public class HomeController extends HttpServlet {
 						Feature feature = new Feature();
 						feature.setName(request.getParameter("featureName"));
 						dao.addFeature(feature);
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("true")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
 					}
-					catch(SQLException e)
+					catch(Exception e)
 					{
 						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("false")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
 					}
 					finally {
 						if(out != null)
@@ -471,12 +470,12 @@ public class HomeController extends HttpServlet {
 						out = response.getWriter();
 						int id = Integer.parseInt(request.getParameter("id"));
 						dao.removeFeature(id);
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("true")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
 					}
-					catch(SQLException e)
+					catch(Exception e)
 					{
 						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aStringBuilder("false")).build()));
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
 					}
 					finally {
 						if(out != null)
