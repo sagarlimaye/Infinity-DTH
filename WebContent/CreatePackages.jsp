@@ -90,37 +90,16 @@ background-image: url("1.jpg");
               <div class="cols-sm-10">
                <div class="input-group">
                 <div class="category">
-                 <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">Categories</button>
-                  <div class="dropdown-menu">
-                   <a class="dropdown-item" href="#">Sports</a>
-                   <a class="dropdown-item" href="#">News</a>
-                   <a class="dropdown-item" href="#">Entertainment</a>
-                 </div>
-                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#category">Add Category</button>
-                 <div class="modal fade" id="category" role="dialog">
-                  <div class="modal-dialog">
-                   <div class="modal-content">
-                    <div class="modal-header">
-                    <h4 class="modal-title">Add Category</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>                                                             
-                   </div>
-                   <div class="modal-body">
-                     <div class="form-group">
-                       <label for="cname" class="cols-sm-2 control-label">Name</label>
-                       <input class="form-control" type="text" placeholder="Category Name">
-                     </div>
-                      <div class="input-group">
-                       <label for="min" class="cols-sm-2 control-label">Min Channels </label>
-                       <span class="input-group-addon" style="width:10px"></span>
-                       <input type="text" class="form-control" placeholder="0"/>
-                       <span class="input-group-addon" style="width:30px"></span>
-                       <label for="max" class="cols-sm-2 control-label">Max Channels </label>
-                       <span class="input-group-addon" style="width:10px"></span>
-                       <input type="text" class="form-control" placeholder=" "/>
-                      </div>
-                   </div>
-                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Create</button>
+                       
+                    <select name= "category">
+                     	<c:forEach items="${categoryInf}" var="category">
+                    		<option value="${category.categoryName}">${category.categoryName}</option>                  	
+                    	</c:forEach>                   
+                    </select>
+                    
+                    <input type="hidden" value = "InputCategory">
+                    <button type="submit" formaction = "HomeController">Submit</button>
+                
                    </div>
                   </div>
                  </div>

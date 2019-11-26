@@ -8,7 +8,8 @@ public class Category implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String category_name;
-	private int min_channels, max_channels;
+	private int category_id;
+	private int minChannels, maxChannels;
 	
 	public String getCategoryName() {
 		return category_name;
@@ -19,19 +20,27 @@ public class Category implements Serializable{
 	}
 	
 	public int getMinChannels() {
-		return min_channels;
+		return minChannels;
 	}
 	
 	public void setMinChannels(int minChannels) {
-		this.min_channels = minChannels;
+		this.minChannels = minChannels;
 	}
 	
 	public int getMaxChannels() {
-		return max_channels;
+		return maxChannels;
 	}
 	
 	public void setMaxChannels(int maxChannels) {
-		this.max_channels = maxChannels;
+		this.maxChannels = maxChannels;
+	}
+
+	public int getCategory_id() {
+		return category_id;
+	}
+
+	public void setCategory_id(int i) {
+		this.category_id = i;
 	}
 	
 }	
