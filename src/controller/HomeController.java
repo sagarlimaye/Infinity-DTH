@@ -47,6 +47,10 @@ public class HomeController extends HttpServlet {
     public HomeController() {
         super();
     }
+    
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -564,12 +568,14 @@ public class HomeController extends HttpServlet {
 						Feature feature = new Feature();
 						feature.setName(request.getParameter("featureName"));
 						dao.addFeature(feature);
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
+						String id = Integer.toString(feature.getId());
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("id", aNumberBuilder(id)).build()));
+						response.setStatus(201);
 					}
 					catch(Exception e)
 					{
 						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
+						response.setStatus(500);
 					}
 					finally {
 						if(out != null)
@@ -589,12 +595,13 @@ public class HomeController extends HttpServlet {
 						out = response.getWriter();
 						int id = Integer.parseInt(request.getParameter("id"));
 						dao.removeFeature(id);
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
+						response.setStatus(204);
 					}
 					catch(Exception e)
 					{
 						e.printStackTrace();
 						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
+						response.setStatus(500);
 					}
 					finally {
 						if(out != null)
@@ -602,6 +609,7 @@ public class HomeController extends HttpServlet {
 						if(dao != null)
 							dao.close();
 					}
+					
 				}
 				break;
 				default:

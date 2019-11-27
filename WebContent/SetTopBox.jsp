@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -27,10 +28,8 @@
 
         /* Style the close button */
         .close {
-            position: absolute;
             right: 0;
             top: 0;
-            padding: 12px 16px 12px 16px;
         }
     </style>
 
@@ -135,8 +134,8 @@
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title custom_align" id="Heading">Add
                                                                     Features</h4>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-hidden="true">�</button>
+                                                                <button type="button" data-dismiss="modal"
+                                                                    aria-hidden="true">X</button>
 
                                                             </div>
                                                             <div class="modal-body">
@@ -146,75 +145,60 @@
                                                                 </div>
 
                                                                 <ul id="list">
-
-
+                                                                    <c:forEach items="${features}" var="feature">
+                                                                    <li>
+                                                                    	<c:out value="${feature.name}"></c:out>
+                                                                        <span class="close" id="${feature.id}">x</span>
+                                                                    </li>
+                                                                        
+                                                                    </c:forEach>
                                                                 </ul>
                                                                 <script>
-
-                                                                    // Click on a close button to hide the current list item
-                                                                    var close = document.getElementsByClassName("close");
-                                                                    var i;
-                                                                    for (i = 0; i < close.length; i++) {
-                                                                        close[i].onclick = function () {
-                                                                            var saved = false;
-                                                                            $.post("/HomeController", {
-                                                                                option: "FeatureRemove"
-                                                                            }, function(result) {
-                                                                                saved = result.success;
-                                                                                if(!saved)
-                                                                                {
-                                                                                    alert('Could not delete that feature');
-                                                                                }
-                                                                            });
-                                                                            if(!saved)
-                                                                                return;
-                                                                            var div = this.parentElement;
-                                                                            div.style.display = "none";
-                                                                        }
-                                                                    }
-
-                                                                    // Create a new list item when clicking on the "Add" button
-                                                                    document.getElementById("add").onclick = function () {
+                                                                    function OnClose() {
                                                                         var saved = false;
-                                                                        $.post("/HomeController", {
-                                                                            option: "FeatureAdd"
+                                                                        var div = this.parentElement;
+                                                                        $.ajax("/InfinityDTH/HomeController?option=FeatureRemove&id="+this.id, {
+                                                                            method: "DELETE",
+                                                                            statusCode: {
+                                                                                204: function() {
+                                                                                    div.style.display = "none";
+                                                                                },
+                                                                                500: () => { alert("Could not delete that feature"); }
+                                                                            } 
+                                                                        });  
+                                                                    }
+                                                                    function OnClick() {
+                                                                        var saved = false;
+                                                                        var node = document.createElement("li");
+                                                                        var textnode = document.createTextNode(document.getElementById("idea").value);
+                                                                        $.post("/InfinityDTH/HomeController", {
+                                                                            option: "FeatureAdd",
+                                                                            featureName: textnode.textContent
                                                                         }, function(result) {
-                                                                            saved = result.success;
-                                                                            if(!saved)
-                                                                            {
-                                                                                alert('Could not save that feature');
+                                                                            node.appendChild(textnode);
+                                                                            list.appendChild(node);
+                                                                            document.getElementById("idea").value = "";
+                                                                            var span = document.createElement("SPAN");
+                                                                            var txt = document.createTextNode("\u00D7");
+                                                                            span.className = "close";
+                                                                            span.id = result.id;
+                                                                            span.appendChild(txt);
+                                                                            node.appendChild(span);
+
+                                                                            for (i = 0; i < close.length; i++) {
+                                                                                close[i].onclick = OnClose;
                                                                             }
                                                                         });
-                                                                        if(!saved)
-                                                                            return;
-                                                                        var node = document.createElement("li");
-
-                                                                        var textnode = document.createTextNode(document.getElementById("idea").value);
-
-                                                                        node.appendChild(textnode);
-
-                                                                        document.getElementById("list").appendChild(node);
-
-                                                                        document.getElementById("idea").value = "";
-
-
-                                                                        var span = document.createElement("SPAN");
-                                                                        var txt = document.createTextNode("\u00D7");
-                                                                        span.className = "close";
-                                                                        span.appendChild(txt);
-                                                                        node.appendChild(span);
-
-                                                                        for (i = 0; i < close.length; i++) {
-                                                                            close[i].onclick = function () {
-                                                                                var div = this.parentElement;
-                                                                                div.style.display = "none";
-                                                                            }
-                                                                        }
                                                                     }
-
-
-
-
+                                                                    // Click on a close button to hide the current list item
+                                                                    var close = document.getElementsByClassName("close");
+                                                                    var list = document.getElementById("list");
+                                                                    var i;
+                                                                    for (i = 0; i < close.length; i++) {
+                                                                        close[i].onclick = OnClose;
+                                                                    }
+                                                                    // Create a new list item when clicking on the "Add" button
+                                                                    document.getElementById("add").onclick = OnClick;
                                                                 </script>
 
                                                             </div>
@@ -347,15 +331,6 @@
                 </div>
 </div>
 
-<div class="featureList">
-	<c:forEach items="${features}" var="features">
-		<div class="featureItem" 
-			 id="${features.id}"
-			  data-name="${category.feature_name}" >
-			 <c:out value="${features.feature_name}"/>
-		</div>
-	</c:forEach>
-</div>
 </body>
 
 </html>
