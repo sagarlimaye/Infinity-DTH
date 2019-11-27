@@ -6,6 +6,7 @@
 
 <head>
 
+    <jsp:include page="Admin.jsp"/>
     <meta charset="ISO-8859-1">
     <title>Create Set Top Box (STB)</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -22,6 +23,18 @@
             top: 0;
         }
     </style>
+    <style type="text/css">
+body{
+background-image: url("1.jpg");
+ height: 1300px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+
+</style>
 
     <script type="text/javascript">
 
@@ -316,14 +329,9 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-                            <div class="form-group ">
-                                <button type="submit"
-                                    class="btn btn-primary btn-lg btn-block login-button">Submit</button>
-                            </div>
+                                <input type="hidden" name="option" value="CreateSetTopBox"/>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
+                            
 
                         </form>
                     </div>
