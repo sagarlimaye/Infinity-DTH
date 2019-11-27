@@ -5,26 +5,17 @@
 <html>
 
 <head>
-    <jsp:include page="Admin.jsp" />
+    
     <meta charset="ISO-8859-1">
-    <title>Insert title here</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <title>Create Set Top Box (STB)</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
     <style type="text/css">
-        body {
-            background-image: url("1.jpg");
-            height: 1200px;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            position: relative;
-
-        }
+        
 
         /* Style the close button */
         .close {
@@ -110,8 +101,12 @@
                                 <label for="features" class="cols-sm-2 control-label">Add Features</label>
                                 <div class="cols-sm-10">
                                     <div class="input-group">
-                                        <select class="selectpicker" name="channels" id="channelSelect" multiple>
-
+                                        <select class="selectpicker" name="channels" id="featureSelect" multiple>
+                                            <c:forEach items="${features}" var="feature">
+                                                <option value="${feature.id}">
+                                                    <c:out value="${feature.name}"></c:out>
+                                                </option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
@@ -125,7 +120,7 @@
 
                                         <div class="features">
                                             <button type="button" class="btn btn-info" data-toggle="modal"
-                                                data-target="#features">Add Features</button>
+                                                data-target="#features">Features</button>
                                             <div class="modal fade" id="features" tabindex="-1" role="dialog"
                                                 aria-labelledby="features" aria-hidden="true">
                                                 <div class="modal-dialog">
@@ -154,14 +149,20 @@
                                                                     </c:forEach>
                                                                 </ul>
                                                                 <script>
+                                                                    var select = document.getElementById("featureSelect");
+                                                                    var close = document.getElementsByClassName("close");
+                                                                    var list = document.getElementById("list");
+                                                                    var i;
                                                                     function OnClose() {
                                                                         var saved = false;
                                                                         var div = this.parentElement;
+                                                                        
                                                                         $.ajax("/InfinityDTH/HomeController?option=FeatureRemove&id="+this.id, {
                                                                             method: "DELETE",
                                                                             statusCode: {
-                                                                                204: function() {
-                                                                                    div.style.display = "none";
+                                                                                204: () => {
+                                                                                    $(select).find("option[value='"+this.id+"']").remove();
+                                                                                    div.remove(); 
                                                                                 },
                                                                                 500: () => { alert("Could not delete that feature"); }
                                                                             } 
@@ -179,26 +180,26 @@
                                                                             list.appendChild(node);
                                                                             document.getElementById("idea").value = "";
                                                                             var span = document.createElement("SPAN");
-                                                                            var txt = document.createTextNode("\u00D7");
+                                                                            var txt = document.createTextNode("X");
+                                                                            var option = document.createElement("option");
                                                                             span.className = "close";
                                                                             span.id = result.id;
+                                                                            option.value = result.id;
+                                                                            option.text = textnode.textContent;
                                                                             span.appendChild(txt);
                                                                             node.appendChild(span);
-
-                                                                            for (i = 0; i < close.length; i++) {
-                                                                                close[i].onclick = OnClose;
-                                                                            }
+                                                                            select.appendChild(option);
+                                                                            span.onclick = OnClose;
                                                                         });
                                                                     }
                                                                     // Click on a close button to hide the current list item
-                                                                    var close = document.getElementsByClassName("close");
-                                                                    var list = document.getElementById("list");
-                                                                    var i;
                                                                     for (i = 0; i < close.length; i++) {
                                                                         close[i].onclick = OnClose;
                                                                     }
+                                                                    
                                                                     // Create a new list item when clicking on the "Add" button
                                                                     document.getElementById("add").onclick = OnClick;
+                                                                    $("#features").on('hidden.bs.modal', () => { $("#featureSelect").selectpicker("refresh"); });
                                                                 </script>
 
                                                             </div>
@@ -208,7 +209,7 @@
                                                                 <input type="hidden" name="package_Id">
                                                                 <button type="submit" class="btn btn-warning btn-lg"
                                                                     style="width: 100%;"><span
-                                                                        class="glyphicon glyphicon-ok-sign"></span>�Add
+                                                                        class="glyphicon glyphicon-ok-sign"></span>Add
                                                                     Features</button>
 
                                                             </div>
