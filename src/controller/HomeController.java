@@ -587,34 +587,6 @@ public class HomeController extends HttpServlet {
 					}
 				}
 				break;
-				case "FeatureList":
-				{
-					response.setContentType("application/json");
-					PrintWriter out = null;
-					FeatureDAO dao = null;
-					try {
-						dao = new FeatureDAO();
-						out = response.getWriter();
-						Feature[] features = dao.getAllFeatures();
-						JsonArrayNodeBuilder dataBuilder = anArrayBuilder();
-						JsonObjectNodeBuilder nodeBuilder = anObjectBuilder().withField("success", aTrueBuilder());
-						for(int i = 0; i<features.length; i++) {
-							dataBuilder.withElement(anObjectBuilder().withField("name", aStringBuilder(features[i].getName())));
-						}
-						out.print(JSON_FORMATTER.format(nodeBuilder.withField("data", dataBuilder).build()));
-					}
-					catch(Exception e) {
-						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
-					}
-					finally {
-						if(dao != null)
-							dao.close();
-						if(out != null)
-							out.close();
-					}
-				}
-				break;
 				case "FeatureAdd":
 				{
 					response.setContentType("application/json");
@@ -633,7 +605,7 @@ public class HomeController extends HttpServlet {
 					catch(Exception e)
 					{
 						e.printStackTrace();
-						response.setStatus(500);
+						response.sendError(500);
 					}
 					finally {
 						if(out != null)
@@ -659,7 +631,7 @@ public class HomeController extends HttpServlet {
 					{
 						e.printStackTrace();
 						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
-						response.setStatus(500);
+						response.sendError(500);
 					}
 					finally {
 						if(out != null)

@@ -6,6 +6,7 @@
 
 <head>
 
+    <jsp:include page="Admin.jsp"/>
     <meta charset="ISO-8859-1">
     <title>Create Set Top Box (STB)</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -22,6 +23,18 @@
             top: 0;
         }
     </style>
+    <style type="text/css">
+body{
+background-image: url("1.jpg");
+ height: 1300px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+
+</style>
 
     <script type="text/javascript">
 
@@ -156,15 +169,14 @@
                                                                         var saved = false;
                                                                         var li = this.parentElement;
 
-                                                                        $.ajax("/InfinityDTH/HomeController?option=FeatureRemove&id=" + this.id, {
+                                                                        $.ajax("/InfinityDTH/HomeController?option=FeatureRemove&id=" + this.id, 
+                                                                        {
                                                                             method: "DELETE",
-                                                                            statusCode: {
-                                                                                204: () => {
-                                                                                    $(select).find("option[value='" + this.id + "']").remove();
-                                                                                    li.remove();
-                                                                                },
-                                                                                500: () => { alert("Could not delete that feature"); }
-                                                                            }
+                                                                            success: () => {
+                                                                                $(select).find("option[value='" + this.id + "']").remove();
+                                                                                li.remove();
+                                                                            },
+                                                                            error: () => { alert("Could not delete that feature"); }
                                                                         });
                                                                     }
                                                                     function OnClick() {
@@ -189,7 +201,7 @@
                                                                             node.appendChild(span);
                                                                             select.append(option);
                                                                             span.onclick = OnClose;
-                                                                        });
+                                                                        }).fail(() => { alert("Could not add that feature"); });
                                                                     }
 
                                                                     // Click on a close button to hide the current list item
@@ -303,18 +315,12 @@
                                         <span class="input-group-addon"><i class="fa fa-lock fa-lg"
                                                 aria-hidden="true"></i></span>
                                         <input type="file" name="myFile" multiple>
-                                        <input type="submit" value="upload" />
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-                            <div class="form-group ">
-                                <button type="button"
-                                    class="btn btn-primary btn-lg btn-block login-button">Submit</button>
-                            </div>
+                                <input type="hidden" name="option" value="CreateSetTopBox"/>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
+                            
 
                         </form>
                     </div>
