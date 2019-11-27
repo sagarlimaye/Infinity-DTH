@@ -106,7 +106,7 @@ background-image: url("1.jpg");
 </div>
 
 <div align="center" class="add-container">
-	<button onclick="location.href = 'SetTopBox.jsp';" id="myButton" class="btn btn-primary float-none submit-button" >Add SetTop Box</button>
+	<button onclick="location.href = '/HomeController?option=PrepareCreateSetTopBox';" id="myButton" class="btn btn-primary float-none submit-button" >Add SetTop Box</button>
 </div>
    
 </body>
