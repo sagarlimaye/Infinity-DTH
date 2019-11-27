@@ -169,15 +169,14 @@ background-image: url("1.jpg");
                                                                         var saved = false;
                                                                         var li = this.parentElement;
 
-                                                                        $.ajax("/InfinityDTH/HomeController?option=FeatureRemove&id=" + this.id, {
+                                                                        $.ajax("/InfinityDTH/HomeController?option=FeatureRemove&id=" + this.id, 
+                                                                        {
                                                                             method: "DELETE",
-                                                                            statusCode: {
-                                                                                204: () => {
-                                                                                    $(select).find("option[value='" + this.id + "']").remove();
-                                                                                    li.remove();
-                                                                                },
-                                                                                500: () => { alert("Could not delete that feature"); }
-                                                                            }
+                                                                            success: () => {
+                                                                                $(select).find("option[value='" + this.id + "']").remove();
+                                                                                li.remove();
+                                                                            },
+                                                                            error: () => { alert("Could not delete that feature"); }
                                                                         });
                                                                     }
                                                                     function OnClick() {
@@ -202,7 +201,7 @@ background-image: url("1.jpg");
                                                                             node.appendChild(span);
                                                                             select.append(option);
                                                                             span.onclick = OnClose;
-                                                                        });
+                                                                        }).fail(() => { alert("Could not add that feature"); });
                                                                     }
 
                                                                     // Click on a close button to hide the current list item
