@@ -106,6 +106,32 @@ public List<Category> CategoryInformation() throws SQLException {
 		return categoryInf;
 	}
 
+	public Category getCategoryById(int id) throws SQLException {
+		String query = "SELECT * FROM category WHERE category_id = ?;";
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		Category category = null;
+		
+		try
+		{
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			rs.next();
+			category = new Category();
+			category.setCategory_id(rs.getInt("category_id"));
+			category.setCategoryName(rs.getString("category_name"));
+			category.setMinChannels(rs.getInt("min_channels"));
+			category.setMaxChannels(rs.getInt("max_channels"));
+		}
+		finally {
+			if(rs != null) rs.close();
+			if(stmt != null) stmt.close();
+		}
+		
+		return category;
+	}
+
 	public void close() throws IOException {
 		try {
 			if(conn != null)

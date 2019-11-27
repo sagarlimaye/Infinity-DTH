@@ -29,13 +29,21 @@ $(document).ready(function() {
 </script>
 <style type="text/css">
 body{
-background-image: url("1.jpg");
- height: 500px;
+	background-image: url("1.jpg");
+ 	height: max-content;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+}
 
+.pagination {
+    width: max-content;
+}
+
+iframe
+{
+    height:700px !important;
 }
 </style>
 
@@ -51,56 +59,52 @@ background-image: url("1.jpg");
 	<div class="row">
 		<h2 class="text-center">Package Dashboard</h2>
 	</div>
-    
-        <div class="row">
-		
-            <div class="col-md-12" style="width:500px;height:250px;line-height:3em;overflow:scroll;padding:5px;">
-  
-            
-				<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-    				<thead>
-						<tr>
-							<th>Name</th>
-							<th>Charging Type</th>
-							<th>Transmission Type</th>
-							<th>Cost</th>
-							<th>Available From</th>
-							<th>Available To</th>
-							<th>Add By Default</th>
-							<th>Channels</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-						</tr>
-					</thead>			
+   
+    <div class="row">
+    	<div class="col-md-12" style="padding:5px;">
+			<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    			<thead>
+					<tr>
+						<th>Name</th>
+						<th>category</th>
+						<th>Charging Type</th>
+						<th>Transmission Type</th>
+						<th>Cost</th>
+						<th>Available From</th>
+						<th>Available To</th>
+						<th>Add By Default</th>
+						<th>Channels</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+					</tr>
+				</thead>			
 					
-					<tbody>	
+				<tbody>	
 					<c:forEach items="${inf}" var="pac">
                		<tr>
-                    <td><c:out value="${pac.name}" /></td>
-                    <td><c:out value="${pac.chargingType}" /></td>
-                    <td><c:out value="${pac.transmissionType}" /></td>
-                    <td><c:out value="${pac.cost}" /></td>
-                    <td><c:out value="${pac.availableFrom}" /></td>
-                    <td><c:out value="${pac.availableTo}" /></td>
-                    <td><c:out value="${pac.addedByDefault}" /></td>
-                    <td class="channels">
-	                    <c:forEach items="${channels}" var="channel">
-	                    	<c:if test = "${pac.packageID == channel.packageId}">
-	                    		<c:out value="${channel.name},"/>
-	                    	</c:if>
-	                    </c:forEach>
-                    </td>
-                    <input type = "hidden" name = "updateID" value = "${pac.packageID} ">                   
-                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs editChannel" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
-    			    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs removeChannel" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td> 
-             </tr> 
-            </c:forEach>
-					
-					</tbody>
-					</table>
-				
-	
-	</div>
+	                    <td><c:out value="${pac.name}" /></td>
+	                    <td><c:out value="${pac.category.categoryName}" /></td>
+	                    <td><c:out value="${pac.chargingType}" /></td>
+	                    <td><c:out value="${pac.transmissionType}" /></td>
+	                    <td><c:out value="${pac.cost}" /></td>
+	                    <td><c:out value="${pac.availableFrom}" /></td>
+	                    <td><c:out value="${pac.availableTo}" /></td>
+	                    <td><c:out value="${pac.addedByDefault}" /></td>
+	                    <td class="channels">
+		                    <c:forEach items="${channels}" var="channel">
+		                    	<c:if test = "${pac.packageID == channel.packageId}">
+		                    		<c:out value="${channel.name},"/>
+		                    	</c:if>
+		                    </c:forEach>
+                    	</td>
+                    	<input type = "hidden" name = "updateID" value = "${pac.packageID} ">                   
+                    	<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs editChannel" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
+    			    	<td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs removeChannel" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td> 
+             		</tr> 
+            		</c:forEach>
+            	</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 
