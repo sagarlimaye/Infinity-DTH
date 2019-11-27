@@ -10,13 +10,11 @@ $(function() {
         
         $.ajax("/InfinityDTH/HomeController?option=CategoryRemove&id="+ this.id, {
             method: "DELETE",
-            statusCode: {
-                204: () => {
-                    $(select).find("option[value='"+this.id+"']").remove();
-                    div.remove(); 
-                },
-                500: () => { alert("Could not delete that feature"); }
-            } 
+            success: () => {
+	                    $(select).find("option[value='"+this.id+"']").remove();
+	                    div.remove(); 
+    				 },
+            error: () => { alert("Could not delete that feature"); }
         });  
     }
     
@@ -46,7 +44,7 @@ $(function() {
             node.appendChild(span);
             select.appendChild(option);
             span.onclick = OnClose;
-        });
+        }).fail(() => { alert("Could not add that feature"); });
     }
     
     // Click on a close button to hide the current list item
