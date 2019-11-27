@@ -65,13 +65,13 @@ background-image: url("1.jpg");
 						<th>Price</th>
 						<th>Installation Charge</th>
 						<th>Upgrade Charge</th>
-						<th>Mac ID</th>
-                       	<th>Control Asset ID</th>
+						
+                       	
                         <th>Billing Type</th>
                         <th>Discount</th>
-                        <th>Dish Asset ID</th>
+                        
                         <th>Refundable Deposit</th>
-                        <th>Status</th>
+                       
                         <th>Inventory Details CSV</th>
                        	<th>Edit</th>
                         <th>Delete</th>                                                                                                                                                
@@ -87,13 +87,12 @@ background-image: url("1.jpg");
                     		<td><c:out value="${settopbox.price}" /></td>
                     		<td><c:out value="${settopbox.installation_charges}" /></td>
                     		<td><c:out value="${settopbox.upgradation_charges}" /></td>
-                    		<td><c:out value="${settopbox.mac_id}" /></td>
-                    		<td><c:out value="${settopbox.control_asset_id}" /></td>
+                    		
                     		<td><c:out value="${settopbox.billing_type}" /></td>
                     		<td><c:out value="${settopbox.discount}" /></td>
-                    		<td><c:out value="${settopbox.dish_asset_id}" /></td>
+                    		
                     		<td><c:out value="${settopbox.refundable_deposit}" /></td>
-                    		<td><c:out value="${settopbox.status}" /></td>
+                    		
                     		<td><c:out value="${settopbox.inventory_details}" /></td>
 		                    <input type = "hidden" name = "updateID" value = "${settopbox.serialNumber} ">                   
 		                    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs editChannel" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
@@ -107,7 +106,7 @@ background-image: url("1.jpg");
 </div>
 
 <div align="center" class="add-container">
-	<button onclick="location.href = 'CreateChannel.jsp';" id="myButton" class="btn btn-primary float-none submit-button" >Add Channel</button>
+	<button onclick="location.href = 'SetTopBox.jsp';" id="myButton" class="btn btn-primary float-none submit-button" >Add SetTop Box</button>
 </div>
    
 </body>

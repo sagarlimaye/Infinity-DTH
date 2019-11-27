@@ -52,6 +52,10 @@ public class HomeController extends HttpServlet {
     public HomeController() {
         super();
     }
+    
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -189,14 +193,26 @@ public class HomeController extends HttpServlet {
 				{
 					Package pkg = new Package();
 					PackageDAO pkgDao = null;
-					ChannelDAO channelDao =  null;
+					ChannelDAO channelDao = null;
+					CategoryDAO categoryDao = null;
+					
 					float cost = 0;
 					pkg.setName(request.getParameter("pkgName"));
 					pkg.setChargingType(request.getParameter("chargeType"));
 					pkg.setTransmissionType(request.getParameter("transmissionType"));
 					pkg.setCost(0);
+					
+					int categoryId = Integer.parseInt(request.getParameter("category"));
+					try {
+						categoryDao = new CategoryDAO();
+						pkg.setCategory(categoryDao.getCategoryById(categoryId));
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					
 					pkg.setAddedByDefault(Boolean.parseBoolean(request.getParameter("addedByDefault")));
 					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					
 					try {
 						String afs =request.getParameter("availableFrom"); 
 						String ats = request.getParameter("availableTo");
@@ -233,13 +249,13 @@ public class HomeController extends HttpServlet {
 						e.printStackTrace();
 					}
 					finally {
-						if(pkgDao != null) pkgDao.close();
-						if(channelDao != null) channelDao.close();
+						if (pkgDao != null) pkgDao.close();
+						if (channelDao != null) channelDao.close();
+						if (categoryDao != null) categoryDao.close();
 						getServletContext().getRequestDispatcher("/HomeController?option=ViewPackage").forward(request, response);
 					}
 				}
 				break;
-				
 				case "CreateCategory":
 				{
 					Category category = new Category();
@@ -561,12 +577,14 @@ public class HomeController extends HttpServlet {
 						Feature feature = new Feature();
 						feature.setName(request.getParameter("featureName"));
 						dao.addFeature(feature);
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
+						String id = Integer.toString(feature.getId());
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("id", aNumberBuilder(id)).build()));
+						response.setStatus(201);
 					}
 					catch(Exception e)
 					{
 						e.printStackTrace();
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
+						response.setStatus(500);
 					}
 					finally {
 						if(out != null)
@@ -586,12 +604,13 @@ public class HomeController extends HttpServlet {
 						out = response.getWriter();
 						int id = Integer.parseInt(request.getParameter("id"));
 						dao.removeFeature(id);
-						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aTrueBuilder()).build()));
+						response.setStatus(204);
 					}
 					catch(Exception e)
 					{
 						e.printStackTrace();
 						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
+						response.setStatus(500);
 					}
 					finally {
 						if(out != null)
@@ -599,6 +618,7 @@ public class HomeController extends HttpServlet {
 						if(dao != null)
 							dao.close();
 					}
+					
 				}
 				break;
 				default:
