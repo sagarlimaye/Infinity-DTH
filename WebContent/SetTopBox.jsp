@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -144,11 +145,15 @@
                                                                 </div>
 
                                                                 <ul id="list">
-
-
+                                                                    <c:forEach items="${features}" var="feature">
+                                                                    <li>
+                                                                    	<c:out value="${feature.name}"></c:out>
+                                                                        <span class="close" id="${feature.id}">x</span>
+                                                                    </li>
+                                                                        
+                                                                    </c:forEach>
                                                                 </ul>
                                                                 <script>
-
                                                                     function OnClose() {
                                                                         var saved = false;
                                                                         var div = this.parentElement;
