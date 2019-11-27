@@ -14,6 +14,7 @@ public class Package implements Serializable{
 	private float cost;
 	private boolean addedByDefault;
 	private Channel[] channels;
+	private Category category;
 	private int packageID;
 	
 	public String getName() {
@@ -69,6 +70,12 @@ public class Package implements Serializable{
 	}
 	public void setCost(float cost) {
 		this.cost = cost;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }

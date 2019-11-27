@@ -84,9 +84,9 @@ background-image: url("1.jpg");
            			</div>
            			
         			<div class="form-group">
-         				<label for="pack" class="cols-sm-2 control-label">Package Category</label>
+         				<label for="category" class="cols-sm-2 control-label">Package Category</label>
              			<div class="category">
-             				<select class="form-control">
+             				<select class="form-control" name="category">
 								<c:forEach items="${categoryInf}" var="category">
 									<option value="${category.category_id}">${category.categoryName}</option>
 								</c:forEach>
