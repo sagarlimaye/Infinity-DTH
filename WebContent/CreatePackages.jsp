@@ -40,7 +40,8 @@ background-image: url("1.jpg");
        				<div class="form-group">
          				<label for="name" class="cols-sm-2 control-label">Package Name</label>
             			<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-              			<input type="text" class="form-control" name="pkgName" id="name" placeholder="Enter package name" />
+              			<input type="text" class="form-control" name="pkgName" id="name"
+              			placeholder="Enter package name" required />
        				</div>
        				
        				<div class="form-group">
@@ -53,7 +54,8 @@ background-image: url("1.jpg");
                				</div>
                				<div class="form-check-inline">
                  				<label class="form-check-label" for="radio2">
-                 					<input type="radio" class="form-check-input" name="chargeType" value="fta">FTA
+                 					<input type="radio" class="form-check-input" name="chargeType" 
+                 						value="fta" checked>FTA
                  				</label>
                				</div>
               			</div>
@@ -69,7 +71,8 @@ background-image: url("1.jpg");
                 			</div>
                 			<div class="form-check-inline">
                 				<label class="form-check-label" for="radio4">
-                 					<input type="radio" class="form-check-input" name="transmissionType" value="standard">Standard
+                 					<input type="radio" class="form-check-input" name="transmissionType" 
+                 						value="standard" checked>Standard
                  				</label>
                 			</div>
                			</div>
@@ -86,23 +89,30 @@ background-image: url("1.jpg");
         			<div class="form-group">
          				<label for="category" class="cols-sm-2 control-label">Package Category</label>
              			<div class="category">
-             				<select class="form-control" name="category">
-								<c:forEach items="${categoryInf}" var="category">
+             				<select class="form-control" name="category" id="categorySelect">
+								<c:forEach items="${categories}" var="category">
 									<option value="${category.category_id}">${category.categoryName}</option>
 								</c:forEach>
                  			</select>
              			</div>
                		</div>
                		
+               		<div class="categories">
+	                    <button type="button" class="btn btn-info" data-toggle="modal"
+	                        data-target="#categories">Add / Remove Categories</button>
+					</div>
+               		
        				<div class="form-group">
            				<label for="fdate" class="cols-sm-2 control-label">Package Available from date</label>
                			<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                 		<input type="date" class="form-control" name="availableFrom" id="fdate" placeholder="YYYY/MM/DD" />
+                 		<input type="date" class="form-control" name="availableFrom" id="fdate" 
+                 			placeholder="YYYY/MM/DD" required />
             		</div>
          			<div class="form-group">
            				<label for="tdate" class="cols-sm-2 control-label">Package Available to date</label>
                			<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                 		<input type="date" class="form-control" name="availableTo" id="tdate" placeholder="YYYY/MM/DD" />
+                 		<input type="date" class="form-control" name="availableTo" id="tdate" placeholder="YYYY/MM/DD"
+                 			required />
            	 		</div>
            	 		
          			<div class="form-group">
@@ -115,7 +125,7 @@ background-image: url("1.jpg");
 	                		</div>
 	                		<div class="form-check-inline">
 	                 			<label class="form-check-label" for="radio6">
-	                 				<input type="radio" class="form-check-input" name="addedByDefault" value="false">No
+	                 				<input type="radio" class="form-check-input" name="addedByDefault" value="false" checked>No
 	                 			</label>
 	                		</div>
             			</div>
@@ -129,6 +139,38 @@ background-image: url("1.jpg");
 		</div>
 	</div>
 </div>
+</div>
+
+<div class="modal fade" id="categories" tabindex="-1" role="dialog"
+	aria-labelledby="categories" aria-hidden="true">
+	<div class="modal-dialog">
+		<form action="HomeController" method="Post">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h4 class="modal-title custom_align" id="Heading">Add Categories</h4>
+	                <button type="button" data-dismiss="modal" aria-hidden="true">X</button>
+	            </div>
+	               
+				<div class="modal-body">
+	                <div class="form-group">
+	                    <input type="text" id="categoryName" placeholder="Category Name"/>
+	                    <input type="number" id="minChannels" placeholder="Min Channels"/>
+	                    <input type="number" id="maxChannels" placeholder="Max Channels"/>
+	                    <input type="button" value="add to list" id="add" />
+	                </div>
+	
+	                <ul id="list">
+	                	<c:forEach items="${categories}" var="category">
+	                    	<li>
+	                        	<c:out value="${category.categoryName}"></c:out>
+	                            <span class="close" id="${category.category_id}">X</span>
+	                        </li>
+	                    </c:forEach>
+	                </ul>
+				</div>
+	        </div><!-- /.modal-content -->
+   	    </form>  
+  	</div><!-- /.modal-dialog -->
 </div>
 
 <div class="channelList">

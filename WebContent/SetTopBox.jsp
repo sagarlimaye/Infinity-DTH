@@ -203,16 +203,6 @@
                                                                 </script>
 
                                                             </div>
-                                                            <div class="modal-footer ">
-                                                                <input type="hidden" name="option"
-                                                                    value="UpdatePackage">
-                                                                <input type="hidden" name="package_Id">
-                                                                <button type="submit" class="btn btn-warning btn-lg"
-                                                                    style="width: 100%;"><span
-                                                                        class="glyphicon glyphicon-ok-sign"></span>Add
-                                                                    Features</button>
-
-                                                            </div>
                                                         </div>
                                                     </form>
                                                     <!-- /.modal-content -->

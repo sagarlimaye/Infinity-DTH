@@ -303,6 +303,59 @@ public class HomeController extends HttpServlet {
 					}
 				}
 				break;
+				case "CategoryAdd":
+				{
+					response.setContentType("application/json");
+					PrintWriter out = null;
+					CategoryDAO dao = null;
+					try {
+						dao = new CategoryDAO();
+						out = response.getWriter();
+						Category category = new Category();
+						category.setCategoryName(request.getParameter("categoryName"));
+						category.setMinChannels(Integer.parseInt(request.getParameter("minChannels")));
+						category.setMaxChannels(Integer.parseInt(request.getParameter("maxChannels")));
+						dao.addCategory(category);
+						String id = Integer.toString(category.getCategory_id());
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("id", aNumberBuilder(id)).build()));
+						response.setStatus(201);
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+						response.setStatus(500);
+					}
+					finally {
+						if(out != null) out.close();
+						if(dao != null) dao.close();
+					}
+				}
+				break;
+				case "CategoryRemove":
+				{
+					response.setContentType("application/json");
+					PrintWriter out = null;
+					CategoryDAO dao = null;
+					try {
+						dao = new CategoryDAO();
+						out = response.getWriter();
+						int id = Integer.parseInt(request.getParameter("id"));
+						dao.removeCategory(id);
+						response.setStatus(204);
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
+						response.setStatus(500);
+					}
+					finally {
+						if(out != null) out.close();
+						if(dao != null) dao.close();
+					}
+					
+				}
+				break;
 				
 				case "PrepareCreatePackage":
 				{
@@ -311,8 +364,8 @@ public class HomeController extends HttpServlet {
 	
 					try {
 						dao = new CategoryDAO();
-						List<Category> names = dao.CategoryInformation();
-						request.setAttribute("categoryInf", names);
+						List<Category> categories = dao.CategoryInformation();
+						request.setAttribute("categories", categories);
 	
 						channelDao = new ChannelDAO();
 						Channel[] channels = channelDao.ChannelInformation();
