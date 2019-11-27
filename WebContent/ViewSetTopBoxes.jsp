@@ -157,7 +157,7 @@ background-image: url("1.jpg");
 </div>
 
 <div align="center" class="add-container">
-	<button onclick="location.href = '/HomeController?option=PrepareCreateSetTopBox';" id="myButton" class="btn btn-primary float-none submit-button" >Add Set Top Box</button>
+	<button onclick="location.href = '/InfinityDTH/HomeController?option=PrepareCreateSetTopBox';" id="myButton" class="btn btn-primary float-none submit-button" >Add Set Top Box</button>
 </div>
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
