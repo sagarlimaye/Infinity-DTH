@@ -5,18 +5,17 @@
 <html>
 
 <head>
-    
+
     <meta charset="ISO-8859-1">
     <title>Create Set Top Box (STB)</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
     <style type="text/css">
-        
-
         /* Style the close button */
         .close {
             right: 0;
@@ -141,32 +140,32 @@
 
                                                                 <ul id="list">
                                                                     <c:forEach items="${features}" var="feature">
-                                                                    <li>
-                                                                    	<c:out value="${feature.name}"></c:out>
-                                                                        <span class="close" id="${feature.id}">x</span>
-                                                                    </li>
-                                                                        
+                                                                        <li>
+                                                                            <c:out value="${feature.name}"></c:out>
+                                                                            <span class="close"
+                                                                                id="${feature.id}">X</span>
+                                                                        </li>
                                                                     </c:forEach>
                                                                 </ul>
                                                                 <script>
-                                                                    var select = document.getElementById("featureSelect");
+                                                                    var select = $("#featureSelect");
                                                                     var close = document.getElementsByClassName("close");
                                                                     var list = document.getElementById("list");
                                                                     var i;
                                                                     function OnClose() {
                                                                         var saved = false;
-                                                                        var div = this.parentElement;
-                                                                        
-                                                                        $.ajax("/InfinityDTH/HomeController?option=FeatureRemove&id="+this.id, {
+                                                                        var li = this.parentElement;
+
+                                                                        $.ajax("/InfinityDTH/HomeController?option=FeatureRemove&id=" + this.id, {
                                                                             method: "DELETE",
                                                                             statusCode: {
                                                                                 204: () => {
-                                                                                    $(select).find("option[value='"+this.id+"']").remove();
-                                                                                    div.remove(); 
+                                                                                    $(select).find("option[value='" + this.id + "']").remove();
+                                                                                    li.remove();
                                                                                 },
                                                                                 500: () => { alert("Could not delete that feature"); }
-                                                                            } 
-                                                                        });  
+                                                                            }
+                                                                        });
                                                                     }
                                                                     function OnClick() {
                                                                         var saved = false;
@@ -175,7 +174,7 @@
                                                                         $.post("/InfinityDTH/HomeController", {
                                                                             option: "FeatureAdd",
                                                                             featureName: textnode.textContent
-                                                                        }, function(result) {
+                                                                        }, function (result) {
                                                                             node.appendChild(textnode);
                                                                             list.appendChild(node);
                                                                             document.getElementById("idea").value = "";
@@ -188,18 +187,19 @@
                                                                             option.text = textnode.textContent;
                                                                             span.appendChild(txt);
                                                                             node.appendChild(span);
-                                                                            select.appendChild(option);
+                                                                            select.append(option);
                                                                             span.onclick = OnClose;
                                                                         });
                                                                     }
+
                                                                     // Click on a close button to hide the current list item
                                                                     for (i = 0; i < close.length; i++) {
                                                                         close[i].onclick = OnClose;
                                                                     }
-                                                                    
+
                                                                     // Create a new list item when clicking on the "Add" button
                                                                     document.getElementById("add").onclick = OnClick;
-                                                                    $("#features").on('hidden.bs.modal', () => { $("#featureSelect").selectpicker("refresh"); });
+                                                                    $("#features").on('hidden.bs.modal', () => { select.selectpicker("refresh"); });
                                                                 </script>
 
                                                             </div>
@@ -330,7 +330,7 @@
                     </div>
 
                 </div>
-</div>
+            </div>
 
 </body>
 
