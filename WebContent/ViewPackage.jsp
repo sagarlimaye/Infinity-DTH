@@ -66,7 +66,7 @@ iframe
     			<thead>
 					<tr>
 						<th>Name</th>
-						<th>category</th>
+						<th>Category</th>
 						<th>Charging Type</th>
 						<th>Transmission Type</th>
 						<th>Cost</th>
@@ -109,114 +109,112 @@ iframe
 </div>
 
 <div align="center" class="add-container">
- <button onclick="location.href = 'HomeController?option=PrepareCreatePackage';" id="myButton" class="btn btn-primary float-none submit-button" >Add Package</button>
+ 	<button onclick="location.href = 'HomeController?option=PrepareCreatePackage';" id="myButton" class="btn btn-primary float-none submit-button" >Add Package</button>
 </div>
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-      <form id="edit-form" action = "HomeController" method = "Post">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title custom_align" id="Heading">Edit Package</h4>
-      </div>
-      <div class="modal-body">
-      	<div class="form-group">
-				<input class="form-control " type="text" name = "packageName" placeholder="Package Name">
-			</div>
-			<div class="form-group">
-	          	<div class="form-check-inline">
-					<label class="form-check-label" for="radio1">
-						<input type="radio" class="form-check-input" name="chargeType" value="paid">Paid by default
-					</label>
-				</div>
-				<div class="form-check-inline">
-					<label class="form-check-label" for="radio2">
-						<input type="radio" class="form-check-input" name="chargeType" value="fta">FTA
-					</label>
-				</div>
-          	</div>
-          	<div class="form-group">
-	          	<div class="form-check-inline">
-					<label class="form-check-label" for="radio1">
-						<input type="radio" class="form-check-input" name="transmissionType" value="hd">HD
-					</label>
-				</div>
-				<div class="form-check-inline">
-					<label class="form-check-label" for="radio2">
-						<input type="radio" class="form-check-input" name="transmissionType" value="standard">Standard
-					</label>
-				</div>
-          	</div>
-          	<div class="form-group">
-          		<div class="input-group">
-		            <select class="selectpicker" name="channels" id="channelSelect" multiple>
-		             
-		            </select>
-	            </div>
-          	</div>
-         	<div class="form-group">
-            	<input class="form-control " type="text" name = "chargeCost" placeholder="Cost">
-         	</div>
-          	<div class="form-group">
-             	<input class="form-control " type="date" name = "availableFrom" placeholder="Available From">
-          	</div>
-          	<div class="form-group">
-            	<input class="form-control " type="date" name = "availableTo" placeholder="Available To">
-          	</div>
-			<div class="form-group">
-	          	<div class="form-check-inline">
-					<label class="form-check-label" for="radio1">
-						<input type="radio" class="form-check-input" name="addedByDefault" value="true">Add by default
-					</label>
-				</div>
-				<div class="form-check-inline">
-					<label class="form-check-label" for="radio2">
-						<input type="radio" class="form-check-input" name="addedByDefault" value="false">Not added by default
-					</label>
-				</div>
-          	</div>
-      </div>
-          <div class="modal-footer ">
-			<input type = "hidden" name = "option" value = "UpdatePackage">
-			<input type = "hidden" name = "package_Id">
-            <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
-         
-         </div>
-     </div>
-     </form>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
+	<div class="modal-dialog">
+      	<form id="edit-form" action = "HomeController" method = "Post">
+	    	<div class="modal-content">
+	          	<div class="modal-header">
+	          		<h4 class="modal-title custom_align" id="Heading">Edit Package</h4>
+	        		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	      		</div>
+	      		
+	      		<div class="modal-body">
+	      			<div class="form-group">
+						<input class="form-control " type="text" name = "packageName" placeholder="Package Name">
+					</div>
+					
+					<div class="form-group">
+		          		<div class="form-check-inline">
+							<label class="form-check-label" for="radio1">
+								<input type="radio" class="form-check-input" name="chargeType" value="paid">Paid by default
+							</label>
+						</div>
+						<div class="form-check-inline">
+							<label class="form-check-label" for="radio2">
+								<input type="radio" class="form-check-input" name="chargeType" value="fta">FTA
+							</label>
+						</div>
+	          		</div>
+	          		
+	          		<div class="form-group">
+		          		<div class="form-check-inline">
+							<label class="form-check-label" for="radio1">
+								<input type="radio" class="form-check-input" name="transmissionType" value="hd">HD
+							</label>
+						</div>
+						<div class="form-check-inline">
+							<label class="form-check-label" for="radio2">
+								<input type="radio" class="form-check-input" name="transmissionType" value="standard">Standard
+							</label>
+						</div>
+		          	</div>
+		          	<div class="form-group">
+		          		<div class="input-group">
+				            <select class="selectpicker" name="channels" id="channelSelect" multiple>
+				             
+				            </select>
+			            </div>
+		          	</div>
+		         	<div class="form-group">
+		            	<input class="form-control " type="text" name = "chargeCost" placeholder="Cost">
+		         	</div>
+		          	<div class="form-group">
+		             	<input class="form-control " type="date" name = "availableFrom" placeholder="Available From">
+		          	</div>
+		          	<div class="form-group">
+		            	<input class="form-control " type="date" name = "availableTo" placeholder="Available To">
+		          	</div>
+					<div class="form-group">
+			          	<div class="form-check-inline">
+							<label class="form-check-label" for="radio1">
+								<input type="radio" class="form-check-input" name="addedByDefault" value="true">Add by default
+							</label>
+						</div>
+						<div class="form-check-inline">
+							<label class="form-check-label" for="radio2">
+								<input type="radio" class="form-check-input" name="addedByDefault" value="false">Not added by default
+							</label>
+						</div>
+		          	</div>
+	      		</div>
+	      		
+	          	<div class="modal-footer ">
+					<input type = "hidden" name = "option" value = "UpdatePackage">
+					<input type = "hidden" name = "package_Id">
+	            	<button type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+	         	</div>
+	     	</div>
+     	</form>
+  	</div><!-- /.modal-content -->  
+</div><!-- /.modal-dialog -->
     
-    
-    
-    <div class="modal fade" id="delete" role="dialog" >
-      <div class="modal-dialog">
-      <form action = "HomeController" method = "post">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
-       
-      </div>
-        <div class="modal-footer ">
-        <input type = "hidden" name = "option" value = "DeletePackage">
-		<input type = "hidden" name = "remove_id">
-        <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" ><span class="glyphicon glyphicon-remove"></span> No</button>
-      </div>
-       </form>
-        </div>
-       
-    <!-- /.modal-content --> 
-  </div>
-    
+<div class="modal fade" id="delete" role="dialog" >
+	<div class="modal-dialog">
+    	<form action = "HomeController" method = "post">
+    		<div class="modal-content">
+          		<div class="modal-header">
+          			<h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+        			<button type="button" class="close" data-dismiss="modal">&times;</button>
+      			</div>
+      			
+          		<div class="modal-body">
+      				<div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+      			</div>
+        
+        		<div class="modal-footer ">
+        			<input type = "hidden" name = "option" value = "DeletePackage">
+					<input type = "hidden" name = "remove_id">
+        			<button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+        			<button type="button" class="btn btn-default" data-dismiss="modal" ><span class="glyphicon glyphicon-remove"></span> No</button>
+      			</div>
+      		</div><!-- /.modal-content --> 
+       	</form>
+     </div><!-- /.modal-dialog -->
+</div> 
+     
 <div class="channelList">
 	<c:forEach items="${channels}" var="channel">
 		<div class="channelItem" 
