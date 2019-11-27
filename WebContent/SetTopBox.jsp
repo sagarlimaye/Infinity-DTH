@@ -313,7 +313,6 @@
                                         <span class="input-group-addon"><i class="fa fa-lock fa-lg"
                                                 aria-hidden="true"></i></span>
                                         <input type="file" name="myFile" multiple>
-                                        <input type="submit" value="upload" />
                                     </div>
                                 </div>
                             </div>
@@ -322,7 +321,7 @@
 
 
                             <div class="form-group ">
-                                <button type="button"
+                                <button type="submit"
                                     class="btn btn-primary btn-lg btn-block login-button">Submit</button>
                             </div>
 
