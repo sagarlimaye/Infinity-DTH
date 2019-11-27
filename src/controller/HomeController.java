@@ -1,6 +1,13 @@
 package controller;
 
+import static argo.jdom.JsonNodeBuilders.aFalseBuilder;
+import static argo.jdom.JsonNodeBuilders.aStringBuilder;
+import static argo.jdom.JsonNodeBuilders.aTrueBuilder;
+import static argo.jdom.JsonNodeBuilders.anArrayBuilder;
+import static argo.jdom.JsonNodeBuilders.anObjectBuilder;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -15,14 +22,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import argo.format.JsonFormatter;
 import argo.format.PrettyJsonFormatter;
 import argo.jdom.JsonArrayNodeBuilder;
 import argo.jdom.JsonObjectNodeBuilder;
-
-import static argo.jdom.JsonNodeBuilders.*;
-
 import data.CategoryDAO;
 import data.ChannelDAO;
 import data.FeatureDAO;
@@ -491,13 +496,17 @@ public class HomeController extends HttpServlet {
 					stb.setPrice(Float.parseFloat(request.getParameter("price")));
 					stb.setInstallation_charges(Float.parseFloat(request.getParameter("installationCharges")));
 					stb.setUpgradation_charges(Float.parseFloat("upgradationCharges"));
-					stb.setMac_id(request.getParameter("macId"));
-					stb.setControl_asset_id(Integer.parseInt(request.getParameter("controlAssetId")));
 					stb.setBilling_type(request.getParameter("billingType"));
 					stb.setDiscount(Float.parseFloat(request.getParameter("discount")));
-					stb.setDish_asset_id(Integer.parseInt(request.getParameter("dishAssetId")));
 					stb.setRefundable_deposit(Float.parseFloat(request.getParameter("refundableDeposit")));
-					stb.setStatus(Integer.parseInt(request.getParameter("status")));
+					// input stream of the upload file 
+					InputStream inputStream = null; 
+					Part filePart = request.getPart("myFile");
+                    
+                         // obtains the upload file part in this multipart request
+				    if (filePart != null) { 
+				                             inputStream = filePart.getInputStream(); }
+				     stb.setInventory_details(inputStream);
 					
 					String[] featureIds = request.getParameterValues("features");
 					
