@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Category;
 import model.Channel;
 import model.Package;
 import util.SQLConnection;
@@ -28,8 +29,9 @@ public class PackageDAO implements Closeable {
 		int id = 0;
 		try
 		{
-			String query = "INSERT INTO package(package_name, charging_type, transmission_type, cost, available_from, available_to, added_default) "
-					+ "		VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO package(package_name, charging_type, transmission_type, "
+					+ "cost, available_from, available_to, added_default, category_id) "
+					+ "		VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			stmt.setString(1, pkg.getName());
@@ -39,6 +41,7 @@ public class PackageDAO implements Closeable {
 			stmt.setDate(5,  new java.sql.Date(pkg.getAvailableFrom().getTime()));
 			stmt.setDate(6,  new java.sql.Date(pkg.getAvailableTo().getTime()));
 			stmt.setBoolean(7, pkg.isAddedByDefault());
+			stmt.setInt(8, pkg.getCategory().getCategory_id());
 			stmt.executeUpdate();
 			rs = stmt.getGeneratedKeys();
 			rs.next();
@@ -70,43 +73,51 @@ public class PackageDAO implements Closeable {
 		}
 			
 	}
-		public List<Package> PackInformation() throws SQLException{
-			List<Package> pack = new ArrayList<Package>();
-			String selectQuery = "Select * from package";
-			Statement stmt = null;
-			ResultSet rs = null;
+	public List<Package> PackInformation() throws SQLException{
+		List<Package> pack = new ArrayList<Package>();
+		String selectQuery = "Select * from package";
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.createStatement();
+		    rs = stmt.executeQuery(selectQuery);
 			
-			try {
-				stmt = conn.createStatement();
-			    rs = stmt.executeQuery(selectQuery);
+
+			while(rs.next()) {
+				Package packageInfo = new Package();
+				packageInfo.setPackageID(rs.getInt(1));
+				packageInfo.setName(rs.getString(2));
 				
-				
-				
-				
-				while(rs.next()) {
-					Package packageInfo = new Package();
-					packageInfo.setPackageID(rs.getInt(1));
-					packageInfo.setName(rs.getString(2));
-					packageInfo.setChargingType(rs.getString(4));
-					packageInfo.setTransmissionType(rs.getString(5));
-					packageInfo.setCost(Float.parseFloat(rs.getString(6)));
-					packageInfo.setAvailableFrom(rs.getDate(7));
-					packageInfo.setAvailableTo(rs.getDate(8));
-					packageInfo.setAddedByDefault((rs.getBoolean(9)));
-					pack.add(packageInfo);			
+				CategoryDAO categoryDao = null;
+				try {
+					categoryDao = new CategoryDAO();
+					packageInfo.setCategory(categoryDao.getCategoryById(rs.getInt(3)));
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
+				
+				packageInfo.setChargingType(rs.getString(4));
+				packageInfo.setTransmissionType(rs.getString(5));
+				packageInfo.setCost(Float.parseFloat(rs.getString(6)));
+				packageInfo.setAvailableFrom(rs.getDate(7));
+				packageInfo.setAvailableTo(rs.getDate(8));
+				packageInfo.setAddedByDefault((rs.getBoolean(9)));
+				
+				pack.add(packageInfo);			
 			}
-			finally {
-				if(rs != null)
-					rs.close();
-				if(stmt != null)
-					stmt.close();
-			}
-			
-			
-			return pack;
-			
 		}
+		finally {
+			if(rs != null)
+				rs.close();
+			if(stmt != null)
+				stmt.close();
+		}
+		
+		
+		return pack;
+		
+	}
 		public void DeletePackage(int id) throws SQLException{
 			String deleteQuery = "Delete from package where package_id = ?";
 			PreparedStatement stmt = null;
