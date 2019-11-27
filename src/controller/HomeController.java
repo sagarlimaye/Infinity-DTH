@@ -552,7 +552,7 @@ public class HomeController extends HttpServlet {
 					catch(Exception e)
 					{
 						e.printStackTrace();
-						response.setStatus(500);
+						response.sendError(500);
 					}
 					finally {
 						if(out != null)
@@ -578,7 +578,7 @@ public class HomeController extends HttpServlet {
 					{
 						e.printStackTrace();
 						out.print(JSON_FORMATTER.format(anObjectBuilder().withField("success", aFalseBuilder()).build()));
-						response.setStatus(500);
+						response.sendError(500);
 					}
 					finally {
 						if(out != null)
