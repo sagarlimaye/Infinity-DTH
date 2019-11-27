@@ -21,37 +21,14 @@ public class SetTopBox {
 	public void setDimensions(String dimensions) {
 		this.dimensions = dimensions;
 	}
-	public String getMac_id() {
-		return mac_id;
-	}
-	public void setMac_id(String mac_id) {
-		this.mac_id = mac_id;
-	}
+	
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int getControl_asset_id() {
-		return control_asset_id;
-	}
-	public void setControl_asset_id(int control_asset_id) {
-		this.control_asset_id = control_asset_id;
-	}
-	public int getDish_asset_id() {
-		return dish_asset_id;
-	}
-	public void setDish_asset_id(int dish_asset_id) {
-		this.dish_asset_id = dish_asset_id;
-	}
 	
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
 	public float getDiscount() {
 		return discount;
 	}

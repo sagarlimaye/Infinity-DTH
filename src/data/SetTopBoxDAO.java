@@ -2,6 +2,7 @@ package data;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,14 +37,10 @@ public class SetTopBoxDAO implements Closeable {
 			stmt.setFloat(3, stb.getPrice());
 			stmt.setFloat(4, stb.getInstallation_charges());
 			stmt.setFloat(5, stb.getUpgradation_charges());
-			stmt.setString(6, stb.getMac_id());
-			stmt.setInt(7, stb.getControl_asset_id());
 			stmt.setString(8, stb.getBilling_type());
 			stmt.setFloat(9, stb.getDiscount());
-			stmt.setInt(10, stb.getDish_asset_id());
 			stmt.setFloat(11, stb.getRefundable_deposit());
-			stmt.setInt(12, stb.getStatus());
-			stmt.setBlob(13, stb.getInventory_details());
+			stmt.setBlob(13,stb.getInventory_details());
 			stmt.executeUpdate();
 			rs = stmt.getGeneratedKeys();
 			rs.next();
@@ -91,13 +88,9 @@ public class SetTopBoxDAO implements Closeable {
 				settopbox.setPrice(rs.getFloat(4));
 				settopbox.setInstallation_charges(rs.getFloat(5));
 				settopbox.setUpgradation_charges(rs.getFloat(6));
-				settopbox.setMac_id(rs.getString(7));
-				settopbox.setControl_asset_id(rs.getInt(8));
 				settopbox.setBilling_type(rs.getString(9));
 				settopbox.setDiscount(rs.getFloat(10));
-				settopbox.setDish_asset_id(rs.getInt(11));
 				settopbox.setRefundable_deposit(rs.getFloat(12));
-				settopbox.setStatus(rs.getInt(13));
 				settopbox.setInventory_details(rs.getBinaryStream(14));
 				setTopBoxInf.add(settopbox);
 			}
@@ -124,13 +117,9 @@ public class SetTopBoxDAO implements Closeable {
 			updateStmt.setFloat(4, settopbox.getPrice());
 			updateStmt.setFloat(5, settopbox.getInstallation_charges());
 			updateStmt.setFloat(6, settopbox.getUpgradation_charges());
-			updateStmt.setString(7, settopbox.getMac_id());
-			updateStmt.setInt(8, settopbox.getControl_asset_id());
 			updateStmt.setString(9, settopbox.getBilling_type());
 			updateStmt.setFloat(10, settopbox.getDiscount());
-			updateStmt.setInt(11, settopbox.getDish_asset_id());
 			updateStmt.setFloat(12, settopbox.getRefundable_deposit());
-			updateStmt.setInt(13, settopbox.getStatus());
 			updateStmt.setBinaryStream(14, settopbox.getInventory_details());
 			updateStmt.executeUpdate();			
 		} finally {

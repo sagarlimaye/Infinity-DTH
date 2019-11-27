@@ -91,7 +91,7 @@
                     <div class="card-header">Manage Set Top Box</div>
                     <div class="card-body">
 
-                        <form class="form-horizontal" method="post" action="#">
+                        <form class="form-horizontal" method="post" action="HomeController" enctype="multipart/form-data">
 
                             <div class="form-group">
                                 <label for="name" class="cols-sm-2 control-label">Type</label>
