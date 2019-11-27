@@ -29,7 +29,6 @@ public class SetTopBoxDAO implements Closeable {
 				+ "		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		int id = 0;
 		try {
 			stmt = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, stb.getType());
@@ -44,7 +43,7 @@ public class SetTopBoxDAO implements Closeable {
 			stmt.executeUpdate();
 			rs = stmt.getGeneratedKeys();
 			rs.next();
-			id = rs.getInt(1);
+			stb.setSerialNumber(rs.getInt(1));
 		}
 		finally {
 			if(rs != null)
