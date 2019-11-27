@@ -44,13 +44,18 @@ public class FeatureDAO implements Closeable {
 	public void addFeature(Feature feature) throws SQLException {
 		String query = "INSERT INTO feature (feature_name) VALUES (?)";
 		PreparedStatement stmt = null;
-		
+		ResultSet rs = null;
 		try {
-			stmt = conn.prepareStatement(query);
+			stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, feature.getName());
 			stmt.executeUpdate();
+			rs = stmt.getGeneratedKeys();
+			rs.next();
+			feature.setId(rs.getInt(1));
 		}
 		finally {
+			if(rs != null)
+				rs.close();
 			if(stmt != null)
 				stmt.close();
 		}
