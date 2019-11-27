@@ -1,10 +1,6 @@
 package controller;
 
-import static argo.jdom.JsonNodeBuilders.aFalseBuilder;
-import static argo.jdom.JsonNodeBuilders.aStringBuilder;
-import static argo.jdom.JsonNodeBuilders.aTrueBuilder;
-import static argo.jdom.JsonNodeBuilders.anArrayBuilder;
-import static argo.jdom.JsonNodeBuilders.anObjectBuilder;
+import static argo.jdom.JsonNodeBuilders.*;
 
 import java.io.IOException;
 import java.io.InputStream;
